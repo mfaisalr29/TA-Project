@@ -17,7 +17,7 @@
             left: 60%;
             width: 613px; 
             height: 92%; 
-            border-top-left-radius: 60px;
+            border-top-left-radius: 80px;
         }
     </style>
     @section('container')

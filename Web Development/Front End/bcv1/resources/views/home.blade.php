@@ -12,10 +12,10 @@
         .empty-column {
             background-color: #C4C4C4; 
             position: absolute; 
-            top: 7.8%; 
+            top: 55px; 
             right: 0%; 
             left: 60%;
-            width: 613px; 
+            /* width: 613px;  */
             height: 92%; 
             border-top-left-radius: 80px;
         }
@@ -23,7 +23,7 @@
     @section('container')
     <div class="container">
         <div class="row">
-            <div class="col-md-9 mx-auto">
+            <div class="col-md-9">
                 <div class="content">
                     <h2 style="font-size: 7vh">{{ $name }}</h2>
                     <br>

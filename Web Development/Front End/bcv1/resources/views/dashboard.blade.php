@@ -17,14 +17,15 @@
 
         <div class="row">
 
-            <div class="col-md-3">
-                <div class="list-group">
-                    <a href="#" class="list-group-item list-group-item-action active">
-                        Nomor Rumah
+            <div class="col-md-3" >
+                <div class="list-group">    
+                    <a href="#" class="list-group-item list-group-item-action active" style="background-color: #394E69">
+                        <img src="{{ asset('img/Profile.png') }}" alt="Nomor Rumah" class="img-fluid mr-2" style="max-height : 100px; border-radius: 40px; padding :10px"> Nomor Rumah
+                        <div class="list-group-item list-group-item-action" style="background-color: #394E69">Detail Tagihan IPL</div>
+                        <div class="list-group-item list-group-item-action" style="background-color: #394E69">Profile</div>
                     </a>
-                    <a href="#" class="list-group-item list-group-item-action ">Detail Tagihan IPL</a>
-                    <a href="#" class="list-group-item list-group-item-action" href="/profile">Profile</a>
-
+                    {{-- <a href="#" class="list-group-item list-group-item-action ">Detail Tagihan IPL</a>
+                    <a href="#" class="list-group-item list-group-item-action" href="/profile">Profile</a> --}}
                 </div>
             </div>
 

@@ -4,7 +4,7 @@
 <body style="background: linear-gradient(to right, #F8F2F0 50%, #394E69 50%); margin:0; padding:0;">
   <div class="container-fluid" style="display: grid; height:100vh">
     <div class="row">
-      <div class="col-md-6" style="align-self: center; margin: auto">
+      <div class="col-md-4" style="align-self: center; margin: auto">
         <form class="form-signin">
           <h1 class="h3 mt-3 d-flex justify-content-center">Welcome!</h1>
           <p class= "mt-3 d-flex justify-content-center"> Welcome back! Please enter your details</p>
@@ -12,6 +12,7 @@
             <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
             <label for="floatingInput">Enter your username</label>
           </div>
+          <br>
           <div class="form-floating">
             <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
             <label for="floatingPassword">Password</label>

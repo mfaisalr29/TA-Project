@@ -52,6 +52,7 @@ Route::get('/kontak', function () {
 Route::get('/dashboard', function(){
     return view('dashboard', [
         "title" => "Dashboard",
+        "image" => "Profile.jpg",
     ]);
 });
 

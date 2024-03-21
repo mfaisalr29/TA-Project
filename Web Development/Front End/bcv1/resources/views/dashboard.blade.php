@@ -17,15 +17,19 @@
 
         <div class="row">
 
-            <div class="col-md-3" >
-                <div class="list-group">    
-                    <a href="#" class="list-group-item list-group-item-action active" style="background-color: #394E69">
-                        <img src="{{ asset('img/Profile.png') }}" alt="Nomor Rumah" class="img-fluid mr-2" style="max-height : 100px; border-radius: 40px; padding :10px"> Nomor Rumah
-                        <div class="list-group-item list-group-item-action" style="background-color: #394E69">Detail Tagihan IPL</div>
-                        <div class="list-group-item list-group-item-action" style="background-color: #394E69">Profile</div>
-                    </a>
-                    {{-- <a href="#" class="list-group-item list-group-item-action ">Detail Tagihan IPL</a>
-                    <a href="#" class="list-group-item list-group-item-action" href="/profile">Profile</a> --}}
+            <div class="col-md-3">
+                <div class="p-3 mb-2" style="background-color: #394E69; border-radius: 10px;">
+                    <div class="d-flex align-items-center">
+                        <img src="{{ asset('img/Profile.png') }}" class="img-fluid mr-2" style="max-height : 100px; border-radius: 40px;">
+                        <h5 class="mb-0 text-white">Nomor Rumah</h5>
+                    </div>
+                    <hr style="border-top: 1px solid #fff;">
+                    <div class="p-2 mb-2" style="background-color: #394E69; border-radius: 10px;">
+                        <p class="mb-0 text-white">Detail Tagihan IPL</p>
+                    </div>
+                    <div class="p-2 mb-2" style="background-color: #394E69; border-radius: 10px;">
+                        <p class="mb-0 text-white">Profile</p>
+                    </div>
                 </div>
             </div>
 
@@ -51,4 +55,3 @@
 </html>
 
 @endsection
-

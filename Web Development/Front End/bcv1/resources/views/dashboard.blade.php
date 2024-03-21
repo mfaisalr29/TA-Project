@@ -24,10 +24,10 @@
                         <h5 class="mb-0 text-white">Nomor Rumah</h5>
                     </div>
                     <hr style="border-top: 1px solid #000000;">
-                    <div class="p-2 mb-2" style="background-color: #394E69; border-radius: 10px;">
+                    <div class="p-2 mb-2" style="background-color: #394E69">
                         <p class="mb-0 text-white">Detail Tagihan IPL</p>
                     </div>
-                    <div class="p-2 mb-2" style="background-color: #394E69; border-radius: 10px;">
+                    <div class="p-2 mb-2" style="background-color: #394E69">
                         <p class="mb-0 text-white">Profile</p>
                     </div>
                 </div>

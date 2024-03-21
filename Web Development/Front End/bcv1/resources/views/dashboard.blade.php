@@ -18,17 +18,16 @@
         <div class="row">
 
             <div class="col-md-3">
-                <div class="p-3 mb-2" style="background-color: #394E69; border-radius: 10px;">
+                <div class="p-3 mb-2" style="background-color: #394E69; border-radius: 10px">
                     <div class="d-flex align-items-center">
                         <img src="{{ asset('img/Profile.png') }}" class="img-fluid mr-2" style="max-height : 100px; border-radius: 40px; padding : 10px">
                         <h5 class="mb-0 text-black">Nomor Rumah</h5>
                     </div>
-                    <hr style="border-top: 1px solid #000000;">
+                    <hr style="border-top: 2px solid #000000;">
                     <div class="p-2 mb-2" style="background-color: #394E69">
-                        <p class="mb-0 text-black">Detail Tagihan IPL</p>
-                    </div>
-                    <div class="p-2 mb-2" style="background-color: #394E69">
-                        <p class="mb-0 text-black">Profile</p>
+                        <a href="#" class="text-black" style="text-decoration: none">Detail Tagihan IPL</a>
+                        <br><br>
+                        <a href="#" class="text-black" style="text-decoration: none">Profile</a>    
                     </div>
                 </div>
             </div>

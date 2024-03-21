@@ -21,13 +21,12 @@
                 <div class="p-3 mb-2" style="background-color: #394E69; border-radius: 10px">
                     <div class="d-flex align-items-center">
                         <img src="{{ asset('img/Profile.png') }}" class="img-fluid mr-2" style="max-height : 100px; border-radius: 40px; padding : 10px">
-                        <h5 class="mb-0 text-black">Nomor Rumah</h5>
+                        <h5 class="mb-0 text-white">Nomor Rumah</h5>
                     </div>
                     <hr style="border-top: 2px solid #000000;">
                     <div class="p-2 mb-2" style="background-color: #394E69">
-                        <a href="#" class="text-black" style="text-decoration: none">Detail Tagihan IPL</a>
-                        <br><br>
-                        <a href="#" class="text-black" style="text-decoration: none">Profile</a>    
+                        <a href="#" class="text-white d-md-block" style="text-decoration: none;">Detail Tagihan IPL</a>  
+                        <a href="#" class="text-white" style="text-decoration: none; margin-top :50px">Profile</a>  
                     </div>
                 </div>
             </div>

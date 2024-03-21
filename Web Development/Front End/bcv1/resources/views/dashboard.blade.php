@@ -24,9 +24,10 @@
                         <h5 class="mb-0 text-white">Nomor Rumah</h5>
                     </div>
                     <hr style="border-top: 2px solid #000000;">
-                    <div class="p-2 mb-2" style="background-color: #394E69">
-                        <a href="#" class="text-white d-md-block" style="text-decoration: none;">Detail Tagihan IPL</a>  
-                        <a href="#" class="text-white" style="text-decoration: none; margin-top :50px">Profile</a>  
+                    <div class="p-2 mb-2">
+                        <a href="#" class="text-white d-md-block mb-2" style="text-decoration: none;">Dashboard</a>  
+                        <a href="#" class="text-white d-md-block mb-2" style="text-decoration: none;">Detail Tagihan IPL</a>  
+                        <a href="#" class="text-white" style="text-decoration: none;">Profile</a>
                     </div>
                 </div>
             </div>

@@ -7,7 +7,7 @@
       <div class="col-md-4" style="align-self: center; margin: auto">
         <form class="form-signin">
           <h1 class="h3 mt-3 d-flex justify-content-center">Welcome!</h1>
-          <p class= "mt-3 d-flex justify-content-center"> Welcome back! Please enter your details</p>
+          <p class= "mt-3 d-flex justify-content-center" style="color:#808080"> Welcome back! Please enter your details</p>
           <div class="form-floating">
             <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
             <label for="floatingInput">Enter your username</label>
@@ -24,7 +24,7 @@
               Remember for 30 days
             </label>
           </div>
-          <a href="/dashboard" class="btn btn-primary w-100 py-2" type="submit">Sign In</a>
+          <a href="/dashboard" class="btn  w-100 py-2" style="background: #FE8660; color: white" type="submit">Sign In</a>
         </form>
       </div>
       <div class="col-md-6" style="align-self: center; margin: auto">        

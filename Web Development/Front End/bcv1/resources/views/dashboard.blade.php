@@ -25,8 +25,8 @@
                     </div>
                     <hr style="border-top: 2px solid #000000;">
                     <div class="p-2 mb-2">
-                        <a href="#" class="text-white d-md-block mb-2" style="text-decoration: none;">Dashboard</a>  
-                        <a href="#" class="text-white d-md-block mb-2" style="text-decoration: none;">Detail Tagihan IPL</a>  
+                        <a href="#" class="text-white d-md-block mb-4" style="text-decoration: none;">Dashboard</a>  
+                        <a href="#" class="text-white d-md-block mb-4" style="text-decoration: none;">Detail Tagihan IPL</a>  
                         <a href="#" class="text-white" style="text-decoration: none;">Profile</a>
                     </div>
                 </div>
@@ -35,12 +35,44 @@
 
             <div class="col-md-9">
                 <div class="card">
-                    <div class="card-header">
-                        <h5 class="welcome-message">Selamat datang, *Nama Warga</h5>
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title">Jadwal Ambil Sampah</h5>
-                        <p class="card-text">Selasa, Kamis</p>
+                    <div class="card-body" style="background-color: #394E69; border-radius: 5px">
+                        <div class="card-body col-md-6 mx-3 mb-4" style="background-color: #D9D9D9;  border-radius: 15px">
+                            <h5 class="card-title" style="text-align: center">Selamat Datang</h5>
+                        </div>
+                        <div class="col-md-6 mx-3 mb-4">
+                            <div class="card-body" style="background-color: #D9D9D9; border-radius: 15px; position: relative;">
+                                <div class="d-flex align-items-center">
+                                    <div style="margin-right: 30px;">
+                                        <img src="{{ asset('img/Vector.png') }}" class="img-fluid" style="max-height: 100px; border-radius: 40px; padding : 5px">
+                                    </div>
+                                    <div style="position: absolute; top: 0; bottom: 0; left: 100px; width: 10px; background-color: #848484;"></div>
+                                    <div style="padding-right: 10px;">
+                                        <h5 class="card-title">Jadwal Ambil Sampah</h5>
+                                        <p class="card-text">Selasa, Kamis</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mx-3">
+                            <div class="card-body" style="background-color: #D9D9D9; border-radius: 15px; position: relative;">
+                                <div class="d-flex align-items-center">
+                                    <div style="margin-right: 30px;">
+                                        <img src="{{ asset('img/Vector.png') }}" class="img-fluid" style="max-height: 100px; border-radius: 40px; padding : 5px">
+                                    </div>
+                                    <div style="position: absolute; top: 0; bottom: 0; left: 100px; width: 10px; background-color: #848484;"></div>
+                                    <div style="padding-right: 10px;">
+                                        <h5 class="card-title">IPL Bulan Ini</h5>
+                                        <p class="card-text">Meter Awal : </p>
+                                        <p class="card-text">Meter Akhir : </p>
+                                        <p class="card-text">Meter Tagihan bulan ini : </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+                        
+                        
                     </div>
                 </div>
 

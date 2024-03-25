@@ -25,9 +25,11 @@
                     </div>
                     <hr style="border-top: 2px solid #000000;">
                     <div class="p-2 mb-2">
-                        <a href="#" class="text-white d-md-block mb-4" style="text-decoration: none;">Dashboard</a>  
-                        <a href="#" class="text-white d-md-block mb-4" style="text-decoration: none;">Detail Tagihan IPL</a>  
-                        <a href="#" class="text-white" style="text-decoration: none;">Profile</a>
+                        <nav class="nav flex-column">
+                            <a class="nav-link text-white" href="#" style="text-decoration: none;">Dashboard</a>
+                            <a class="nav-link text-white" href="#" style="text-decoration: none;">Detail Tagihan IPL</a>
+                            <a class="nav-link text-white" href="#" style="text-decoration: none;">Profile</a>
+                          </nav>
                     </div>
                 </div>
             </div>
@@ -53,7 +55,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6 mx-3">
+                        <div class="col-md-6 mx-3 mb-4">
                             <div class="card-body" style="background-color: #D9D9D9; border-radius: 15px; position: relative;">
                                 <div class="d-flex align-items-center">
                                     <div style="margin-right: 30px;">
@@ -69,11 +71,11 @@
                                 </div>
                             </div>
                         </div>
-                        
-                        
-                        
-                        
+                        <div class=" flex-col col-md-6 mx-3 mb-4 align-self-end">
+                            <div class="card-body" style="background-color: #D9D9D9; border-radius: 15px">
+                        </div>
                     </div>
+                    
                 </div>
 
             </div>

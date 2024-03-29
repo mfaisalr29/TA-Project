@@ -56,4 +56,10 @@ Route::get('/dashboard', function(){
     ]);
 });
 
+Route::get('admindash', function(){
+    return view('admindash', [
+        "title" => "Admin Dashboard"
+    ]);
+});
+
 Route::get('/login', [LoginController::class, 'index']);

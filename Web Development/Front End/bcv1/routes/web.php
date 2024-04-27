@@ -16,10 +16,6 @@ use Illuminate\Support\Facades\Auth;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/home', function () {
     return view('home', [
         "title" => "Home",
         "name" => "Bandung City View I"
@@ -56,9 +52,52 @@ Route::get('/dashboard', function(){
     ]);
 });
 
-Route::get('admindash', function(){
+Route::get('/admindash', function(){
     return view('admindash', [
         "title" => "Admin Dashboard"
+    ]);
+});
+
+
+Route::get('/adminprofile', function(){
+    return view('adminprofile', [
+        "title" => "Admin Profile"
+    ]);
+});
+
+Route::get('/profilewarga', function(){
+    return view('profilewarga', [
+        "title" => "Profile Warga"
+    ]);
+});
+
+Route::get('/profileadmin', function(){
+    return view('profileadmin', [
+        "title" => "Profile Admin"
+    ]);
+});
+
+Route::get('/tagihanipladmin', function(){
+    return view('tagihanipladmin', [
+        "title" => "Tagihan IPL Admin"
+    ]);
+});
+
+Route::get('/tagihan', function(){
+    return view('tagihan', [
+        "title" => "Input Tagihan"
+    ]);
+});
+
+Route::get('/kondisi', function(){
+    return view('kondisi', [
+        "title" => "Kondisi Air dan Alat"
+    ]);
+});
+
+Route::get('/detailtagihan', function(){
+    return view('tagihaniplwarga', [
+        "title" => "Tagihan IPL Warga"
     ]);
 });
 

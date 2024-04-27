@@ -1,20 +1,146 @@
-body{
-  font-family: 'Poppins', sans-serif;
-  background-color: #F8F2F0;
+:root {
+  --bs-body-bg: #f8f2f0;
 }
 
 .navbar {
-  background-color: #394E69;
-
-}
-.welcome-message {
-  color: #006eff;
-  font-size: 24px; 
-  font-weight: bold;
+  background-color: #394e69;
+  color: #fafafa;
 }
 
+.navbar .btn {
+  color: #fefefe;
+  background-color: transparent;
+  border-width: 0;
+  border-radius: 0;
+}
 
+.navbar .btn:hover {
+  color: #c0bec6;
+}
 
-h2{
+.navbar .form-control {
+  outline: none !important;
+  border: 1px solid transparent;
+  border-radius: 0;
+  background: transparent;
+  caret-color: #e7e5ec;
+  color: #fafafa;
+}
+
+.navbar .form-control:focus {
+  outline: none !important;
+  border: none;
+  box-shadow: none !important;
+  border-bottom: 1px solid #7695bf;
+}
+
+.navbar .form-control::placeholder {
+  color: #f2f0f6;
+}
+
+.navbar-brand {
   font-weight: bold;
+  margin-right: 4em;
+}
+
+.navbar-brand:hover {
+  color: #f4d772;
+}
+
+.navbar .nav-item {
+  position: relative;
+}
+
+.navbar .nav-link.active {
+  color: yellow;
+}
+
+.nav-link,
+.nav-link:hover {
+  color: white;
+}
+
+.nav-link.active,
+.nav-link.active:hover {
+  color: yellow;
+}
+
+.sidebar-card.card {
+  background-color: #394e69;
+}
+
+.sidebar-card img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.sidebar-card .list-group {
+  margin: 0 -1em;
+}
+
+.sidebar-card .card-title {
+  color: #f2f0f6;
+}
+
+.main-nav .search-btn {
+  color: #000;
+  border-right: 1px solid #ada7a7;
+}
+
+.main-nav .search-btn:focus,
+.main-nav .search-btn:active,
+.main-nav .search-btn:hover {
+  color: #ada7a7;
+  background: #fff;
+  border-color: transparent;
+}
+
+.main-nav .search-input {
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  background: #fff;
+  caret-color: #555;
+  color: #555;
+}
+
+.main-nav .search-input:focus {
+  outline: none !important;
+  border: none;
+  box-shadow: none !important;
+}
+
+.main-nav .search-input::placeholder {
+  color: #555;
+}
+
+.main .card {
+  margin-top: 2em;
+  margin-bottom: 2em;
+}
+
+.main .card .card-title {
+  background-color: #f8f7fa;
+  padding: 1em 1.5em;
+  color: #636364;
+}
+
+.main .table thead {
+  color: #a2a1a3;
+  background-color: #f8f7fa;
+}
+
+.main .table td,
+.main .table th {
+  padding: 0.8em 1em;
+}
+
+.interactive-circle {
+  display: inline-block;
+  cursor: pointer;
+  border-radius: 50%;
+  padding: 10px; 
+  background-color: #ffffff; 
 }

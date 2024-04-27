@@ -1,20 +1,25 @@
 @extends('layouts.main')
 
 @section('container')
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-</head>
-<body>
-    <div class="container-fluid">
-        <h5>Dashboard</h5>
-        <br><br>
-
+<div class="container-fluid">
+    <div class="container-fluid mt-5">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="d-flex justify-content-center">
+                    <nav style="--bs-breadcrumb-divider: '>'" aria-current="page">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                               Home
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">
+                               {{ $title }}
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
         <div class="row">
 
             <div class="col-md-3">
@@ -26,14 +31,13 @@
                     <hr style="border-top: 2px solid #000000;">
                     <div class="p-2 mb-2">
                         <nav class="nav flex-column">
-                            <a class="nav-link text-white" href="#" style="text-decoration: none;">Dashboard</a>
-                            <a class="nav-link text-white" href="#" style="text-decoration: none;">Detail Tagihan IPL</a>
-                            <a class="nav-link text-white" href="#" style="text-decoration: none;">Profile</a>
+                            <a class="nav-link {{ ($title === "Dashboard") ? 'active' : ''}}" href="/dashboard">Dashboard</a>
+                            <a class="nav-link  " href="/detailtagihan" >Detail Tagihan IPL</a>
+                            <a class="nav-link  " href="/profilewarga" >Profile</a>
                           </nav>
                     </div>
                 </div>
             </div>
-
 
             <div class="col-md-9">
                 <div class="card">
@@ -77,14 +81,8 @@
                     </div>
                     
                 </div>
-
             </div>
         </div>
+
     </div>
-
-
-    <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
-</body>
-</html>
-
 @endsection

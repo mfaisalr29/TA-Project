@@ -24,7 +24,7 @@ class _StatusAlatState extends State<StatusAlat> {
   int isBorBesarOn = 0;
   int isBorKecilOn = 0;
   int isPompaDorongOn = 0;
-  bool isAutoMode = true;
+  bool isAutoMode = false; // Default to manual mode
 
   @override
   void initState() {
@@ -34,20 +34,20 @@ class _StatusAlatState extends State<StatusAlat> {
       var value = event.snapshot.value;
       if (value != null && value is Map) {
         setState(() {
+          isAutoMode = value['Automation'] == 1;
           isReservoirAtasEmpty = value['Reservoir1']?['Radar'] == 1;
-          isReservoirBawahEmpty = value['Reservoir2']?['RadarPompa'] == 1;
-          if (!isAutoMode) {
-            isBorBesarOn = value['Reservoir2']?['RelayBorBesar'] ?? 0;
-            isBorKecilOn = value['Reservoir2']?['RelayBorKecil'] ?? 0;
-            isPompaDorongOn = value['Reservoir2']?['RelayPompa'] ?? 0;
+          isReservoirBawahEmpty = value['Reservoir2']?['RadarPompa3'] == 1;
+
+          if (isAutoMode) {
+            // Mode Otomatis
+            isBorBesarOn = value['Reservoir2']?['Relay1'] ?? isBorBesarOn;
+            isBorKecilOn = value['Reservoir2']?['Relay2'] ?? isBorKecilOn;
+            isPompaDorongOn = value['Reservoir2']?['Relay3'] ?? isPompaDorongOn;
           } else {
-            // Perbarui nilai tombol berdasarkan data dari database
-            isBorBesarOn =
-                value['Reservoir2']?['RelayBorBesar'] ?? isBorBesarOn;
-            isBorKecilOn =
-                value['Reservoir2']?['RelayBorKecil'] ?? isBorKecilOn;
-            isPompaDorongOn =
-                value['Reservoir2']?['RelayPompa'] ?? isPompaDorongOn;
+            // Mode Manual
+            isBorBesarOn = value['Reservoir2']?['Relay1'] ?? 0;
+            isBorKecilOn = value['Reservoir2']?['Relay2'] ?? 0;
+            isPompaDorongOn = value['Reservoir2']?['Relay3'] ?? 0;
           }
         });
       }
@@ -214,9 +214,8 @@ class _StatusAlatState extends State<StatusAlat> {
       height: 100.0,
       child: ElevatedButton(
         onPressed: () {
-          setState(() {
-            isAutoMode = !isAutoMode;
-          });
+          int newMode = isAuto ? 0 : 1;
+          _updateData('ControlSystem/Automation', newMode);
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: HexColor('#FE8660'),
@@ -239,15 +238,15 @@ class _StatusAlatState extends State<StatusAlat> {
     switch (name) {
       case 'Bor Besar':
         isBorBesarOn = isBorBesarOn == 1 ? 0 : 1;
-        _updateData('ControlSystem/Reservoir2/RelayBorBesar', isBorBesarOn);
+        _updateData('ControlSystem/Reservoir2/Relay1', isBorBesarOn);
         break;
       case 'Bor Kecil':
         isBorKecilOn = isBorKecilOn == 1 ? 0 : 1;
-        _updateData('ControlSystem/Reservoir2/RelayBorKecil', isBorKecilOn);
+        _updateData('ControlSystem/Reservoir2/Relay2', isBorKecilOn);
         break;
       case 'Pompa Dorong':
         isPompaDorongOn = isPompaDorongOn == 1 ? 0 : 1;
-        _updateData('ControlSystem/Reservoir2/RelayPompa', isPompaDorongOn);
+        _updateData('ControlSystem/Reservoir2/Relay3', isPompaDorongOn);
         break;
     }
   }

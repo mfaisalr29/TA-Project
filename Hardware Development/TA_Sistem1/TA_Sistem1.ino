@@ -1,59 +1,103 @@
-#define BLYNK_TEMPLATE_ID "TMPL6y8DumDpX"
-#define BLYNK_TEMPLATE_NAME "Lampu Kamar"
-#define BLYNK_AUTH_TOKEN "euhP79t15iiElKDrUBeT8mZurOUaOUST"
-#define BLYNK_PRINT Serial
+#include <ESP8266Firebase.h>
 #include <ESP8266WiFi.h>
-#include <BlynkSimpleEsp8266.h>
 #include <WiFiClientSecure.h>
 #include <ArduinoJson.h>
-BlynkTimer timer;
-WidgetLED led_air(V2);
 
-//Define the relay pins
-#define touch1 D1
-#define touch2 D3
-char auth[] = BLYNK_AUTH_TOKEN;
-char ssid[] = "FAISAL OVIE 2";//Enter your WIFI name
-char pass[] = "1sampai0";//Enter your WIFI password
+// Define the relay pins
+#define radar_s1 D1
+#define led_radar_s1 D5
+#define led_pompa_s2 D7
+#define _SSID "FAISAL OVIE 2"          // Your WiFi SSID
+#define _PASSWORD "1sampai0"           // Your WiFi Password
+#define REFERENCE_URL "https://bcv1-f450b-default-rtdb.asia-southeast1.firebasedatabase.app/"  // Your Firebase project reference url
 
 WiFiClientSecure client;
+Firebase firebase(REFERENCE_URL);
+
+String inputString = "";  // A string to hold incoming data
+bool stringComplete = false;  // Whether the string is complete
 
 void setup() {
-  //Set the relay pins as output pins
+  pinMode(radar_s1, INPUT_PULLUP);
+  pinMode(led_radar_s1, OUTPUT);
+  pinMode(led_pompa_s2, OUTPUT);
+  pinMode(LED_BUILTIN, OUTPUT);
   Serial.begin(9600);
-  //Initialize the Blynk library
-  Blynk.begin(auth, ssid, pass, "blynk.cloud", 80);
+  inputString.reserve(200);
+
+  WiFi.mode(WIFI_STA);
+  WiFi.disconnect();
+  delay(1000);
+
+  WiFi.begin(_SSID, _PASSWORD);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    digitalWrite(LED_BUILTIN, HIGH);
+    delay(500);
+    digitalWrite(LED_BUILTIN, LOW);
+  }
+  if (WiFi.status() == WL_CONNECTED) {
+    digitalWrite(LED_BUILTIN, LOW);
+  }
 }
 
 void loop() {
-  //Run the Blynk library
-  Blynk.run();
+  int i = 0;
+  while (WiFi.status() != WL_CONNECTED && i < 5) {
+    digitalWrite(LED_BUILTIN, HIGH);
+    reconnectWiFi();
+    delay(1000);
+    i += 1;
+  }
 
-    // Menunggu data dari Wemos 1
-    if (Serial.available() > 0) {
-        // Membaca data untuk Sensor1
-        String sensor1Data = Serial.readStringUntil('\n');
-        sensor1Data.trim(); // Hapus whitespace
-        int sensor1Value = parseSensorData(sensor1Data);
-      
-        if (sensor1Value == 1){
-          led_air.on();
-        }
-        else if (sensor1Value == 0){
-          led_air.off();
-        }
-        
+  if (stringComplete) {
+    Serial.print("Received data: ");
+    Serial.println(inputString);
+
+    StaticJsonDocument<200> doc;
+    DeserializationError error = deserializeJson(doc, inputString);
+
+    if (!error) {
+      int relay1State = doc["relay1State"];
+      int relay2State = doc["relay2State"];
+      int relay3State = doc["relay3State"];
+      int radar1 = doc["radar1"];
+      int radar2 = doc["radar2"];
+      int radar3 = doc["radar3"];
+
+      firebase.setInt("ControlSystem/Reservoir2/Relay1", relay1State);
+      firebase.setInt("ControlSystem/Reservoir2/Relay2", relay2State);
+      firebase.setInt("ControlSystem/Reservoir2/Relay3", relay3State);
+      firebase.setInt("ControlSystem/Reservoir2/RadarBorBesar1", radar1);
+      firebase.setInt("ControlSystem/Reservoir2/RadarBorKecil2", radar2);
+      firebase.setInt("ControlSystem/Reservoir2/RadarPompa3", radar3);
+    } else {
+      Serial.println("Failed to parse JSON");
     }
 
-
-  delay(1000);
+    inputString = "";
+    stringComplete = false;
+  }
 }
 
-// Fungsi untuk mem-parsing data dari masing-masing baris yang diterima
-int parseSensorData(String data) {
-  int index = data.indexOf(':');
-  if (index != -1) {
-    return data.substring(index + 1).toInt();
+void serialEvent() {
+  while (Serial.available()) {
+    char inChar = (char)Serial.read();
+    if (inChar == '\n') {
+      stringComplete = true;
+    } else {
+      inputString += inChar;
+    }
   }
-  return -1; // Mengembalikan nilai default jika parsing gagal
+}
+
+void reconnectWiFi() {
+  WiFi.begin(_SSID, _PASSWORD);
+  delay(500);
+  digitalWrite(LED_BUILTIN, HIGH);
+  delay(500);
+  digitalWrite(LED_BUILTIN, LOW);
+  if (WiFi.status() == WL_CONNECTED) {
+    digitalWrite(LED_BUILTIN, LOW);
+  }
 }

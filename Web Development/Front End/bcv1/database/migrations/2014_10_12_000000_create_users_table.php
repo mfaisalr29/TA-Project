@@ -10,14 +10,16 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
-    {
+   {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('nama');
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->rememberToken();
+            $table->string('nomor_kavling');
+            $table->string('blok_cluster');
+            $table->string('no_hp');
+            $table->string('id_pelanggan_online')->unique();
             $table->timestamps();
         });
     }

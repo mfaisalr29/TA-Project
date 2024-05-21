@@ -14,30 +14,12 @@
           </div>
           <br>
 
-          <div class="form-floating">
+          <div class="form-floating mb-4">
             <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
             <label for="floatingPassword">Password</label>
           </div>
 
-          <div class="container text-center">
-            <div class="row">
-              <div class="col">
-                <div class="form-check text-start my-3">
-                  <input class="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault">
-                  <label class="form-check-label" for="flexCheckDefault">
-                    Remember for 30 days
-                  </label>
-                </div>
-              </div>
-              <div class="col align-content-center">
-                <div class="admin">
-                  <a href="/admin" style="text-decoration:none; color:#212529" >Admin?</a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <a href="/dashboard" class="btn  w-100 py-2" style="background: #FE8660; color: white" type="submit">Sign In</a>
+          <a href="/dashboardadmin" class="btn  w-100 py-2" style="background: #FE8660; color: white" type="submit">Sign In</a>
         </form>
       </div>
       <div class="col-md-6" style="align-self: center; margin: auto">        

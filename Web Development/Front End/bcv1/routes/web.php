@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\LoginControllerAdmin;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -48,13 +49,12 @@ Route::get('/kontak', function () {
 Route::get('/dashboard', function(){
     return view('dashboard', [
         "title" => "Dashboard",
-        "image" => "Profile.jpg",
     ]);
 });
 
-Route::get('/admindash', function(){
-    return view('admindash', [
-        "title" => "Admin Dashboard"
+Route::get('/dashboardadmin', function(){
+    return view('dashboardadmin', [
+        "title" => "Dashboard",
     ]);
 });
 
@@ -101,4 +101,11 @@ Route::get('/detailtagihan', function(){
     ]);
 });
 
+Route::get('/detailtagihan', function(){
+    return view('tagihaniplwarga', [
+        "title" => "Tagihan IPL Warga"
+    ]);
+});
+
 Route::get('/login', [LoginController::class, 'index']);
+Route::get('/admin', [LoginControllerAdmin::class, 'index']);

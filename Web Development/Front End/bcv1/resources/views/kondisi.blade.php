@@ -113,7 +113,7 @@
         <script type="module">
             // Impor modul Firebase
             import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
-            import { getDatabase, ref, set, get, child, onValue } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js";
+            import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js";
 
             const firebaseConfig = {
                 apiKey: "AIzaSyBrFK8HL0bBK7QaVm5dsQJ9Gk9Nm5-LmlU",
@@ -174,6 +174,13 @@
                 });
             }
 
+            function updateImageBasedOnFirebaseValue(elementId, imageId, value) {
+                const img = document.getElementById(imageId);
+                const onImage = '{{ asset('img/lightbulb-on.png') }}';
+                const offImage = '{{ asset('img/lightbulb-off.png') }}';
+                img.src = value === 1 ? onImage : offImage;
+            }
+
             listenFirebase('ControlSystem/Automation', updateUIForAutomation);
             listenFirebase('ControlSystem/Reservoir1/Radar', (data) => {
                 const img = document.getElementById('gambar-reservoir-atas');
@@ -184,6 +191,20 @@
                 const img = document.getElementById('gambar-reservoir-bawah');
                 const newImage = data === 1 ? '{{ asset('img/water-pump.png') }}' : '{{ asset('img/water-pump-off.png') }}';
                 img.src = newImage;
+            });
+
+            // Listen to Firebase changes for each control element
+            listenFirebase('ControlSystem/Automation', (data) => {
+                updateImageBasedOnFirebaseValue('mode-kontrol', 'gambar1', data);
+            });
+            listenFirebase('ControlSystem/Reservoir2/Relay1', (data) => {
+                updateImageBasedOnFirebaseValue('bor-besar', 'gambar2', data);
+            });
+            listenFirebase('ControlSystem/Reservoir2/Relay2', (data) => {
+                updateImageBasedOnFirebaseValue('kondisi-air', 'gambar3', data);
+            });
+            listenFirebase('ControlSystem/Reservoir2/Relay3', (data) => {
+                updateImageBasedOnFirebaseValue('pompa-dorong', 'gambar4', data);
             });
         </script>
     </div>

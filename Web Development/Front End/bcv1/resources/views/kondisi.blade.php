@@ -47,6 +47,27 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="text-center">
+                                    <div class="interactive-circle" id="reservoir-atas">
+                                        <img id="gambar-reservoir-atas" src="{{ asset('img/water-pump-off.png') }}" class="img-fluid" style="width: 100px; height: 100px;">
+                                        <h5 class="mt-2">Reservoir Atas</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="text-center">
+                                    <div class="interactive-circle" id="reservoir-bawah">
+                                        <img id="gambar-reservoir-bawah" src="{{ asset('img/water-pump-off.png') }}" class="img-fluid" style="width: 100px; height: 100px;">
+                                        <h5 class="mt-2">Reservoir Bawah</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 mt-3">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="text-center">
                                     <div class="interactive-circle" id="mode-kontrol" onclick="handleClick('mode-kontrol', 'ControlSystem/Automation', 'gambar1', '{{ asset('img/lightbulb-on.png') }}', '{{ asset('img/lightbulb-off.png') }}')">
                                         <img id="gambar1" src="{{ asset('img/lightbulb-off.png') }}" class="img-fluid" style="width: 100px; height: 100px;">
                                         <h5 class="mt-2">Mode Kontrol</h5>
@@ -82,22 +103,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <div class="text-center">
-                                    <div class="interactive-circle" id="reservoir-atas" onclick="handleClick('reservoir-atas', 'ControlSystem/Reservoir1/Radar', 'gambar5', '{{ asset('img/water-pump.png') }}', '{{ asset('img/water-pump-off.png') }}')">
-                                        <img id="gambar5" src="{{ asset('img/water-pump-off.png') }}" class="img-fluid" style="width: 100px; height: 100px;">
-                                        <h5 class="mt-2">Reservoir Atas</h5>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="text-center">
-                                    <div class="interactive-circle" id="reservoir-bawah" onclick="handleClick('reservoir-bawah', 'ControlSystem/Reservoir2/RadarPompa3', 'gambar6', '{{ asset('img/water-pump.png') }}', '{{ asset('img/water-pump-off.png') }}')">
-                                        <img id="gambar6" src="{{ asset('img/water-pump-off.png') }}" class="img-fluid" style="width: 100px; height: 100px;">
-                                        <h5 class="mt-2">Reservoir Bawah</h5>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -115,7 +120,7 @@
                 authDomain: "bcv1-f450b.firebaseapp.com",
                 databaseURL: "https://bcv1-f450b-default-rtdb.asia-southeast1.firebasedatabase.app",
                 projectId: "bcv1-f450b",
-                storageBucket: "bcv1-f450b.appspot.com",
+                storageBucket: "bcv1-f450b",
                 messagingSenderId: "632085793199",
                 appId: "1:632085793199:web:64563abd2d0d8faad2c75a",
             };
@@ -133,18 +138,8 @@
 
                 img.src = newImage;
                 updateFirebase(firebasePath, newValue);
-                // changeCircleColor(elementId, newValue === 1 ? 'yellow' : 'transparent'); 
             };
-
-            function changeCircleColor(elementId, color) {
-                const circle = document.getElementById(elementId);
-                if(circle) {
-                    circle.style.backgroundColor = color;
-                } else {
-                    console.error("Element with ID " + elementId + " not found.");
-                }
-            }
-
+            
             function updateFirebase(path, value) {
                 const dbRef = ref(database, path);
                 console.log(`Updating Firebase at ${path} with value ${value}`); 
@@ -157,33 +152,39 @@
                     });
             }
 
-            function readFirebase(path) {
-                const dbRef = ref(database);
-                return get(child(dbRef, path))
-                    .then((snapshot) => {
-                        if (snapshot.exists()) {
-                            return snapshot.val();
-                        } else {
-                            console.log("No data available");
-                            return 0; 
-                        }
-                    })
-                    .catch((error) => {
-                        console.error("Error reading data: ", error);
-                        return 0; 
-                    });
-            }
-
-            function listenFirebase(path) {
+            function listenFirebase(path, callback) {
                 const dbRef = ref(database, path);
                 onValue(dbRef, (snapshot) => {
                     const data = snapshot.val();
-                    console.log(data);
+                    callback(data);
                 });
             }
 
-            listenFirebase('ControlSystem/Reservoir1/Radar');
-            listenFirebase('ControlSystem/Reservoir2/RadarBorBesar1');
+            function updateUIForAutomation(value) {
+                const elements = ['bor-besar', 'kondisi-air', 'pompa-dorong'];
+                elements.forEach(id => {
+                    const element = document.getElementById(id);
+                    if (value === 1) {
+                        element.style.pointerEvents = 'none';
+                        element.style.opacity = '0.5';
+                    } else {
+                        element.style.pointerEvents = 'auto';
+                        element.style.opacity = '1';
+                    }
+                });
+            }
+
+            listenFirebase('ControlSystem/Automation', updateUIForAutomation);
+            listenFirebase('ControlSystem/Reservoir1/Radar', (data) => {
+                const img = document.getElementById('gambar-reservoir-atas');
+                const newImage = data === 1 ? '{{ asset('img/water-pump.png') }}' : '{{ asset('img/water-pump-off.png') }}';
+                img.src = newImage;
+            });
+            listenFirebase('ControlSystem/Reservoir2/RadarPompa3', (data) => {
+                const img = document.getElementById('gambar-reservoir-bawah');
+                const newImage = data === 1 ? '{{ asset('img/water-pump.png') }}' : '{{ asset('img/water-pump-off.png') }}';
+                img.src = newImage;
+            });
         </script>
     </div>
 </div>

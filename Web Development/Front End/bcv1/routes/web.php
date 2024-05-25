@@ -107,5 +107,11 @@ Route::get('/detailtagihan', function(){
     ]);
 });
 
+Route::get('/daftarwarga', function(){
+    return view('daftarwarga', [
+        "title" => "Daftar Akun Warga"
+    ]);
+});
+
 Route::get('/login', [LoginController::class, 'index']);
 Route::get('/admin', [LoginControllerAdmin::class, 'index']);

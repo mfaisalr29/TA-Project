@@ -144,3 +144,99 @@
   padding: 10px; 
   background-color: #ffffff; 
 }
+
+/* Styles for home.blade.php */
+.content {
+  margin-top: 18vh;
+  color: azure;
+}
+.empty-column {
+  background-color: #C4C4C4;
+  position: absolute;
+  top: 56px; /* Adjusted to be right below the navbar */
+  left: 50%;
+  width: 50%;
+  height: calc(100vh - 56px); /* Adjust height to fill the page below the navbar */
+  border-top-left-radius: 80px;
+}
+
+@media (max-width: 1200px) {
+  .empty-column {
+    left: 60%;
+    width: 40%;
+  }
+}
+
+@media (max-width: 992px) {
+  .empty-column {
+    left: 70%;
+    width: 30%;
+  }
+}
+
+@media (max-width: 768px) {
+  .content {
+    margin-top: 10vh;
+    text-align: center;
+    padding: 0 20px;
+  }
+  .empty-column {
+    position: absolute;
+    top: 56px;
+    left: 0;
+    height: auto;
+    width: 100%;
+    border-top-left-radius: 0;
+    border-radius: 0;
+    z-index: 1;
+  }
+  .content h2 {
+    font-size: 5vh;
+  }
+}
+.input-custom {
+  background-color: rgba(255, 255, 255, 0); 
+  border: 1px solid black; 
+  color: #fff;
+  width: 100%; 
+  max-width: 400px;
+  padding: 0.5rem 1rem;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.input-custom:focus {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.7);
+  outline: none;
+}
+
+.input-custom::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.input-custom option {
+  background-color: rgba(0, 0, 0, 0.8); /* Background option */
+  color: #fff; /* Warna teks */
+}
+
+.btn-custom {
+  background-color: #28a745;
+  border: none;
+}
+
+.input-custom:focus {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.7);
+  outline: none;
+}
+
+.btn-custom:hover {
+  background-color: #218838;
+}
+
+
+@media (max-width: 768px) {
+  .input-custom {
+      max-width: 100%; 
+  }
+}

@@ -114,4 +114,3 @@ Route::get('/daftarwarga', function(){
 });
 
 Route::get('/login', [LoginController::class, 'index']);
-Route::get('/admin', [LoginControllerAdmin::class, 'index']);

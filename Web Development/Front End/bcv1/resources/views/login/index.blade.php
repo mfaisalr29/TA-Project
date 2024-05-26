@@ -5,20 +5,18 @@
   <div class="container-fluid" style="display: grid; height:100vh">
     <div class="row">
       <div class="col-md-4" style="align-self: center; margin: auto">
-        <form class="form-signin">
+        <form class="form-signin" id="user-login-form">
           <h1 class="h3 mt-3 d-flex justify-content-center">Welcome!</h1>
           <p class= "mt-3 d-flex justify-content-center" style="color:#808080"> Welcome back! Please enter your details</p>
           <div class="form-floating">
-            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-            <label for="floatingInput">Enter your username</label>
+            <input type="email" class="form-control" id="email" placeholder="name@example.com">
+            <label for="email">Enter your username</label>
           </div>
           <br>
-
           <div class="form-floating">
-            <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-            <label for="floatingPassword">Password</label>
+            <input type="password" class="form-control" id="password" placeholder="Password">
+            <label for="password">Password</label>
           </div>
-
           <div class="container text-center">
             <div class="row">
               <div class="col">
@@ -36,8 +34,8 @@
               </div>
             </div>
           </div>
-
-          <a href="/dashboard" class="btn  w-100 py-2" style="background: #FE8660; color: white" type="submit">Sign In</a>
+          <button class="btn w-100 py-2" style="background: #FE8660; color: white" type="submit">Sign In</button>
+          <div id="error-message" class="mt-3 text-danger"></div>
         </form>
       </div>
       <div class="col-md-6" style="align-self: center; margin: auto">        
@@ -47,4 +45,37 @@
       </div>
     </div>
   </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $.ajaxSetup({
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+      });
+
+      $('#user-login-form').on('submit', function(e) {
+        e.preventDefault();
+        var email = $('#email').val();
+        var password = $('#password').val();
+
+        $.ajax({
+          url: '/api/auth/login',
+          type: 'POST',
+          data: {
+            email: email,
+            password: password
+          },
+          success: function(response) {
+            localStorage.setItem('token', response.access_token);
+            window.location.href = response.redirect_to;
+          },
+          error: function(xhr, status, error) {
+            $('#error-message').text('Invalid credentials. Please try again.');
+          }
+        });
+      });
+    });
+  </script>
 </body>

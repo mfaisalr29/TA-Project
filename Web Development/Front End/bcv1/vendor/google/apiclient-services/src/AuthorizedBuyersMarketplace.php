@@ -48,6 +48,7 @@ class AuthorizedBuyersMarketplace extends \Google\Service
   public $buyers_proposals;
   public $buyers_proposals_deals;
   public $buyers_publisherProfiles;
+  public $rootUrlTemplate;
 
   /**
    * Constructs the internal representation of the AuthorizedBuyersMarketplace
@@ -61,6 +62,7 @@ class AuthorizedBuyersMarketplace extends \Google\Service
   {
     parent::__construct($clientOrConfig);
     $this->rootUrl = $rootUrl ?: 'https://authorizedbuyersmarketplace.googleapis.com/';
+    $this->rootUrlTemplate = $rootUrl ?: 'https://authorizedbuyersmarketplace.UNIVERSE_DOMAIN/';
     $this->servicePath = '';
     $this->batchPath = 'batch';
     $this->version = 'v1';
@@ -82,6 +84,10 @@ class AuthorizedBuyersMarketplace extends \Google\Service
                   'required' => true,
                 ],
                 'filter' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'orderBy' => [
                   'location' => 'query',
                   'type' => 'string',
                 ],
@@ -160,6 +166,10 @@ class AuthorizedBuyersMarketplace extends \Google\Service
                   'required' => true,
                 ],
                 'filter' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'orderBy' => [
                   'location' => 'query',
                   'type' => 'string',
                 ],

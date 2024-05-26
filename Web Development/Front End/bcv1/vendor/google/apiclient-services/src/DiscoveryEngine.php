@@ -71,9 +71,11 @@ class DiscoveryEngine extends \Google\Service
   public $projects_locations_dataStores_siteSearchEngine_targetSites;
   public $projects_locations_dataStores_suggestionDenyListEntries;
   public $projects_locations_dataStores_userEvents;
+  public $projects_locations_groundingConfigs;
   public $projects_locations_operations;
   public $projects_locations_userEvents;
   public $projects_operations;
+  public $rootUrlTemplate;
 
   /**
    * Constructs the internal representation of the DiscoveryEngine service.
@@ -86,6 +88,7 @@ class DiscoveryEngine extends \Google\Service
   {
     parent::__construct($clientOrConfig);
     $this->rootUrl = $rootUrl ?: 'https://discoveryengine.googleapis.com/';
+    $this->rootUrlTemplate = $rootUrl ?: 'https://discoveryengine.UNIVERSE_DOMAIN/';
     $this->servicePath = '';
     $this->batchPath = 'batch';
     $this->version = 'v1';
@@ -359,7 +362,17 @@ class DiscoveryEngine extends \Google\Service
         'operations',
         [
           'methods' => [
-            'get' => [
+            'cancel' => [
+              'path' => 'v1/{+name}:cancel',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'get' => [
               'path' => 'v1/{+name}',
               'httpMethod' => 'GET',
               'parameters' => [
@@ -1539,7 +1552,17 @@ class DiscoveryEngine extends \Google\Service
         'operations',
         [
           'methods' => [
-            'get' => [
+            'cancel' => [
+              'path' => 'v1/{+name}:cancel',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'get' => [
               'path' => 'v1/{+name}',
               'httpMethod' => 'GET',
               'parameters' => [
@@ -2055,6 +2078,26 @@ class DiscoveryEngine extends \Google\Service
           ]
         ]
     );
+    $this->projects_locations_groundingConfigs = new DiscoveryEngine\Resource\ProjectsLocationsGroundingConfigs(
+        $this,
+        $this->serviceName,
+        'groundingConfigs',
+        [
+          'methods' => [
+            'check' => [
+              'path' => 'v1/{+groundingConfig}:check',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'groundingConfig' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
     $this->projects_locations_operations = new DiscoveryEngine\Resource\ProjectsLocationsOperations(
         $this,
         $this->serviceName,
@@ -2123,7 +2166,17 @@ class DiscoveryEngine extends \Google\Service
         'operations',
         [
           'methods' => [
-            'get' => [
+            'cancel' => [
+              'path' => 'v1/{+name}:cancel',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'get' => [
               'path' => 'v1/{+name}',
               'httpMethod' => 'GET',
               'parameters' => [

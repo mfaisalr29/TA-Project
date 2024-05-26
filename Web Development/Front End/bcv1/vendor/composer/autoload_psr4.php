@@ -139,5 +139,6 @@ return array(
     'Carbon\\' => array($vendorDir . '/nesbot/carbon/src/Carbon'),
     'Brick\\Math\\' => array($vendorDir . '/brick/math/src'),
     'Beste\\Clock\\' => array($vendorDir . '/beste/clock/src/Clock'),
+    'Beste\\Cache\\' => array($vendorDir . '/beste/in-memory-cache/src'),
     'App\\' => array($baseDir . '/app', $vendorDir . '/laravel/pint/app'),
 );

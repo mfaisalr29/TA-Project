@@ -67,9 +67,9 @@
                                 <div style="position: absolute; top: 0; bottom: 0; left: 100px; width: 10px; background-color: #848484;"></div>
                                 <div style="padding-right: 10px;">
                                     <h5 class="card-title">IPL Bulan Ini</h5>
-                                    <p class="card-text">Meter Awal: </p>
-                                    <p class="card-text">Meter Akhir: </p>
-                                    <p class="card-text">Meter Tagihan bulan ini: </p>
+                                    <p class="card-text" id="meter-awal">Meter Awal: </p>
+                                    <p class="card-text" id="meter-akhir">Meter Akhir: </p>
+                                    <p class="card-text" id="meter-tagihan">Meter Tagihan bulan ini: </p>
                                 </div>
                             </div>
                         </div>
@@ -102,6 +102,29 @@
                     },
                     error: function(xhr, status, error) {
                         console.error('Failed to fetch dashboard data:', error);
+                    }
+                });
+
+                $.ajax({
+                    url: '/api/bills',
+                    type: 'POST',
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    },
+                    success: function(response) {
+                        if (response.length > 0) {
+                            var bill = response[0]; // Mengambil tagihan pertama (karena bisa ada lebih dari satu)
+                            $('#meter-awal').append(bill.meter_awal + ' m³');
+                            $('#meter-akhir').append(bill.meter_akhir + ' m³');
+                            $('#meter-tagihan').append('Rp' +bill.tag_now);
+                        } else {
+                            $('#meter-awal').text('No Data');
+                            $('#meter-akhir').text('No Data');
+                            $('#meter-tagihan').text('No Data');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Failed to fetch bill data:', error);
                     }
                 });
             });

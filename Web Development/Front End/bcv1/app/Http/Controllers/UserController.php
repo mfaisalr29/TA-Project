@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -22,7 +23,10 @@ class UserController extends Controller
             'blok_cluster' => 'required|string|max:255',
             'no_hp' => 'required|string|max:255',
             'id_pelanggan_online' => 'required|string|max:255|unique:users',
+            'nomor_rumah' => 'nullable|string|max:255', // Menambahkan validasi nomor_rumah
         ]);
+
+        $validatedData['password'] = Hash::make($validatedData['password']); // Hash password sebelum disimpan
 
         $user = User::create($validatedData);
 
@@ -46,7 +50,12 @@ class UserController extends Controller
             'blok_cluster' => 'sometimes|required|string|max:255',
             'no_hp' => 'sometimes|required|string|max:255',
             'id_pelanggan_online' => 'sometimes|required|string|max:255|unique:users,id_pelanggan_online,'.$id,
+            'nomor_rumah' => 'sometimes|nullable|string|max:255',
         ]);
+
+        if (isset($validatedData['password'])) {
+            $validatedData['password'] = Hash::make($validatedData['password']); 
+        }
 
         $user->update($validatedData);
 

@@ -3,7 +3,9 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BillController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\JadwalSampahController;
 
 
@@ -32,4 +34,12 @@ Route::middleware('auth:sanctum')->group(function () {
 
 Route::post('/schedule/get', [JadwalSampahController::class, 'getSchedule']);
 Route::post('/schedule/edit', [JadwalSampahController::class, 'editSchedule'])->middleware('auth:sanctum');
+
 Route::post('/dashboard/data', [JadwalSampahController::class, 'getDashboardData'])->middleware('auth:sanctum');
+
+Route::post('/bills', [BillController::class, 'getBills'])->middleware('auth:sanctum');
+Route::post('/bills/add', [BillController::class, 'addBill'])->middleware('auth:sanctum');
+Route::get('/bills/{id}', [BillController::class, 'getBillDetails'])->middleware('auth:sanctum');
+Route::post('/bills/update', [BillController::class, 'updateBill'])->middleware('auth:sanctum');
+
+Route::post('/user/profile', [ProfileController::class, 'getProfile'])->middleware('auth:sanctum');

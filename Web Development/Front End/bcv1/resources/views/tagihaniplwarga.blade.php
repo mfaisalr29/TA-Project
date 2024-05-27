@@ -78,163 +78,8 @@
                                             <th scope="col">Tagihan</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                            <th scope="row">2023</th>
-                                            <td>Januari</td>
-                                            <td>
-                                                10 M<sup>3</sup>
-                                                <span style="color : black; margin-left : 30px">20 M
-                                            </td>
-                                            <td>
-                                                80 M<sup>3</sup>
-                                                <span style="color : black; margin-left : 30px">100 M
-                                            </td>
-                                            <td>Rp400.000</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">2023</th>
-                                            <td>Januari</td>
-                                            <td>
-                                                10 M<sup>3</sup>
-                                                <span style="color : black; margin-left : 30px">20 M
-                                            </td>
-                                            <td>
-                                                80 M<sup>3</sup>
-                                                <span style="color : black; margin-left : 30px">100 M
-                                            </td>
-                                            <td>Rp400.000</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">2023</th>
-                                            <td>Januari</td>
-                                            <td>
-                                                10 M<sup>3</sup>
-                                                <span style="color : black; margin-left : 30px">20 M
-                                            </td>
-                                            <td>
-                                                80 M<sup>3</sup>
-                                                <span style="color : black; margin-left : 30px">100 M
-                                            </td>
-                                            <td>Rp400.000</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">2023</th>
-                                            <td>Januari</td>
-                                            <td>
-                                                10 M<sup>3</sup>
-                                                <span style="color : black; margin-left : 30px">20 M
-                                            </td>
-                                            <td>
-                                                80 M<sup>3</sup>
-                                                <span style="color : black; margin-left : 30px">100 M
-                                            </td>
-                                            <td>Rp400.000</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">2023</th>
-                                            <td>Januari</td>
-                                            <td>
-                                                10 M<sup>3</sup>
-                                                <span style="color : black; margin-left : 30px">20 M
-                                            </td>
-                                            <td>
-                                                80 M<sup>3</sup>
-                                                <span style="color : black; margin-left : 30px">100 M
-                                            </td>
-                                            <td>Rp400.000</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">2023</th>
-                                            <td>Januari</td>
-                                            <td>
-                                                10 M<sup>3</sup>
-                                                <span style="color : black; margin-left : 30px">20 M
-                                            </td>
-                                            <td>
-                                                80 M<sup>3</sup>
-                                                <span style="color : black; margin-left : 30px">100 M
-                                            </td>
-                                            <td>Rp400.000</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">2023</th>
-                                            <td>Januari</td>
-                                            <td>
-                                                10 M<sup>3</sup>
-                                                <span style="color : black; margin-left : 30px">20 M
-                                            </td>
-                                            <td>
-                                                80 M<sup>3</sup>
-                                                <span style="color : black; margin-left : 30px">100 M
-                                            </td>
-                                            <td>Rp400.000</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">2023</th>
-                                            <td>Januari</td>
-                                            <td>
-                                                10 M<sup>3</sup>
-                                                <span style="color : black; margin-left : 30px">20 M
-                                            </td>
-                                            <td>
-                                                80 M<sup>3</sup>
-                                                <span style="color : black; margin-left : 30px">100 M
-                                            </td>
-                                            <td>Rp400.000</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">2023</th>
-                                            <td>Januari</td>
-                                            <td>
-                                                10 M<sup>3</sup>
-                                                <span style="color : black; margin-left : 30px">20 M
-                                            </td>
-                                            <td>
-                                                80 M<sup>3</sup>
-                                                <span style="color : black; margin-left : 30px">100 M
-                                            </td>
-                                            <td>Rp400.000</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">2023</th>
-                                            <td>Januari</td>
-                                            <td>
-                                                10 M<sup>3</sup>
-                                                <span style="color : black; margin-left : 30px">20 M
-                                            </td>
-                                            <td>
-                                                80 M<sup>3</sup>
-                                                <span style="color : black; margin-left : 30px">100 M
-                                            </td>
-                                            <td>Rp400.000</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">2023</th>
-                                            <td>Januari</td>
-                                            <td>
-                                                10 M<sup>3</sup>
-                                                <span style="color : black; margin-left : 30px">20 M
-                                            </td>
-                                            <td>
-                                                80 M<sup>3</sup>
-                                                <span style="color : black; margin-left : 30px">100 M
-                                            </td>
-                                            <td>Rp400.000</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">2023</th>
-                                            <td>Januari</td>
-                                            <td>
-                                                10 M<sup>3</sup>
-                                                <span style="color : black; margin-left : 30px">20 M
-                                            </td>
-                                            <td>
-                                                80 M<sup>3</sup>
-                                                <span style="color : black; margin-left : 30px">100 M
-                                            </td>
-                                            <td>Rp400.000</td>
-                                        </tr>
+                                    <tbody id="bill-table-body">
+                                        <!-- Data akan diisi melalui JavaScript -->
                                     </tbody>
                                 </table>
                             </div>
@@ -246,6 +91,39 @@
     </div>
 
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
-</body>
-</html>
+    <script>
+        $(document).ready(function() {
+            $.ajax({
+                url: '/api/bills',
+                type: 'POST',
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                },
+                success: function(response) {
+                    var billTableBody = $('#bill-table-body');
+                    billTableBody.empty(); // Kosongkan isi tabel sebelumnya
+
+                    if (response.length > 0) {
+                        response.forEach(function(bill) {
+                            var row = `
+                                <tr>
+                                    <th scope="row">${bill.thn_bl.substring(0, 4)}</th>
+                                    <td>${new Date(bill.thn_bl.substring(0, 4), bill.thn_bl.substring(4, 6) - 1).toLocaleString('default', { month: 'long' })}</td>
+                                    <td>${bill.meter_awal} M<sup>3</sup></td>
+                                    <td>${bill.meter_akhir} M<sup>3</sup></td>
+                                    <td>Rp${bill.total_tag.toLocaleString('id-ID')}</td>
+                                </tr>
+                            `;
+                            billTableBody.append(row);
+                        });
+                    } else {
+                        billTableBody.append('<tr><td colspan="5" class="text-center">No data available</td></tr>');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('Failed to fetch bill data:', error);
+                }
+            });
+        });
+    </script>
 @endsection

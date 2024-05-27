@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\JadwalSampahController;
 
@@ -18,6 +19,7 @@ use App\Http\Controllers\JadwalSampahController;
 */
 
 
+Route::post('/auth/login', [AuthController::class, 'login']);
 
 Route::apiResource('users', UserController::class);
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -30,3 +32,4 @@ Route::middleware('auth:sanctum')->group(function () {
 
 Route::post('/schedule/get', [JadwalSampahController::class, 'getSchedule']);
 Route::post('/schedule/edit', [JadwalSampahController::class, 'editSchedule'])->middleware('auth:sanctum');
+Route::post('/dashboard/data', [JadwalSampahController::class, 'getDashboardData'])->middleware('auth:sanctum');

@@ -39,4 +39,31 @@ class JadwalSampahController extends Controller
             return response()->json(['message' => 'Schedule not found'], 404);
         }
     }
+    public function getDashboardData()
+    {
+        $hariIni = now()->format('l'); // Mendapatkan nama hari dalam bahasa Inggris (Monday, Tuesday, etc.)
+    
+        // Konversi nama hari dari bahasa Inggris ke bahasa Indonesia
+        $hariIndo = $this->convertToIndonesianDay($hariIni);
+    
+        $schedule = JadwalSampah::where('hari', $hariIndo)->get();
+    
+        return response()->json($schedule, 200);
+    }
+    
+    private function convertToIndonesianDay($dayInEnglish)
+    {
+        $days = [
+            'Monday' => 'Senin',
+            'Tuesday' => 'Selasa',
+            'Wednesday' => 'Rabu',
+            'Thursday' => 'Kamis',
+            'Friday' => 'Jumat',
+            'Saturday' => 'Sabtu',
+            'Sunday' => 'Minggu'
+        ];
+    
+        return $days[$dayInEnglish] ?? $dayInEnglish;
+    }
+    
 }

@@ -30,7 +30,7 @@
                             <a class="nav-link {{ ($title === "Kondisi Air dan Alat") ? 'active' : ''}}" href="/kondisi">Kondisi Air dan Alat</a>
                             <a class="nav-link {{ ($title === "Daftar Akun Warga") ? 'active' : ''}}" href="/daftarwarga">Daftar Akun Warga</a>
                             <a class="nav-link {{ ($title === "Profile Admin") ? 'active' : ''}}" href="/profileadmin">Profile</a>
-                          </nav>
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -75,6 +75,8 @@
                                         <tr>
                                             <th scope="col">Tahun</th>
                                             <th scope="col">Bulan</th>
+                                            <th scope="col">Nama</th>
+                                            <th scope="col">Nomor Kavling</th>
                                             <th scope="col">Meter Awal</th>
                                             <th scope="col">Meter Akhir</th>
                                             <th scope="col">Tagihan</th>
@@ -112,6 +114,8 @@
                                 <tr>
                                     <th scope="row">${bill.thn_bl.substring(0, 4)}</th>
                                     <td>${new Date(bill.thn_bl.substring(0, 4), bill.thn_bl.substring(4, 6) - 1).toLocaleString('default', { month: 'long' })}</td>
+                                    <td>${bill.nama}</td>
+                                    <td>${bill.no_kav}</td>
                                     <td>${bill.meter_awal} M<sup>3</sup></td>
                                     <td>${bill.meter_akhir} M<sup>3</sup></td>
                                     <td>Rp${bill.total_tag.toLocaleString('id-ID')}</td>
@@ -123,7 +127,7 @@
                             billTableBody.append(row);
                         });
                     } else {
-                        billTableBody.append('<tr><td colspan="6" class="text-center">No data available</td></tr>');
+                        billTableBody.append('<tr><td colspan="8" class="text-center">No data available</td></tr>');
                     }
                 },
                 error: function(xhr, status, error) {

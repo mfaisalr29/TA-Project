@@ -77,5 +77,5 @@ class BillController extends Controller
 
         return response()->json($bill, 200);
     }
-
+    
 }

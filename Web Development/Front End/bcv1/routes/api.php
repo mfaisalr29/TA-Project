@@ -8,7 +8,6 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\JadwalSampahController;
 
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -20,7 +19,6 @@ use App\Http\Controllers\JadwalSampahController;
 |
 */
 
-
 Route::post('/auth/login', [AuthController::class, 'login']);
 
 Route::apiResource('users', UserController::class);
@@ -30,17 +28,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('user/profile', [UserController::class, 'profile']);
+    Route::post('/schedule/get', [JadwalSampahController::class, 'getSchedule']);
+    Route::post('/schedule/edit', [JadwalSampahController::class, 'editSchedule']);
+    Route::post('/dashboard/data', [JadwalSampahController::class, 'getDashboardData']);
+    Route::post('/bills', [BillController::class, 'getBills']);
+    Route::post('/bills/add', [BillController::class, 'addBill']);
+    Route::get('/bills/{id}', [BillController::class, 'getBillDetails']);
+    Route::post('/bills/update', [BillController::class, 'updateBill']);
+    Route::post('/user/profile', [ProfileController::class, 'getProfile']);
+    Route::post('/user/update', [ProfileController::class, 'updateProfile']);
 });
-
-Route::post('/schedule/get', [JadwalSampahController::class, 'getSchedule']);
-Route::post('/schedule/edit', [JadwalSampahController::class, 'editSchedule'])->middleware('auth:sanctum');
-
-Route::post('/dashboard/data', [JadwalSampahController::class, 'getDashboardData'])->middleware('auth:sanctum');
-
-Route::post('/bills', [BillController::class, 'getBills'])->middleware('auth:sanctum');
-Route::post('/bills/add', [BillController::class, 'addBill'])->middleware('auth:sanctum');
-Route::get('/bills/{id}', [BillController::class, 'getBillDetails'])->middleware('auth:sanctum');
-Route::post('/bills/update', [BillController::class, 'updateBill'])->middleware('auth:sanctum');
-
-Route::post('/user/profile', [ProfileController::class, 'getProfile'])->middleware('auth:sanctum');
-Route::post('/user/update', [ProfileController::class, 'updateProfile'])->middleware('auth:sanctum');

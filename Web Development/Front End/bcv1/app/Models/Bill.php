@@ -33,4 +33,9 @@ class Bill extends Model
             'total_tag' => $total_tag,
         ];
     }
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+    
 }

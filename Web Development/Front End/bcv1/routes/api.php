@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\AuthController;
+use App\Http\Controllers\JadwalSampahController;
 
 
 /*
@@ -27,3 +27,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('user/profile', [UserController::class, 'profile']);
 });
+
+Route::post('/schedule/get', [JadwalSampahController::class, 'getSchedule']);
+Route::post('/schedule/edit', [JadwalSampahController::class, 'editSchedule'])->middleware('auth:sanctum');

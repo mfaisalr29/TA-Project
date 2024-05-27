@@ -27,11 +27,6 @@
                   </label>
                 </div>
               </div>
-              <div class="col align-content-center">
-                <div class="admin">
-                  <a href="/admin" style="text-decoration:none; color:#212529" >Admin?</a>
-                </div>
-              </div>
             </div>
           </div>
           <button class="btn w-100 py-2" style="background: #FE8660; color: white" type="submit">Sign In</button>

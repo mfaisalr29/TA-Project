@@ -43,3 +43,4 @@ Route::get('/bills/{id}', [BillController::class, 'getBillDetails'])->middleware
 Route::post('/bills/update', [BillController::class, 'updateBill'])->middleware('auth:sanctum');
 
 Route::post('/user/profile', [ProfileController::class, 'getProfile'])->middleware('auth:sanctum');
+Route::post('/user/update', [ProfileController::class, 'updateProfile'])->middleware('auth:sanctum');

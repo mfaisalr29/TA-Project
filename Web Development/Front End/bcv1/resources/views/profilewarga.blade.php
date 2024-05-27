@@ -53,9 +53,6 @@
                                         Blok 
                                     </div>
                                 </div>
-                                <div class="text-center mt-5" style="color: #000000; background-color: white; border: 2px solid black; border-radius: 50px; width: 150px; margin-left: 20px">
-                                    *Change Password
-                                </div>
                             </div>
                             <div class="col d-flex flex-column" style="margin-left : 70px">
                                 <div class="mt-3" style="color : #33FF00;">
@@ -68,11 +65,20 @@
                                             <p>Nama</p>
                                             <p>No. Rumah</p>
                                             <p>Nomor Kavling</p>
+                                            <p>No. HP</p>
                                         </div>
                                         <div style="flex: 1;">
-                                            <p id="user-nama"></p>
-                                            <p id="user-no-rumah"></p>
-                                            <p id="user-no-kavling"></p>
+                                            <p id="view-nama"></p>
+                                            <p id="view-no-rumah"></p>
+                                            <p id="view-no-kavling"></p>
+                                            <p id="view-no-hp"></p>
+                                            <form id="update-profile-form" class="d-none">
+                                                <input type="text" id="edit-nama" class="form-control mb-2 form-control-transparent">
+                                                <input type="text" id="edit-no-rumah" class="form-control mb-2 form-control-transparent">
+                                                <input type="text" id="edit-no-kavling" class="form-control mb-2 form-control-transparent">
+                                                <input type="text" id="edit-no-hp" class="form-control mb-2 form-control-transparent">
+                                                <button type="submit" class="btn btn-primary mt-2">Submit</button>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -80,21 +86,8 @@
                                     <div class="mt-3" style="color : #33FF00;">
                                         <p>Ubah Detail Profile</p>
                                         <hr style="border-top: 2px solid black; margin-bottom : 0px; margin-top: 0px">
+                                        <button class="btn btn-primary mt-3" id="edit-profile-btn">Edit Profile</button>
                                     </div>
-                                    <div class="mt-3" style="color : white;">
-                                        <div class="d-flex">
-                                            <div style="width : 200px;">
-                                                <p>No.HP</p>
-                                                <p>Password</p>
-                                            </div>
-                                            <div style="flex: 1;">
-                                                <p id="user-no-hp"></p>
-                                                <div class="d-flex align-items-center">
-                                                    <input type="password" class="form-control bg-transparent border-0" id="user-password" style="color: white; width: 40%" readonly>
-                                                    <button onclick="togglePassword()" class="btn btn-link">
-                                                        <i id="toggleIcon" class="bi bi-eye-slash"></i></button>
-                                                </div>
-                                            </div>
                                             <script>
                                                 function togglePassword() {
                                                     var passwordInput = document.getElementById("user-password");
@@ -118,17 +111,66 @@
                                                             'Authorization': 'Bearer ' + localStorage.getItem('token')
                                                         },
                                                         success: function(response) {
-                                                            $('#user-nama').text(response.nama);
-                                                            $('#user-no-rumah').text(response.nomor_rumah);
+                                                            $('#view-nama').text(response.nama);
+                                                            $('#view-no-rumah').text(response.nomor_rumah);
                                                             $('#nomor-rumah-title').text(response.nomor_rumah);
-                                                            $('#user-no-kavling').text(response.nomor_kavling);
+                                                            $('#view-no-kavling').text(response.nomor_kavling);
                                                             $('#user-blok').append(response.blok_cluster);
-                                                            $('#user-no-hp').text(response.no_hp);
-                                                            $('#user-password').val('password'); 
+                                                            $('#view-no-hp').text(response.no_hp);
+                                                            $('#user-password').val('password'); // Set default password
+
+                                                            // Set values for editing
+                                                            $('#edit-nama').val(response.nama);
+                                                            $('#edit-no-rumah').val(response.nomor_rumah);
+                                                            $('#edit-no-kavling').val(response.nomor_kavling);
+                                                            $('#edit-blok').val(response.blok_cluster);
+                                                            $('#edit-no-hp').val(response.no_hp);
                                                         },
                                                         error: function(xhr, status, error) {
                                                             console.error('Failed to fetch profile data:', error);
                                                         }
+                                                    });
+
+                                                    $('#edit-profile-btn').on('click', function() {
+                                                        $('#view-nama, #view-no-rumah, #view-no-kavling, #view-no-hp').toggle();
+                                                        $('#update-profile-form').toggleClass('d-none');
+                                                        $('#edit-profile-btn').toggleClass('d-none');
+                                                    });
+
+                                                    $('#update-profile-form').on('submit', function(e) {
+                                                        e.preventDefault();
+                                                        const data = {
+                                                            nama: $('#edit-nama').val(),
+                                                            nomor_rumah: $('#edit-no-rumah').val(),
+                                                            nomor_kavling: $('#edit-no-kavling').val(),
+                                                            blok_cluster: $('#edit-blok').val(),
+                                                            no_hp: $('#edit-no-hp').val(),
+                                                        };
+
+                                                        $.ajax({
+                                                            url: '/api/user/update',
+                                                            type: 'POST',
+                                                            headers: {
+                                                                'Authorization': 'Bearer ' + localStorage.getItem('token')
+                                                            },
+                                                            data: data,
+                                                            success: function(response) {
+                                                                alert('Profile updated successfully');
+                                                                // Update view mode with new data
+                                                                $('#view-nama').text(response.nama);
+                                                                $('#view-no-rumah').text(response.nomor_rumah);
+                                                                $('#view-no-kavling').text(response.nomor_kavling);
+                                                                $('#view-no-hp').text(response.no_hp);
+
+                                                                // Toggle back to view mode
+                                                                $('#view-nama, #view-no-rumah, #view-no-kavling, #view-no-hp').toggle();
+                                                                $('#update-profile-form').toggleClass('d-none');
+                                                                $('#edit-profile-btn').toggleClass('d-none');
+                                                            },
+                                                            error: function(xhr, status, error) {
+                                                                console.error('Failed to update profile data:', error);
+                                                            }
+                                                        });
                                                     });
                                                 });
                                             </script>

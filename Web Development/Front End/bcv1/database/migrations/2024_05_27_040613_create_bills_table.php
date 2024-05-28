@@ -11,10 +11,10 @@ class CreateBillsTable extends Migration
         Schema::create('bills', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->string('no_kav');
+            $table->string('nomor_kavling'); 
             $table->string('nama');
             $table->boolean('paid');
-            $table->string('thn_bl'); // YYYYMM format
+            $table->string('thn_bl');
             $table->integer('ipl');
             $table->integer('meter_awal');
             $table->integer('meter_akhir');
@@ -38,3 +38,4 @@ class CreateBillsTable extends Migration
         Schema::dropIfExists('bills');
     }
 }
+

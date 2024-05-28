@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Bill;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class BillController extends Controller
 {
@@ -12,11 +13,9 @@ class BillController extends Controller
     {
         $user = Auth::user();
 
-        // Jika admin, dapat melihat semua tagihan
         if ($user->role === 'admin') {
             $bills = Bill::all();
         } else {
-            // Jika warga, hanya dapat melihat tagihan miliknya
             $bills = Bill::where('user_id', $user->id)->get();
         }
 
@@ -25,12 +24,14 @@ class BillController extends Controller
 
     public function addBill(Request $request)
     {
+        Log::info('Request data:', $request->all());
+    
         $data = $request->validate([
             'user_id' => 'required|exists:users,id',
-            'no_kav' => 'required|string',
+            'nomor_kavling' => 'required|string',
             'nama' => 'required|string',
             'paid' => 'required|boolean',
-            'thn_bl' => 'required|string', // YYYYMM format
+            'thn_bl' => 'required|string',
             'ipl' => 'required|integer',
             'meter_awal' => 'required|integer',
             'meter_akhir' => 'required|integer',
@@ -38,7 +39,7 @@ class BillController extends Controller
             'tunggakan_2' => 'integer|nullable',
             'tunggakan_3' => 'integer|nullable',
         ]);
-
+    
         $billData = Bill::calculateBill(
             $data['meter_awal'],
             $data['meter_akhir'],
@@ -48,34 +49,17 @@ class BillController extends Controller
             $data['tunggakan_3'] ?? 0
         );
 
-        $bill = Bill::create(array_merge($data, $billData));
-
-        return response()->json($bill, 201);
-    }
-    public function getBillDetails($id)
-    {
-        $bill = Bill::findOrFail($id);
-        return response()->json($bill, 200);
-    }
-
-    public function updateBill(Request $request)
-    {
-        $data = $request->validate([
-            'bill_id' => 'required|exists:bills,id',
-            'nominal' => 'required|integer',
-            'meter_awal' => 'required|integer',
-            'meter_akhir' => 'required|integer',
-            'tanggal' => 'required|date',
-        ]);
-
-        $bill = Bill::findOrFail($data['bill_id']);
-        $bill->meter_awal = $data['meter_awal'];
-        $bill->meter_akhir = $data['meter_akhir'];
-        $bill->thn_bl = substr($data['tanggal'], 0, 6); // YYYYMM
-        $bill->total_tag = $data['nominal'];
-        $bill->save();
-
-        return response()->json($bill, 200);
-    }
+        $bill = Bill::where('user_id', $data['user_id'])
+                    ->where('nomor_kavling', $data['nomor_kavling'])
+                    ->where('thn_bl', $data['thn_bl'])
+                    ->first();
     
+        if ($bill) {
+            $bill->update(array_merge($data, $billData));
+            return response()->json($bill, 200); 
+        } else {
+            $bill = Bill::create(array_merge($data, $billData));
+            return response()->json($bill, 201); 
+        }
+    }
 }

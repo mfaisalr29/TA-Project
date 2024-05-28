@@ -12,14 +12,13 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('nama');
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->string('nomor_kavling');
+            $table->string('nomor_rumah');
             $table->string('blok_cluster');
+            $table->string('nomor_kavling');
             $table->string('no_hp');
-            $table->string('id_pelanggan_online')->nullable();
-            $table->string('role');
-            $table->string('nomor_rumah')->nullable();
+            $table->string('password');
+            $table->string('role')->default('warga');
+            $table->string('id_pelanggan_online')->unique(); // Tambahkan kolom ini
             $table->rememberToken();
             $table->timestamps();
         });

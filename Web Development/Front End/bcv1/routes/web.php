@@ -78,13 +78,13 @@ Route::get('/profileadmin', function(){
 
 Route::get('/tagihanipladmin', function(){
     return view('tagihanipladmin', [
-        "title" => "Tagihan IPL Admin"
+        "title" => "Lihat Tagihan IPL"
     ]);
 });
 
 Route::get('/tagihan', function(){
     return view('tagihan', [
-        "title" => "Input Tagihan"
+        "title" => "Input Tagihan IPL"
     ]);
 });
 
@@ -100,16 +100,10 @@ Route::get('/detailtagihan', function(){
     ]);
 });
 
-Route::get('/detailtagihan', function(){
-    return view('tagihaniplwarga', [
-        "title" => "Tagihan IPL Warga"
-    ]);
-});
-
-Route::get('/daftarwarga', function(){
-    return view('daftarwarga', [
-        "title" => "Daftar Akun Warga"
-    ]);
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/daftarwarga', function () {
+        return view('daftarwarga', ['title' => 'Daftar Akun Warga']);
+    });
 });
 
 Route::get('/login', [LoginController::class, 'index']);

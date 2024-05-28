@@ -20,110 +20,154 @@
             </div>
         </div>
     </div>
-        <div class="row">
-            <div class="col-md-3">
-                <div class="p-3 mb-2" style="background-color: #394E69; border-radius: 10px">
-                    <div class="d-flex align-items-center">
-                        <img src="{{ asset('img/Profile.png') }}" class="img-fluid mr-2" style="max-height : 100px; border-radius: 40px; padding : 10px">
-                        <h5 class="mb-0 text-white">Nomor Rumah</h5>
-                    </div>
-                    <hr style="border-top: 2px solid #000000;">
-                    <div class="p-2 mb-2">
-                        <nav class="nav flex-column">
-                            <a class="nav-link {{ ($title === "Dashboard") ? 'active' : ''}}" href="/dashboardadmin">Dashboard</a>
-                            <a class="nav-link {{ ($title === "Tagihan IPL Admin") ? 'active' : ''}}" href="/tagihanipladmin">Tagihan IPL</a>
-                            <a class="nav-link {{ ($title === "Kondisi Air dan Alat") ? 'active' : ''}}" href="/kondisi">Kondisi Air dan Alat</a>
-                            <a class="nav-link {{ ($title === "Daftar Akun Warga") ? 'active' : ''}}" href="/daftarwarga">Daftar Akun Warga</a>
-                            <a class="nav-link {{ ($title === "Profile Admin") ? 'active' : ''}}" href="/profileadmin">Profile</a>
-                          </nav>
-                    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="p-3 mb-2" style="background-color: #394E69; border-radius: 10px">
+                <div class="d-flex align-items-center">
+                    <img src="{{ asset('img/Profile.png') }}" class="img-fluid mr-2" style="max-height : 100px; border-radius: 40px; padding : 10px">
+                    <h5 class="mb-0 text-white">Nomor Rumah</h5>
+                </div>
+                <hr style="border-top: 2px solid #000000;">
+                <div class="p-2 mb-2">
+                    <nav class="nav flex-column">
+                        <a class="nav-link {{ ($title === "Dashboard") ? 'active' : ''}}" href="/dashboardadmin">Dashboard</a>
+                        <a class="nav-link {{ ($title === "Lihat Tagihan IPL") ? 'active' : ''}}" href="/tagihanipladmin">Lihat Tagihan IPL</a>
+                        <a class="nav-link {{ ($title === "Input Tagihan IPL") ? 'active' : ''}}" href="/tagihan">Input Tagihan IPL</a>
+                        <a class="nav-link {{ ($title === "Kondisi Air dan Alat") ? 'active' : ''}}" href="/kondisi">Kondisi Air dan Alat</a>
+                        <a class="nav-link {{ ($title === "Daftar Akun Warga") ? 'active' : ''}}" href="/daftarwarga">Daftar Akun Warga</a>
+                        <a class="nav-link {{ ($title === "Profile Admin") ? 'active' : ''}}" href="/profileadmin">Profile</a>
+                    </nav>
                 </div>
             </div>
+        </div>
 
-            <div class="col-md-9">
-                <div class="card card-tagihan-ipl">
-                    <div class="card-title">
-                        Masukan Tagihan IPL
-                    </div>
-                    <div class="card-body">
-                        <form id="edit-bill-form" action="/api/bills/update" method="POST">
-                            @csrf
-                            <input type="hidden" id="bill-id" name="bill_id">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-floating mb-3">
-                                        <input type="text" class="form-control" id="blockInput" placeholder="Masukan blok" readonly />
-                                        <label for="blockInput">Blok</label>
-                                    </div>
-                
-                                    <div class="form-floating mb-3">
-                                        <input type="text" class="form-control" id="noHomeInput" placeholder="Masukan nomor rumah" readonly />
-                                        <label for="noHomeInput">Nomor Rumah</label>
-                                    </div>
-                
-                                    <div class="input-group mb-3">
-                                        <span class="input-group-text">Rp</span>
-                                        <div class="form-floating">
-                                            <input type="number" class="form-control" id="nominalInput" name="nominal" placeholder="Masukan nominal" />
-                                            <label for="nominalInput">Nominal</label>
-                                        </div>
+        <div class="col-md-9">
+            <div class="card card-tagihan-ipl">
+                <div class="card-title">
+                    Masukan Tagihan IPL
+                </div>
+                <div class="card-body">
+                    <form id="bill-form" action="/api/bills/add" method="POST">
+                        @csrf
+                        <input type="hidden" id="userIdInput" name="user_id" value="{{ auth()->user()->id }}" />
+                        <input type="hidden" id="iplInput" name="ipl" value="50000" /> 
+                        <input type="hidden" id="paidInput" name="paid" value="0" /> 
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="namaInput" name="nama" placeholder="Masukan nama" readonly required />
+                                    <label for="namaInput">Nama</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="blokInput" name="blok" placeholder="Masukan blok" required />
+                                    <label for="blokInput">Blok</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="noHomeInput" name="nomor_kavling" placeholder="Masukan nomor kavling" required />
+                                    <label for="noHomeInput">Nomor Kavling</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="noRumahInput" name="nomor_rumah" placeholder="Masukan nomor rumah" required />
+                                    <label for="noRumahInput">Nomor Rumah</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="tanggalInput" class="form-label">Tanggal</label>
+                                    <input type="date" class="form-control form-date" id="tanggalInput" name="thn_bl" required />
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="meterAwalInput">Meter Awal</label>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" id="meterAwalInput" name="meter_awal" placeholder="Masukan meter awal" aria-label="Meter Awal" required />
+                                        <span class="input-group-text">M<sup>3</sup></span>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label for="tanggalInput" class="form-label">Tanggal</label>
-                                        <input type="date" class="form-control form-date" id="tanggalInput" name="tanggal" />
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label" for="meterAwalInput">Meter Awal</label>
-                                        <div class="input-group">
-                                            <input type="number" class="form-control" id="meterAwalInput" name="meter_awal" placeholder="Masukan meter awal" aria-label="Meter Awal" />
-                                            <span class="input-group-text">M<sup>3</sup></span>
-                                        </div>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label" for="meterAkhirInput">Meter Akhir</label>
-                                        <div class="input-group">
-                                            <input type="number" class="form-control" id="meterAkhirInput" name="meter_akhir" placeholder="Masukan meter akhir" aria-label="Meter Akhir" />
-                                            <span class="input-group-text">M<sup>3</sup></span>
-                                        </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="meterAkhirInput">Meter Akhir</label>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" id="meterAkhirInput" name="meter_akhir" placeholder="Masukan meter akhir" aria-label="Meter Akhir" required />
+                                        <span class="input-group-text">M<sup>3</sup></span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="mt-2 d-flex justify-content-center">
-                                <button type="submit" class="btn btn-success btn-outline">Submit</button>
-                            </div>
-                        </form>
-                    </div>
+                        </div>
+                        <div class="mt-2 d-flex justify-content-center">
+                            <button type="submit" class="btn btn-success btn-outline">Submit</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    <script>
-        $(document).ready(function() {
-            var url = window.location.href;
-            var billId = url.substring(url.lastIndexOf('/') + 1);
+<script>
+    $(document).ready(function() {
+        function fetchName() {
+            const data = {
+                nomor_rumah: $('#noRumahInput').val(),
+                nomor_kavling: $('#noHomeInput').val(),
+                blok: $('#blokInput').val()
+            };
+
+            if (data.nomor_rumah && data.nomor_kavling && data.blok) {
+                $.ajax({
+                    url: '/api/find-name',
+                    type: 'POST',
+                    data: data,
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    },
+                    success: function(response) {
+                        $('#namaInput').val(response.nama);
+                    },
+                    error: function(xhr, status, error) {
+                        $('#namaInput').val('');
+                        console.error('Failed to fetch name:', error);
+                    }
+                });
+            }
+        }
+
+        $('#noRumahInput, #noHomeInput, #blokInput').on('blur', fetchName);
+
+        $('#bill-form').on('submit', function(e) {
+            e.preventDefault();
+
+            const data = {
+                user_id: $('#userIdInput').val(),
+                nomor_kavling: $('#noHomeInput').val(),
+                nama: $('#namaInput').val(),
+                paid: $('#paidInput').val(),
+                thn_bl: $('#tanggalInput').val().replace(/-/g, '').substring(0, 6),
+                ipl: $('#iplInput').val(),
+                meter_awal: $('#meterAwalInput').val(),
+                meter_akhir: $('#meterAkhirInput').val(),
+                tunggakan_1: 0,
+                tunggakan_2: 0,
+                tunggakan_3: 0,
+            };
+
+            console.log(data);
 
             $.ajax({
-                url: '/api/bills/' + billId,
-                type: 'GET',
+                url: '/api/bills/add',
+                type: 'POST',
+                data: data,
                 headers: {
                     'Authorization': 'Bearer ' + localStorage.getItem('token')
                 },
                 success: function(response) {
-                    $('#bill-id').val(response.id);
-                    $('#blockInput').val(response.blok);
-                    $('#noHomeInput').val(response.no_kav);
-                    $('#nominalInput').val(response.total_tag);
-                    $('#tanggalInput').val(response.thn_bl + '01');
-                    $('#meterAwalInput').val(response.meter_awal);
-                    $('#meterAkhirInput').val(response.meter_akhir);
+                    alert('Tagihan berhasil ditambahkan!');
+                    window.location.href = '/tagihanipladmin';
                 },
                 error: function(xhr, status, error) {
-                    console.error('Failed to fetch bill details:', error);
+                    console.error('Failed to add bill:', error);
+                    alert('Pendaftaran tagihan gagal');
                 }
             });
         });
-    </script>
+    });
+</script>
 @endsection

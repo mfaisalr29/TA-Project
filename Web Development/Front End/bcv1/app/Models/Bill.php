@@ -10,7 +10,7 @@ class Bill extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id', 'no_kav', 'nama', 'paid', 'thn_bl', 'ipl', 'meter_awal', 'meter_akhir',
+        'user_id', 'nomor_kavling', 'nama', 'paid', 'thn_bl', 'ipl', 'meter_awal', 'meter_akhir',
         'penggunaan_air', 'tag_air', 'adm_air', 'admin', 'tunggakan_1', 'tunggakan_2',
         'tunggakan_3', 'tag_now', 'total_tag'
     ];
@@ -33,9 +33,11 @@ class Bill extends Model
             'total_tag' => $total_tag,
         ];
     }
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
     }
-    
 }
+
+

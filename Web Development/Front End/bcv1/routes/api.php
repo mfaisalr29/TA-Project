@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BillController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\JadwalSampahController;
 
@@ -37,4 +38,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/bills/update', [BillController::class, 'updateBill']);
     Route::post('/user/profile', [ProfileController::class, 'getProfile']);
     Route::post('/user/update', [ProfileController::class, 'updateProfile']);
+    Route::post('/admin/data', [AdminController::class, 'getAdminData']);
+    Route::post('/daftarwarga', [UserController::class, 'registerWarga']);
+    Route::post('/find-name', [UserController::class, 'findName']);
+
 });

@@ -13,25 +13,25 @@ class UserSeeder extends Seeder
         User::create([
             'nama' => 'Admin User',
             'email' => 'admin@example.com',
-            'password' => Hash::make('password'),
-            'nomor_kavling' => 'A1',
+            'nomor_rumah' => '50A',
             'blok_cluster' => 'A',
+            'nomor_kavling' => 'A1',
             'no_hp' => '08123456789',
-            'id_pelanggan_online' => '12345',
+            'password' => Hash::make('password'),
             'role' => 'admin',
-            'nomor_rumah' => '50A' 
+            'id_pelanggan_online' => '12345',
         ]);
 
         User::create([
             'nama' => 'Warga User',
             'email' => 'warga@example.com',
-            'password' => Hash::make('password'),
-            'nomor_kavling' => 'B2',
+            'nomor_rumah' => '179B' ,
             'blok_cluster' => 'B',
+            'nomor_kavling' => 'B2',
             'no_hp' => '08123456780',
-            'id_pelanggan_online' => '12346',
+            'password' => Hash::make('password'),
             'role' => 'warga',
-            'nomor_rumah' => '179B' 
+            'id_pelanggan_online' => '12346',
         ]);
     }
 }

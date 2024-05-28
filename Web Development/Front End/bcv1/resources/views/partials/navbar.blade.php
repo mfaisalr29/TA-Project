@@ -1,7 +1,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark">
   @php
-    $exceptions1 = ["Dashboard", "Admin Dashboard", "Profile Warga", "Profile Admin", "Input Tagihan", "Tagihan IPL Admin", "Kondisi Air dan Alat", "Tagihan IPL Warga", "Daftar Akun Warga"];
+    $exceptions1 = ["Dashboard", "Admin Dashboard", "Profile Warga", "Profile Admin", "Input Tagihan IPL", "Lihat Tagihan IPL", "Kondisi Air dan Alat", "Tagihan IPL Warga", "Daftar Akun Warga"];
     $exceptions2 = ["Home"];
   @endphp
   <div class="container">

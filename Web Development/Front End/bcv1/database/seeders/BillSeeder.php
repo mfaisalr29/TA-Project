@@ -24,7 +24,7 @@ class BillSeeder extends Seeder
 
             Bill::create([
                 'user_id' => $user->id,
-                'no_kav' => $user->nomor_kavling,
+                'nomor_kavling' => $user->nomor_kavling,
                 'nama' => $user->nama,
                 'paid' => rand(0, 1),
                 'thn_bl' => now()->format('Ym'),

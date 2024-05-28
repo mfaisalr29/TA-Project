@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Bill;
 use App\Models\Schedule;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
@@ -120,16 +121,25 @@ class AdminController extends Controller
         return response()->json($user, 201);
     }
     public function getDashboardData(Request $request)
-{
-    // Logika untuk mengambil data dashboard admin
-    $schedule = Schedule::latest()->first(); // Contoh: mengambil jadwal terbaru
-    $bill = Bill::latest()->first(); // Contoh: mengambil tagihan terbaru
+    {
+        // Logika untuk mengambil data dashboard admin
+        $schedule = Schedule::latest()->first(); // Contoh: mengambil jadwal terbaru
+        $bill = Bill::latest()->first(); // Contoh: mengambil tagihan terbaru
 
-    return response()->json([
-        'schedule_title' => $schedule ? $schedule->hari . ', ' . $schedule->waktu : 'Tidak ada jadwal',
-        'meter_awal' => $bill ? $bill->meter_awal : 'N/A',
-        'meter_akhir' => $bill ? $bill->meter_akhir : 'N/A',
-        'meter_tagihan' => $bill ? ($bill->meter_akhir - $bill->meter_awal) : 'N/A'
-    ], 200);
-}
+        return response()->json([
+            'schedule_title' => $schedule ? $schedule->hari . ', ' . $schedule->waktu : 'Tidak ada jadwal',
+            'meter_awal' => $bill ? $bill->meter_awal : 'N/A',
+            'meter_akhir' => $bill ? $bill->meter_akhir : 'N/A',
+            'meter_tagihan' => $bill ? ($bill->meter_akhir - $bill->meter_awal) : 'N/A'
+        ], 200);
+    }
+    public function getAdminData()
+    {
+        $user = Auth::user();
+        return response()->json([
+            'nama' => $user->nama,
+            'nomor_rumah' => $user->nomor_rumah,
+            'tanggal' => now()->format('l, d F Y'),
+        ], 200);
+    }
 }

@@ -24,10 +24,10 @@ class UserController extends Controller
             'blok_cluster' => 'required|string|max:255',
             'no_hp' => 'required|string|max:255',
             'id_pelanggan_online' => 'required|string|max:255|unique:users',
-            'nomor_rumah' => 'nullable|string|max:255', // Menambahkan validasi nomor_rumah
+            'nomor_rumah' => 'nullable|string|max:255', 
         ]);
 
-        $validatedData['password'] = Hash::make($validatedData['password']); // Hash password sebelum disimpan
+        $validatedData['password'] = Hash::make($validatedData['password']); 
 
         $user = User::create($validatedData);
 

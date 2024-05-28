@@ -101,7 +101,7 @@
                 },
                 success: function(response) {
                     var billTableBody = $('#bill-table-body');
-                    billTableBody.empty(); // Kosongkan isi tabel sebelumnya
+                    billTableBody.empty(); 
 
                     if (response.length > 0) {
                         response.forEach(function(bill) {

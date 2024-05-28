@@ -91,7 +91,6 @@
 <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
 <script>
     $(document).ready(function() {
-        // Fetch admin data
         $.ajax({
             url: '/api/admin/data',
             type: 'POST',
@@ -101,14 +100,13 @@
             success: function(response) {
                 $('#admin-name').text('Selamat Datang, ' + response.nama);
                 $('#current-date').text(response.tanggal);
-                $('#nomor-rumah-title').text(response.nomor_rumah);
+                $('#nomor-rumah-title').text(response.nama);
             },
             error: function(xhr, status, error) {
                 console.error('Failed to fetch admin data:', error);
             }
         });
 
-        // Fetch bills data
         $.ajax({
             url: '/api/bills',
             type: 'POST',

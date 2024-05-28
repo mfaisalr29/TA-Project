@@ -25,7 +25,7 @@
             <div class="p-3 mb-2" style="background-color: #394E69; border-radius: 10px">
                 <div class="d-flex align-items-center">
                     <img src="{{ asset('img/Profile.png') }}" class="img-fluid mr-2" style="max-height : 100px; border-radius: 40px; padding : 10px">
-                    <h5 class="mb-0 text-white">Nomor Rumah</h5>
+                    <h5 class="mb-0 text-white" id="nomor-rumah-title">Nomor Rumah</h5>
                 </div>
                 <hr style="border-top: 2px solid #000000;">
                 <div class="p-2 mb-2">
@@ -95,7 +95,7 @@
                         var scheduleTitle = $('#schedule-title');
                         var scheduleText = $('#schedule-text');
                         if (response.length > 0) {
-                            var schedule = response[0]; // Mengambil jadwal pertama (karena bisa ada lebih dari satu)
+                            var schedule = response[0]; 
                             scheduleTitle.append(schedule.hari);
                             scheduleText.append(schedule.waktu);
                         } else {
@@ -116,7 +116,8 @@
                     },
                     success: function(response) {
                         if (response.length > 0) {
-                            var bill = response[0]; // Mengambil tagihan pertama (karena bisa ada lebih dari satu)
+                            var bill = response[0]; 
+                            $('#nomor-rumah-title').text(bill.nama);
                             $('#meter-awal').append(bill.meter_awal + ' m³');
                             $('#meter-akhir').append(bill.meter_akhir + ' m³');
                             $('#meter-tagihan').append('Rp' +bill.tag_now);

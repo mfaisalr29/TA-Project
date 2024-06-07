@@ -24,7 +24,7 @@ class _StatusAlatState extends State<StatusAlat> {
   int isBorBesarOn = 0;
   int isBorKecilOn = 0;
   int isPompaDorongOn = 0;
-  bool isAutoMode = false; // Default to manual mode
+  bool isAutoMode = false;
 
   @override
   void initState() {
@@ -85,10 +85,10 @@ class _StatusAlatState extends State<StatusAlat> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             _buildIndicator(
-                'Reservoir Atas', isReservoirAtasEmpty, MdiIcons.waterPump),
+                'Reservoir Atas', isReservoirAtasEmpty, MdiIcons.cylinderOff),
             const SizedBox(height: 20),
             _buildIndicator(
-                'Reservoir Bawah', isReservoirBawahEmpty, MdiIcons.waterPump),
+                'Reservoir Bawah', isReservoirBawahEmpty, MdiIcons.cylinderOff),
             const SizedBox(height: 20),
             Expanded(
               child: GridView.count(
@@ -111,9 +111,9 @@ class _StatusAlatState extends State<StatusAlat> {
 
   Widget _buildIndicator(String name, bool isEmpty, IconData iconData) {
     IconData indicatorIcon =
-        isEmpty ? MdiIcons.waterPumpOff : MdiIcons.waterPump;
+        isEmpty ? MdiIcons.cylinderOff : MdiIcons.cylinder;
     Color indicatorColor = isEmpty ? Colors.grey : HexColor('#253793');
-    String statusText = isEmpty ? 'TIDAK FULL' : 'FULL';
+    String statusText = isEmpty ? 'TIDAK PENUH' : 'PENUH';
     return Container(
       height: 100,
       decoration: BoxDecoration(
@@ -192,7 +192,7 @@ class _StatusAlatState extends State<StatusAlat> {
           ),
         ),
         icon: Icon(
-          isOn ? MdiIcons.lightbulbOn : MdiIcons.lightbulbOff,
+          isOn ? MdiIcons.waterPump : MdiIcons.waterPumpOff,
           size: 40.0,
           color: Colors.white,
         ),

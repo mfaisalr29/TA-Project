@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:pro_tav1/main.dart';
 import 'package:pro_tav1/screens/splash_screen.dart';
-import 'login_page_admin.dart';
+import 'main.dart';
 
 // String validateUP(String username, String password){
 //   if (username.isEmpty || password.isEmpty) {
@@ -21,7 +20,6 @@ void main() {
   runApp(const MaterialApp(
     home: SplashScreen(),
   ));
-
 }
 
 class LoginPage extends StatefulWidget {
@@ -84,7 +82,7 @@ class _LoginPageState extends State<LoginPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
-                      'Username',
+                      'Email',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 18.0,
@@ -159,45 +157,25 @@ class _LoginPageState extends State<LoginPage> {
                   ],
                 ),
                 const SizedBox(height: 25.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: HexColor("#FE8660"),
-                        foregroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                      ),
-                      child: const Text(
-                        'Sign in',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'Roboto',
-                          letterSpacing: 1.0,
-                        ),
+                Center(
+                  child: ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: HexColor("#FE8660"),
+                      foregroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
                       ),
                     ),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const LoginPageAdmin()),
-                        );
-                      },
-                      child: Text(
-                        'Sign in as Admin',
-                        style: TextStyle(
-                          color: Colors.grey[200],
-                          fontFamily: 'Roboto',
-                          fontWeight: FontWeight.bold,
-                        ),
+                    child: const Text(
+                      'Sign in',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontFamily: 'Roboto',
+                        letterSpacing: 1.0,
                       ),
                     ),
-                  ],
+                  ),
                 ),
               ],
             ),

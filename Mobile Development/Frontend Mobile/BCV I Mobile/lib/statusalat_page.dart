@@ -96,8 +96,8 @@ class _StatusAlatState extends State<StatusAlat> {
                 mainAxisSpacing: 20.0,
                 crossAxisSpacing: 20.0,
                 children: [
-                  _buildControlButton('Bor Besar', isBorBesarOn == 1),
-                  _buildControlButton('Bor Kecil', isBorKecilOn == 1),
+                  _buildControlButton('Sibel Besar', isBorBesarOn == 1),
+                  _buildControlButton('Sibel Kecil', isBorKecilOn == 1),
                   _buildControlButton('Pompa Dorong', isPompaDorongOn == 1),
                   _buildModeControlButton(isAutoMode),
                 ],
@@ -236,11 +236,11 @@ class _StatusAlatState extends State<StatusAlat> {
 
   void _toggleButton(String name) {
     switch (name) {
-      case 'Bor Besar':
+      case 'Sibel Besar':
         isBorBesarOn = isBorBesarOn == 1 ? 0 : 1;
         _updateData('ControlSystem/Reservoir2/Relay1', isBorBesarOn);
         break;
-      case 'Bor Kecil':
+      case 'Sibel Kecil':
         isBorKecilOn = isBorKecilOn == 1 ? 0 : 1;
         _updateData('ControlSystem/Reservoir2/Relay2', isBorKecilOn);
         break;

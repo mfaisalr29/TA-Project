@@ -240,7 +240,7 @@ class _MainContentAdminState extends State<MainContentAdmin> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Text(
-                            'Profil Warga',
+                            'IPL',
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: Colors.black,

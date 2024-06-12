@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:pro_tav1/tagihan_ipl.dart';
+import 'package:pro_tav1/tagihan_ipl_warga.dart';
 import 'other_menu.dart';
 
 void main() {

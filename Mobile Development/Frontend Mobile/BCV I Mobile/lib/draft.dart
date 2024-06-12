@@ -4,24 +4,40 @@ import 'package:pro_tav1/main.dart';
 
 void main() {
   runApp(const MaterialApp(
-    home: ProfilWarga(),
+    home: DetailIPL(),
   ));
 }
 
-class ProfilWarga extends StatefulWidget {
-  const ProfilWarga({super.key});
+class DetailIPL extends StatefulWidget {
+  const DetailIPL({super.key});
+
   @override
-  _ProfilWargastate createState() => _ProfilWargastate();
+  _DetailIPLstate createState() => _DetailIPLstate();
 }
 
-class _ProfilWargastate extends State<ProfilWarga> {
+class _DetailIPLstate extends State<DetailIPL> {
+  String? selectedYear;
+  String? selectedMonth;
+  
+  // Generate years dynamically from current year to 10 years in the future
+  final List<String> years = List.generate(100, (index) => (DateTime.now().year + index).toString());
+  
+  final List<String> months = [
+    'January', 'February', 'March', 'April', 'May', 'June', 
+    'July', 'August', 'September', 'October', 'November', 'December'
+  ];
+
+  final TextEditingController _meterAwalController = TextEditingController();
+  final TextEditingController _meterAkhirController = TextEditingController();
+  final TextEditingController _totalTagihanController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: HexColor('#F4EBE8'),
       appBar: AppBar(
         title: const Text(
-          'Profil Warga',
+          'Detail Tagihan IPL',
           style: TextStyle(
             color: Colors.black,
             fontFamily: 'Roboto',
@@ -44,83 +60,89 @@ class _ProfilWargastate extends State<ProfilWarga> {
         padding: const EdgeInsets.all(20.0),
         child: Column(
           children: [
+            DropdownButton<String>(
+              hint: const Text("Select Year"),
+              value: selectedYear,
+              items: years.map((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+              onChanged: (newValue) {
+                setState(() {
+                  selectedYear = newValue;
+                });
+              },
+            ),
+            const SizedBox(height: 20),
+            DropdownButton<String>(
+              hint: const Text("Select Month"),
+              value: selectedMonth,
+              items: months.map((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+              onChanged: (newValue) {
+                setState(() {
+                  selectedMonth = newValue;
+                });
+              },
+            ),
+            const SizedBox(height: 20),
             Expanded(
               child: Container(
-                padding: const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 20.0),
+                padding: const EdgeInsets.all(20.0),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(30.0),
                   color: Colors.grey[400],
                 ),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          child: TextField(
-                            decoration: InputDecoration(
-                              hintText: 'Masukkan nama...',
-                              border: OutlineInputBorder(
-                                borderSide: const BorderSide(color: Colors.black),
-                                borderRadius: BorderRadius.circular(30.0),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(color: Colors.black),
-                                borderRadius: BorderRadius.circular(30.0),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(color: Colors.black),
-                                borderRadius: BorderRadius.circular(30.0),
-                              ),
-                              prefixIcon: Icon(
-                                MdiIcons.magnify,
-                                color: Colors.black,
-                                size: 30.0,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
+                    const Text(
+                      "Meter Awal",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    TextField(
+                      controller: _meterAwalController,
+                      keyboardType: TextInputType.number,
+                      decoration: const InputDecoration(
+                        hintText: "Masukkan Meter Awal",
+                      ),
                     ),
                     const SizedBox(height: 20.0),
-                    const Row(
-                      children: [
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Nama warga 1',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'Roboto',
-                                  fontSize: 20.0,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
+                    const Text(
+                      "Meter Akhir",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    TextField(
+                      controller: _meterAkhirController,
+                      keyboardType: TextInputType.number,
+                      decoration: const InputDecoration(
+                        hintText: "Masukkan Meter Akhir",
+                      ),
                     ),
                     const SizedBox(height: 20.0),
-                    const Row(
-                      children: [
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Nama warga 2',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'Roboto',
-                                  fontSize: 20.0,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    )
+                    const Text(
+                      "Total Tagihan IPL",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    TextField(
+                      controller: _totalTagihanController,
+                      keyboardType: TextInputType.number,
+                      decoration: const InputDecoration(
+                        hintText: "Masukkan Total Tagihan",
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -128,19 +150,6 @@ class _ProfilWargastate extends State<ProfilWarga> {
           ],
         ),
       ),
-      floatingActionButton: Transform.scale(
-        scale: 1.3,
-        child: FloatingActionButton(
-          onPressed: () {},
-          backgroundColor: HexColor("#FE8660"),
-          foregroundColor: HexColor('#253793'),
-          shape: const CircleBorder(),
-          elevation: 10.0,
-          splashColor: HexColor('#253793'),
-          child: Icon(MdiIcons.plusThick),
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }

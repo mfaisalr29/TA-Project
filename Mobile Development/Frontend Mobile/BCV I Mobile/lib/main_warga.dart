@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:pro_tav1/tagihan_ipl.dart';
 import 'other_menu.dart';
 
 void main() {
@@ -221,7 +222,12 @@ class _MainContentState extends State<MainContent> {
             children: [
               Expanded(
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const DetailIPL()));
+                      },
                   style: ElevatedButton.styleFrom(
                       backgroundColor: HexColor("#FE8660"),
                       fixedSize: const Size(0.0, 65.0),

@@ -117,9 +117,8 @@
                                                             $('#view-no-kavling').text(response.nomor_kavling);
                                                             $('#user-blok').append(response.blok_cluster);
                                                             $('#view-no-hp').text(response.no_hp);
-                                                            $('#user-password').val('password'); // Set default password
+                                                            $('#user-password').val('password');
 
-                                                            // Set values for editing
                                                             $('#edit-nama').val(response.nama);
                                                             $('#edit-no-rumah').val(response.nomor_rumah);
                                                             $('#edit-no-kavling').val(response.nomor_kavling);
@@ -156,13 +155,12 @@
                                                             data: data,
                                                             success: function(response) {
                                                                 alert('Profile updated successfully');
-                                                                // Update view mode with new data
+
                                                                 $('#view-nama').text(response.nama);
                                                                 $('#view-no-rumah').text(response.nomor_rumah);
                                                                 $('#view-no-kavling').text(response.nomor_kavling);
                                                                 $('#view-no-hp').text(response.no_hp);
 
-                                                                // Toggle back to view mode
                                                                 $('#view-nama, #view-no-rumah, #view-no-kavling, #view-no-hp').toggle();
                                                                 $('#update-profile-form').toggleClass('d-none');
                                                                 $('#edit-profile-btn').toggleClass('d-none');

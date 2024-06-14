@@ -33,5 +33,17 @@ class UserSeeder extends Seeder
             'role' => 'warga',
             'id_pelanggan_online' => '12346',
         ]);
+
+        User::create([
+            'nama' => 'Rakyat',
+            'email' => 'rakyat@example.com',
+            'nomor_rumah' => '12B' ,
+            'blok_cluster' => 'C',
+            'nomor_kavling' => 'C2',
+            'no_hp' => '081234542780',
+            'password' => Hash::make('password'),
+            'role' => 'warga',
+            'id_pelanggan_online' => '14346',
+        ]);
     }
 }

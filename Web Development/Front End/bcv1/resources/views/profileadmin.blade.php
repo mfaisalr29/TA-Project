@@ -25,7 +25,7 @@
             <div class="p-3 mb-2" style="background-color: #394E69; border-radius: 10px">
                 <div class="d-flex align-items-center">
                     <img src="{{ asset('img/Profile.png') }}" class="img-fluid mr-2" style="max-height: 100px; border-radius: 40px; padding: 10px">
-                    <h5 class="mb-0 text-white" id="nomor-rumah-title">Nomor Rumah</h5>
+                    <h5 class="mb-0 text-white" id="nomor-rumah-title"></h5>
                 </div>
                 <hr style="border-top: 2px solid #000000;">
                 <div class="p-2 mb-2">
@@ -88,13 +88,12 @@
                                                         success: function(response) {
                                                             $('#view-nama').text(response.nama);
                                                             $('#view-no-rumah').text(response.nomor_rumah);
-                                                            $('#nomor-rumah-title').text(response.nomor_rumah);
+                                                            $('#nomor-rumah-title').text(response.nama);
                                                             $('#view-no-kavling').text(response.nomor_kavling);
                                                             $('#user-blok').append(response.blok_cluster);
                                                             $('#view-no-hp').text(response.no_hp);
-                                                            $('#user-password').val('password'); // Set default password
+                                                            $('#user-password').val('password'); 
 
-                                                            // Set values for editing
                                                             $('#edit-nama').val(response.nama);
                                                             $('#edit-no-rumah').val(response.nomor_rumah);
                                                             $('#edit-no-kavling').val(response.nomor_kavling);

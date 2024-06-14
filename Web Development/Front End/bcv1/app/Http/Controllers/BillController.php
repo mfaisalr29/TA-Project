@@ -13,11 +13,25 @@ class BillController extends Controller
     {
         $user = Auth::user();
 
-        if ($user->role === 'admin') {
-            $bills = Bill::all();
-        } else {
-            $bills = Bill::where('user_id', $user->id)->get();
+        $query = Bill::query();
+
+        if ($user->role !== 'admin') {
+            $query->where('user_id', $user->id);
         }
+
+        if ($request->has('year')) {
+            $query->whereYear('thn_bl', $request->year);
+        }
+
+        if ($request->has('month')) {
+            $query->whereMonth('thn_bl', $request->month);
+        }
+
+        if ($request->has('name')) {
+            $query->where('nama', 'like', '%' . $request->name . '%');
+        }
+
+        $bills = $query->get();
 
         return response()->json($bills, 200);
     }
@@ -25,7 +39,7 @@ class BillController extends Controller
     public function addBill(Request $request)
     {
         Log::info('Request data:', $request->all());
-    
+
         $data = $request->validate([
             'user_id' => 'required|exists:users,id',
             'nomor_kavling' => 'required|string',
@@ -39,7 +53,7 @@ class BillController extends Controller
             'tunggakan_2' => 'integer|nullable',
             'tunggakan_3' => 'integer|nullable',
         ]);
-    
+
         $billData = Bill::calculateBill(
             $data['meter_awal'],
             $data['meter_akhir'],
@@ -53,13 +67,13 @@ class BillController extends Controller
                     ->where('nomor_kavling', $data['nomor_kavling'])
                     ->where('thn_bl', $data['thn_bl'])
                     ->first();
-    
+
         if ($bill) {
             $bill->update(array_merge($data, $billData));
-            return response()->json($bill, 200); 
+            return response()->json($bill, 200);
         } else {
             $bill = Bill::create(array_merge($data, $billData));
-            return response()->json($bill, 201); 
+            return response()->json($bill, 201);
         }
     }
 }

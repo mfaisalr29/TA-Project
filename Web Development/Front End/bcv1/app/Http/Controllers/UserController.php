@@ -100,14 +100,12 @@ class UserController extends Controller
     public function findName(Request $request)
     {
         $request->validate([
-            'nomor_rumah' => 'required|string',
             'nomor_kavling' => 'required|string',
             'blok' => 'required|string',
         ]);
 
         try {
-            $user = User::where('nomor_rumah', $request->nomor_rumah)
-                        ->where('nomor_kavling', $request->nomor_kavling)
+            $user = User::where('nomor_kavling', $request->nomor_kavling)
                         ->where('blok_cluster', $request->blok)
                         ->first();
 

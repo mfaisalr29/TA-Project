@@ -25,7 +25,7 @@
             <div class="p-3 mb-2" style="background-color: #394E69; border-radius: 10px">
                 <div class="d-flex align-items-center">
                     <img src="{{ asset('img/Profile.png') }}" class="img-fluid mr-2" style="max-height : 100px; border-radius: 40px; padding : 10px">
-                    <h5 class="mb-0 text-white">Nomor Rumah</h5>
+                    <h5 class="mb-0 text-white" id="nomor-rumah-title"></h5>
                 </div>
                 <hr style="border-top: 2px solid #000000;">
                 <div class="p-2 mb-2">
@@ -42,66 +42,70 @@
         </div>
 
         <div class="col-md-9">
+            <div class="card mb-3">
+                <div class="card-header text-center">
+                    <strong>Kondisi Reservoir</strong>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="text-center">
+                                <div class="interactive-circle" id="reservoir-atas">
+                                    <img id="gambar-reservoir-atas" src="{{ asset('img/water-pump-off.png') }}" class="img-fluid" style="width: 100px; height: 100px;">
+                                    <h5 class="mt-2">Reservoir Atas</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="text-center">
+                                <div class="interactive-circle" id="reservoir-bawah">
+                                    <img id="gambar-reservoir-bawah" src="{{ asset('img/water-pump-off.png') }}" class="img-fluid" style="width: 100px; height: 100px;">
+                                    <h5 class="mt-2">Reservoir Bawah</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="card">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="text-center">
-                                    <div class="interactive-circle" id="reservoir-atas">
-                                        <img id="gambar-reservoir-atas" src="{{ asset('img/water-pump-off.png') }}" class="img-fluid" style="width: 100px; height: 100px;">
-                                        <h5 class="mt-2">Reservoir Atas</h5>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="text-center">
-                                    <div class="interactive-circle" id="reservoir-bawah">
-                                        <img id="gambar-reservoir-bawah" src="{{ asset('img/water-pump-off.png') }}" class="img-fluid" style="width: 100px; height: 100px;">
-                                        <h5 class="mt-2">Reservoir Bawah</h5>
-                                    </div>
+                <div class="card-header text-center">
+                    <strong>Pengendalian Alat</strong>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <div class="text-center">
+                                <div class="interactive-circle" id="mode-kontrol" onclick="handleClick('mode-kontrol', 'ControlSystem/Automation', 'gambar1', '{{ asset('img/lightbulb-on.png') }}', '{{ asset('img/lightbulb-off.png') }}')">
+                                    <img id="gambar1" src="{{ asset('img/lightbulb-off.png') }}" class="img-fluid" style="width: 100px; height: 100px;">
+                                    <h5 class="mt-2">Mode Kontrol</h5>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="col-md-12 mt-3">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="text-center">
-                                    <div class="interactive-circle" id="mode-kontrol" onclick="handleClick('mode-kontrol', 'ControlSystem/Automation', 'gambar1', '{{ asset('img/lightbulb-on.png') }}', '{{ asset('img/lightbulb-off.png') }}')">
-                                        <img id="gambar1" src="{{ asset('img/lightbulb-off.png') }}" class="img-fluid" style="width: 100px; height: 100px;">
-                                        <h5 class="mt-2">Mode Kontrol</h5>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="text-center">
-                                    <div class="interactive-circle" id="bor-besar" onclick="handleClick('bor-besar', 'ControlSystem/Reservoir2/Relay1', 'gambar2', '{{ asset('img/lightbulb-on.png') }}', '{{ asset('img/lightbulb-off.png') }}')">
-                                        <img id="gambar2" src="{{ asset('img/lightbulb-off.png') }}" class="img-fluid" style="width: 100px; height: 100px;">
-                                        <h5 class="mt-2">Pompa Celup Besar</h5>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="text-center">
-                                    <div class="interactive-circle" id="kondisi-air" onclick="handleClick('kondisi-air', 'ControlSystem/Reservoir2/Relay2', 'gambar3', '{{ asset('img/lightbulb-on.png') }}', '{{ asset('img/lightbulb-off.png') }}')">
-                                        <img id="gambar3" src="{{ asset('img/lightbulb-off.png') }}" class="img-fluid" style="width: 100px; height: 100px;">
-                                        <h5 class="mt-2">Pompa Celup Kecil</h5>
-                                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="text-center">
+                                <div class="interactive-circle" id="bor-besar" onclick="handleClick('bor-besar', 'ControlSystem/Reservoir2/Relay1', 'gambar2', '{{ asset('img/lightbulb-on.png') }}', '{{ asset('img/lightbulb-off.png') }}')">
+                                    <img id="gambar2" src="{{ asset('img/lightbulb-off.png') }}" class="img-fluid" style="width: 100px; height: 100px;">
+                                    <h5 class="mt-2">Summersible Besar</h5>
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="col-md-12 mt-3">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="text-center">
-                                    <div class="interactive-circle" id="pompa-dorong" onclick="handleClick('pompa-dorong', 'ControlSystem/Reservoir2/Relay3', 'gambar4', '{{ asset('img/lightbulb-on.png') }}', '{{ asset('img/lightbulb-off.png') }}')">
-                                        <img id="gambar4" src="{{ asset('img/lightbulb-off.png') }}" class="img-fluid" style="width: 100px; height: 100px;">
-                                        <h5 class="mt-2">Pompa Dorong</h5>
-                                    </div>
+                        <div class="col-md-4">
+                            <div class="text-center">
+                                <div class="interactive-circle" id="kondisi-air" onclick="handleClick('kondisi-air', 'ControlSystem/Reservoir2/Relay2', 'gambar3', '{{ asset('img/lightbulb-on.png') }}', '{{ asset('img/lightbulb-off.png') }}')">
+                                    <img id="gambar3" src="{{ asset('img/lightbulb-off.png') }}" class="img-fluid" style="width: 100px; height: 100px;">
+                                    <h5 class="mt-2">Summersible Kecil</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="text-center">
+                                <div class="interactive-circle" id="pompa-dorong" onclick="handleClick('pompa-dorong', 'ControlSystem/Reservoir2/Relay3', 'gambar4', '{{ asset('img/lightbulb-on.png') }}', '{{ asset('img/lightbulb-off.png') }}')">
+                                    <img id="gambar4" src="{{ asset('img/lightbulb-off.png') }}" class="img-fluid" style="width: 100px; height: 100px;">
+                                    <h5 class="mt-2">Pompa Dorong</h5>
                                 </div>
                             </div>
                         </div>
@@ -110,9 +114,8 @@
             </div>
         </div>
 
-        <!-- Impor modul Firebase dari CDN -->
+
         <script type="module">
-            // Impor modul Firebase
             import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
             import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js";
 
@@ -126,11 +129,10 @@
                 appId: "1:632085793199:web:64563abd2d0d8faad2c75a",
             };
 
-            // Inisialisasi Firebase
             const app = initializeApp(firebaseConfig);
             const database = getDatabase(app);
 
-            // Definisikan fungsi global
+            
             window.handleClick = function(elementId, firebasePath, imageId, onImage, offImage) {
                 const img = document.getElementById(imageId);
                 const currentSrc = img.src;
@@ -206,6 +208,21 @@
             });
             listenFirebase('ControlSystem/Reservoir2/Relay3', (data) => {
                 updateImageBasedOnFirebaseValue('pompa-dorong', 'gambar4', data);
+            });
+            $(document).ready(function() {
+              $.ajax({
+                url: '/api/admin/data',
+                type: 'POST',
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                },
+                success: function(response) {
+                    $('#nomor-rumah-title').text(response.nama);
+                },
+                error: function(xhr, status, error) {
+                    console.error('Failed to fetch admin data:', error);
+                }
+                });
             });
         </script>
     </div>

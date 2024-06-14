@@ -35,14 +35,7 @@
             <div class="d-flex">
               <form action="" method="get">
                 <div class="input-group">
-                  <input
-                    name="q"
-                    type="text"
-                    class="form-control"
-                    placeholder="Search..."
-                    aria-label="Search"
-                    aria-describedby="searchBtn"
-                  />
+                  <input name="q" type="text" class="form-control" placeholder="Search..." aria-label="Search" aria-describedby="searchBtn"/>
                   <button class="btn main-nav search-btn" type="submit" id="searchBtn">
                     <i class="bi bi-search"></i>
                   </button>

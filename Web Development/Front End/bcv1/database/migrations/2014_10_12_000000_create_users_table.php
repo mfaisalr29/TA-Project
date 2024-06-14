@@ -18,7 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('no_hp');
             $table->string('password');
             $table->string('role')->default('warga');
-            $table->string('id_pelanggan_online')->unique(); // Tambahkan kolom ini
+            $table->string('id_pelanggan_online')->unique(); 
             $table->rememberToken();
             $table->timestamps();
         });

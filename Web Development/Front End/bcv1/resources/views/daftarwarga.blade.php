@@ -102,7 +102,6 @@
         $(document).ready(function() {
             $('#register-warga-form').on('submit', function(e) {
                 e.preventDefault();
-
                 const data = {
                     nama: $('#nama').val(),
                     nomor_rumah: $('#noRumah').val(),

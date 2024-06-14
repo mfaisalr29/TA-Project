@@ -16,7 +16,7 @@
             <div class="p-3 mb-2" style="background-color: #394E69; border-radius: 10px">
                 <div class="d-flex align-items-center">
                     <img src="{{ asset('img/Profile.png') }}" class="img-fluid mr-2" style="max-height: 100px; border-radius: 40px; padding: 10px">
-                    <h5 class="mb-0 text-white" id="nomor-rumah-title">Nomor Rumah</h5>
+                    <h5 class="mb-0 text-white" id="nomor-rumah-title"></h5>
                 </div>
                 <hr style="border-top: 2px solid #000000;">
                 <div class="p-2 mb-2">
@@ -38,34 +38,32 @@
                 <h2 class="small text-muted fs-6" id="current-date">*Hari, Tanggal Bulan Tahun</h2>
 
                 <nav class="main-nav d-flex justify-content-between mt-5">
-                    <form action="">
-                        <div class="input-group border">
-                            <button class="btn search-btn" type="button" id="buttonSearchTable">
-                                <i class="bi bi-search"></i>
-                            </button>
-                            <input type="text" class="form-control search-input" placeholder="Search ..." aria-label="Example text with button addon" aria-describedby="buttonSearchTable">
-                        </div>
-                    </form>
+                    <div class="input-group border">
+                        <button class="btn search-btn" type="button" id="buttonSearchTable">
+                            <i class="bi bi-search"></i>
+                        </button>
+                        <input type="text" class="form-control search-input" id="searchName" placeholder="Search ..." aria-label="Example text with button addon" aria-describedby="buttonSearchTable">
+                    </div>
                     <div class="d-flex gap-4">
-                        <a href="#" class="btn btn-light border">
+                        <button class="btn btn-light border" data-bs-toggle="modal" data-bs-target="#filterModal">
                             <div class="d-flex">
                                 <i class="bi bi-funnel me-2"></i>
                                 <span>Filter</span>
                             </div>
-                        </a>
-                        <a href="#" class="btn btn-light border">
+                        </button>
+                        <button class="btn btn-light border" id="exportBtn">
                             <div class="d-flex">
                                 <i class="bi bi-box-arrow-up me-2"></i>
                                 <span>Export</span>
                             </div>
-                        </a>
+                        </button>
                     </div>
                 </nav>
 
-                <div class="card">
+                <div class="card mt-4">
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table">
+                            <table class="table" id="billTable">
                                 <thead class="table-light">
                                     <tr>
                                         <th scope="col">Tahun</th>
@@ -88,31 +86,75 @@
     </div>
 </div>
 
-<script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
-<script>
-    $(document).ready(function() {
-        $.ajax({
-            url: '/api/admin/data',
-            type: 'POST',
-            headers: {
-                'Authorization': 'Bearer ' + localStorage.getItem('token')
-            },
-            success: function(response) {
-                $('#admin-name').text('Selamat Datang, ' + response.nama);
-                $('#current-date').text(response.tanggal);
-                $('#nomor-rumah-title').text(response.nama);
-            },
-            error: function(xhr, status, error) {
-                console.error('Failed to fetch admin data:', error);
-            }
-        });
+<!-- Modal for Filter -->
+<div class="modal fade" id="filterModal" tabindex="-1" aria-labelledby="filterModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="filterModalLabel">Filter Tagihan</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="filterForm">
+                    <div class="mb-3">
+                        <label for="filterYear" class="form-label">Tahun</label>
+                        <input type="number" class="form-control" id="filterYear" name="filterYear">
+                    </div>
+                    <div class="mb-3">
+                        <label for="filterMonth" class="form-label">Bulan</label>
+                        <select class="form-select" id="filterMonth" name="filterMonth">
+                            <option value="">Pilih Bulan</option>
+                            <option value="01">Januari</option>
+                            <option value="02">Februari</option>
+                            <option value="03">Maret</option>
+                            <option value="04">April</option>
+                            <option value="05">Mei</option>
+                            <option value="06">Juni</option>
+                            <option value="07">Juli</option>
+                            <option value="08">Agustus</option>
+                            <option value="09">September</option>
+                            <option value="10">Oktober</option>
+                            <option value="11">November</option>
+                            <option value="12">Desember</option>
+                        </select>
+                    </div>
+                    <button type="button" class="btn btn-primary" id="applyFilterBtn">Apply Filter</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+<script>
+$(document).ready(function() {
+    // Fetch admin data
+    $.ajax({
+        url: '/api/admin/data',
+        type: 'POST',
+        headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+        },
+        success: function(response) {
+            $('#admin-name').text('Selamat Datang, ' + response.nama);
+            $('#current-date').text(response.tanggal);
+            $('#nomor-rumah-title').text(response.nama);
+        },
+        error: function(xhr, status, error) {
+            console.error('Failed to fetch admin data:', error);
+        }
+    });
+
+    // Fetch bill data
+    function fetchBillData(filters = {}) {
         $.ajax({
             url: '/api/bills',
             type: 'POST',
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('token')
             },
+            data: filters,
             success: function(response) {
                 var billTableBody = $('#bill-table-body');
                 billTableBody.empty(); 
@@ -133,13 +175,68 @@
                         billTableBody.append(row);
                     });
                 } else {
-                    billTableBody.append('<tr><td colspan="8" class="text-center">No data available</td></tr>');
+                    billTableBody.append('<tr><td colspan="7" class="text-center">No data available</td></tr>');
                 }
             },
             error: function(xhr, status, error) {
                 console.error('Failed to fetch bill data:', error);
             }
         });
+    }
+
+    // Initial fetch
+    fetchBillData();
+
+    // Apply filter function
+    function applyFilter() {
+        const filters = {
+            year: $('#filterYear').val(),
+            month: $('#filterMonth').val()
+        };
+        fetchBillData(filters);
+        $('#filterModal').modal('hide');
+    }
+
+    // Apply filter on button click
+    $('#applyFilterBtn').on('click', function() {
+        applyFilter();
     });
+
+    // Apply filter on Enter key press
+    $('#filterYear, #filterMonth').on('keypress', function(e) {
+        if (e.which === 13) { // Enter key code is 13
+            applyFilter();
+        }
+    });
+
+    // Handle Enter key for search
+    $('#searchName').on('keypress', function(e) {
+        if (e.which === 13) { // Enter key code is 13
+            const searchName = $(this).val();
+            const filters = {
+                name: searchName
+            };
+            fetchBillData(filters);
+        }
+    });
+
+    // Search by name
+    $('#buttonSearchTable').on('click', function() {
+        const searchName = $('#searchName').val();
+        const filters = {
+            name: searchName
+        };
+        fetchBillData(filters);
+    });
+
+    // Export to Excel
+    $('#exportBtn').on('click', function() {
+        var table = document.getElementById('billTable');
+        var wb = XLSX.utils.table_to_book(table, {sheet: "Sheet JS"});
+        XLSX.writeFile(wb, "Tagihan_IPL.xlsx");
+    });
+});
+
+
 </script>
 @endsection

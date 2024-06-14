@@ -24,18 +24,18 @@
         <div class="col-md-3">
             <div class="p-3 mb-2" style="background-color: #394E69; border-radius: 10px">
                 <div class="d-flex align-items-center">
-                    <img src="{{ asset('img/Profile.png') }}" class="img-fluid mr-2" style="max-height : 100px; border-radius: 40px; padding : 10px">
-                    <h5 class="mb-0 text-white" id="nomor-rumah-title">Nomor Rumah</h5>
+                    <img src="{{ asset('img/Profile.png') }}" class="img-fluid mr-2" style="max-height: 100px; border-radius: 40px; padding: 10px">
+                    <h5 class="mb-0 text-white" id="nomor-rumah-title"></h5>
                 </div>
                 <hr style="border-top: 2px solid #000000;">
                 <div class="p-2 mb-2">
                     <nav class="nav flex-column">
-                        <a class="nav-link {{ ($title === "Dashboard") ? 'active' : ''}}" href="/dashboardadmin">Dashboard</a>
-                        <a class="nav-link {{ ($title === "Lihat Tagihan IPL") ? 'active' : ''}}" href="/tagihanipladmin">Lihat Tagihan IPL</a>
-                        <a class="nav-link {{ ($title === "Input Tagihan IPL") ? 'active' : ''}}" href="/tagihan">Input Tagihan IPL</a>
-                        <a class="nav-link {{ ($title === "Kondisi Air dan Alat") ? 'active' : ''}}" href="/kondisi">Kondisi Air dan Alat</a>
-                        <a class="nav-link {{ ($title === "Daftar Akun Warga") ? 'active' : ''}}" href="/daftarwarga">Daftar Akun Warga</a>
-                        <a class="nav-link {{ ($title === "Profile Admin") ? 'active' : ''}}" href="/profileadmin">Profile</a>
+                        <a class="nav-link {{ ($title === "Dashboard") ? 'active' : '' }}" href="/dashboardadmin">Dashboard</a>
+                        <a class="nav-link {{ ($title === "Lihat Tagihan IPL") ? 'active' : '' }}" href="/tagihanipladmin">Lihat Tagihan IPL</a>
+                        <a class="nav-link {{ ($title === "Input Tagihan IPL") ? 'active' : '' }}" href="/tagihan">Input Tagihan IPL</a>
+                        <a class="nav-link {{ ($title === "Kondisi Air dan Alat") ? 'active' : '' }}" href="/kondisi">Kondisi Air dan Alat</a>
+                        <a class="nav-link {{ ($title === "Daftar Akun Warga") ? 'active' : '' }}" href="/daftarwarga">Daftar Akun Warga</a>
+                        <a class="nav-link {{ ($title === "Profile Admin") ? 'active' : '' }}" href="/profileadmin">Profile</a>
                     </nav>
                 </div>
             </div>
@@ -50,8 +50,8 @@
                     <form id="bill-form" action="/api/bills/add" method="POST">
                         @csrf
                         <input type="hidden" id="userIdInput" name="user_id" value="{{ auth()->user()->id }}" />
-                        <input type="hidden" id="iplInput" name="ipl" value="50000" /> 
-                        <input type="hidden" id="paidInput" name="paid" value="0" /> 
+                        <input type="hidden" id="iplInput" name="ipl" value="50000" />
+                        <input type="hidden" id="paidInput" name="paid" value="0" />
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
@@ -65,10 +65,6 @@
                                 <div class="form-floating mb-3">
                                     <input type="text" class="form-control" id="noHomeInput" name="nomor_kavling" placeholder="Masukan nomor kavling" required />
                                     <label for="noHomeInput">Nomor Kavling</label>
-                                </div>
-                                <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="noRumahInput" name="nomor_rumah" placeholder="Masukan nomor rumah" required />
-                                    <label for="noRumahInput">Nomor Rumah</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -104,14 +100,27 @@
 
 <script>
     $(document).ready(function() {
+        $.ajax({
+            url: '/api/admin/data',
+            type: 'POST',
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            },
+            success: function(response) {
+                $('#nomor-rumah-title').text(response.nama);
+            },
+            error: function(xhr, status, error) {
+                console.error('Failed to fetch admin data:', error);
+            }
+        });
+
         function fetchName() {
             const data = {
-                nomor_rumah: $('#noRumahInput').val(),
                 nomor_kavling: $('#noHomeInput').val(),
                 blok: $('#blokInput').val()
             };
 
-            if (data.nomor_rumah && data.nomor_kavling && data.blok) {
+            if (data.nomor_kavling && data.blok) {
                 $.ajax({
                     url: '/api/find-name',
                     type: 'POST',
@@ -130,7 +139,7 @@
             }
         }
 
-        $('#noRumahInput, #noHomeInput, #blokInput').on('blur', fetchName);
+        $('#noHomeInput, #blokInput').on('blur', fetchName);
 
         $('#bill-form').on('submit', function(e) {
             e.preventDefault();

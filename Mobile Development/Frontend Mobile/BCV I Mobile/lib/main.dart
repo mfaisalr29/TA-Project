@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pro_tav1/profil_warga.dart';
+import 'package:pro_tav1/input_ipl.dart';
 //import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:pro_tav1/statusalat_page.dart';
 import 'otheradmin_menu.dart';
@@ -229,7 +229,7 @@ class _MainContentAdminState extends State<MainContentAdmin> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const ProfilWarga()));
+                                builder: (context) => const InputIPL()));
                       },
                       style: ElevatedButton.styleFrom(
                           backgroundColor: HexColor('#FE8660'),

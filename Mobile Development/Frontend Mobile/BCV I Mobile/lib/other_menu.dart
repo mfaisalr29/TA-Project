@@ -9,20 +9,14 @@ void main() {
   ));
 }
 
-class OtherMenu extends StatefulWidget {
+class OtherMenu extends StatelessWidget {
   const OtherMenu({super.key});
 
-  @override
-  _OtherMenustate createState() => _OtherMenustate();
-}
-
-class _OtherMenustate extends State<OtherMenu> {
   // int _selectedIndex = 0;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: HexColor('#F4EBE8'),
+      backgroundColor: HexColor('#F4EBE8'),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Row(
@@ -40,8 +34,9 @@ class _OtherMenustate extends State<OtherMenu> {
                     TextButton.icon(
                       onPressed: () {
                         Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => const ContactMenu()),
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const ContactMenu()),
                         );
                       },
                       icon: Icon(

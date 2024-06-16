@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -21,6 +20,7 @@ class AuthController extends Controller
             'token' => $token->plainTextToken,
         ], 200);
     }
+
     public function login(Request $request)
     {
         Log::info('Login attempt', ['email' => $request->email]);
@@ -30,7 +30,7 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
             Log::info('Login successful', ['user' => $user]);
-            $token = $user->createToken('authToken')->plainTextToken;
+            $token = $user->createToken('authToken', ['role:' . $user->role])->plainTextToken;
 
             return response()->json([
                 'access_token' => $token,
@@ -47,8 +47,10 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
-        $request->user()->currentAccessToken()->delete();
-        return response()->json(['message' => 'Successfully logged out']);
-    }
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
 
+        return redirect('/login')->with('status', 'Anda telah keluar.');
+    }
 }

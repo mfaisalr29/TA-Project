@@ -103,14 +103,14 @@ class UserController extends Controller
             'nomor_kavling' => 'required|string',
             'blok' => 'required|string',
         ]);
-
+    
         try {
             $user = User::where('nomor_kavling', $request->nomor_kavling)
                         ->where('blok_cluster', $request->blok)
                         ->first();
-
+    
             if ($user) {
-                return response()->json(['nama' => $user->nama], 200);
+                return response()->json(['nama' => $user->nama, 'user_id' => $user->id], 200);
             } else {
                 return response()->json(['message' => 'User not found'], 404);
             }

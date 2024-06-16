@@ -11,8 +11,6 @@ class CreateBillsTable extends Migration
         Schema::create('bills', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->string('nomor_kavling'); 
-            $table->string('nama');
             $table->boolean('paid');
             $table->string('thn_bl');
             $table->integer('ipl');
@@ -38,4 +36,3 @@ class CreateBillsTable extends Migration
         Schema::dropIfExists('bills');
     }
 }
-

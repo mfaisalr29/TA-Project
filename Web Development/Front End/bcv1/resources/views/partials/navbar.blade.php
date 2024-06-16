@@ -1,4 +1,3 @@
-
 <nav class="navbar navbar-expand-lg navbar-dark">
   @php
     $exceptions1 = ["Dashboard", "Admin Dashboard", "Profile Warga", "Profile Admin", "Input Tagihan IPL", "Lihat Tagihan IPL", "Kondisi Air dan Alat", "Tagihan IPL Warga", "Daftar Akun Warga"];
@@ -30,22 +29,14 @@
             <a href="/login" class="btn" type="submit" style="color: black; background: #FE8660">Sign In</a>
           @endunless
         </li>
-        @unless (in_array($title, $exceptions2))
-          <li class="nav-item">
-            <div class="d-flex">
-              <form action="" method="get">
-                <div class="input-group">
-                  <input name="q" type="text" class="form-control" placeholder="Search..." aria-label="Search" aria-describedby="searchBtn"/>
-                  <button class="btn main-nav search-btn" type="submit" id="searchBtn">
-                    <i class="bi bi-search"></i>
-                  </button>
-                </div>
-              </form>
-              <a href="#" class="btn person-btn"><i class="bi bi-person"></i></a>
-            </div>
-          </li>
-        @endunless
-        
+        <li class="nav-item">
+          <form action="{{ route('logout') }}" method="POST">
+            @csrf
+            @unless (in_array($title, $exceptions2))
+            <button type="submit" class="btn" style="color: black; background: #FE8660">Logout</button>
+            @endunless
+          </form>
+        </li>
       </ul>
     </div>
   </div>

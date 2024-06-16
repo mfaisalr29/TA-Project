@@ -106,12 +106,12 @@
                     nama: $('#nama').val(),
                     nomor_rumah: $('#noRumah').val(),
                     blok_cluster: $('#blok').val(),
+                    nomor_kavling: $('#nomorKavling').val(),
                     no_hp: $('#noHP').val(),
                     email: $('#email').val(),
-                    password: $('#password').val(),
-                    password_confirmation: $('#password_confirmation').val(),
-                    nomor_kavling: $('#nomorKavling').val(),
                     id_pelanggan_online: $('#idPelangganOnline').val(),
+                    password: $('#password').val(),
+                    password_confirmation: $('#password_confirmation').val()
                 };
 
                 $.ajax({

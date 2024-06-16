@@ -129,10 +129,13 @@
                         'Authorization': 'Bearer ' + localStorage.getItem('token')
                     },
                     success: function(response) {
+                        console.log('Fetched user data:', response); // Log the fetched user data
                         $('#namaInput').val(response.nama);
+                        $('#userIdInput').val(response.user_id); // Set user_id
                     },
                     error: function(xhr, status, error) {
                         $('#namaInput').val('');
+                        $('#userIdInput').val(''); // Clear user_id
                         console.error('Failed to fetch name:', error);
                     }
                 });
@@ -158,7 +161,7 @@
                 tunggakan_3: 0,
             };
 
-            console.log(data);
+            console.log('Data to be submitted:', data); // Log data before submitting
 
             $.ajax({
                 url: '/api/bills/add',

@@ -165,8 +165,8 @@ $(document).ready(function() {
                             <tr>
                                 <th scope="row">${bill.thn_bl.substring(0, 4)}</th>
                                 <td>${new Date(bill.thn_bl.substring(0, 4), bill.thn_bl.substring(4, 6) - 1).toLocaleString('default', { month: 'long' })}</td>
-                                <td>${bill.nama}</td>
-                                <td>${bill.nomor_kavling}</td>
+                                <td>${bill.user.nama}</td>
+                                <td>${bill.user.nomor_kavling}</td>
                                 <td>${bill.meter_awal} M<sup>3</sup></td>
                                 <td>${bill.meter_akhir} M<sup>3</sup></td>
                                 <td>Rp${bill.total_tag.toLocaleString('id-ID')}</td>

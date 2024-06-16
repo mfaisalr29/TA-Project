@@ -10,9 +10,9 @@ class Bill extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id', 'nomor_kavling', 'nama', 'paid', 'thn_bl', 'ipl', 'meter_awal', 'meter_akhir',
-        'penggunaan_air', 'tag_air', 'adm_air', 'admin', 'tunggakan_1', 'tunggakan_2',
-        'tunggakan_3', 'tag_now', 'total_tag'
+        'user_id', 'paid', 'thn_bl', 'ipl', 'meter_awal', 'meter_akhir',
+        'tunggakan_1', 'tunggakan_2', 'tunggakan_3', 'penggunaan_air', 'tag_air', 'adm_air',
+        'admin', 'tag_now', 'total_tag'
     ];
 
     public static function calculateBill($meter_awal, $meter_akhir, $ipl, $tunggakan_1, $tunggakan_2, $tunggakan_3)
@@ -36,8 +36,7 @@ class Bill extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class);
     }
 }
-
 

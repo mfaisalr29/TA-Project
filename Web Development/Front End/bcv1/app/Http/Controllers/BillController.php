@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Bill;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
@@ -13,7 +14,7 @@ class BillController extends Controller
     {
         $user = Auth::user();
 
-        $query = Bill::query();
+        $query = Bill::with('user');
 
         if ($user->role !== 'admin') {
             $query->where('user_id', $user->id);
@@ -22,13 +23,14 @@ class BillController extends Controller
         if ($request->has('year')) {
             $query->whereYear('thn_bl', $request->year);
         }
-
         if ($request->has('month')) {
             $query->whereMonth('thn_bl', $request->month);
         }
 
         if ($request->has('name')) {
-            $query->where('nama', 'like', '%' . $request->name . '%');
+            $query->whereHas('user', function($q) use ($request) {
+                $q->where('nama', 'like', '%' . $request->name . '%');
+            });
         }
 
         $bills = $query->get();
@@ -38,14 +40,11 @@ class BillController extends Controller
 
     public function addBill(Request $request)
     {
-        Log::info('Request data:', $request->all());
 
         $data = $request->validate([
             'user_id' => 'required|exists:users,id',
-            'nomor_kavling' => 'required|string',
-            'nama' => 'required|string',
             'paid' => 'required|boolean',
-            'thn_bl' => 'required|string',
+            'thn_bl' => 'required|string|size:6',
             'ipl' => 'required|integer',
             'meter_awal' => 'required|integer',
             'meter_akhir' => 'required|integer',
@@ -53,6 +52,8 @@ class BillController extends Controller
             'tunggakan_2' => 'integer|nullable',
             'tunggakan_3' => 'integer|nullable',
         ]);
+
+        $user = User::find($data['user_id']);
 
         $billData = Bill::calculateBill(
             $data['meter_awal'],
@@ -64,7 +65,6 @@ class BillController extends Controller
         );
 
         $bill = Bill::where('user_id', $data['user_id'])
-                    ->where('nomor_kavling', $data['nomor_kavling'])
                     ->where('thn_bl', $data['thn_bl'])
                     ->first();
 
@@ -72,6 +72,7 @@ class BillController extends Controller
             $bill->update(array_merge($data, $billData));
             return response()->json($bill, 200);
         } else {
+
             $bill = Bill::create(array_merge($data, $billData));
             return response()->json($bill, 201);
         }

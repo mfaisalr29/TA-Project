@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'main_warga.dart';
-
-void main() {
-  runApp(const MaterialApp(
-    home: OtherMenuAdmin(),
-  ));
-}
+import 'package:shared_preferences/shared_preferences.dart';
+import 'login_page.dart'; // Import halaman login
 
 class OtherMenuAdmin extends StatefulWidget {
   const OtherMenuAdmin({super.key});
@@ -16,7 +11,15 @@ class OtherMenuAdmin extends StatefulWidget {
 }
 
 class _OtherMenuAdminState extends State<OtherMenuAdmin> {
-  // int _selectedIndex = 0;
+  Future<void> _logout(BuildContext context) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.clear(); // Hapus semua data di shared preferences
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (context) => const LoginPage()),
+      (Route<dynamic> route) => false,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +39,7 @@ class _OtherMenuAdminState extends State<OtherMenuAdmin> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TextButton.icon(
-                      onPressed: () {},
+                      onPressed: () => _logout(context), // Panggil fungsi logout
                       icon: Icon(
                         MdiIcons.logoutVariant,
                         color: HexColor('#253793'),

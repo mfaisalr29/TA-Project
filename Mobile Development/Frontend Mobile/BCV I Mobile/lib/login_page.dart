@@ -1,13 +1,13 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:pro_tav1/screens/splash_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'main.dart';
+import 'services/api_service.dart';
 import 'main_warga.dart';
+import 'main.dart';
 
 void main() {
   runApp(const MaterialApp(
-    home: LoginPage(),
+    home: SplashScreen(),
   ));
 }
 
@@ -15,7 +15,7 @@ class HexColor extends Color {
   static int _getColorFromHex(String hexColor) {
     hexColor = hexColor.toUpperCase().replaceAll('#', '');
     if (hexColor.length == 6) {
-      hexColor = 'FF' + hexColor;
+      hexColor = 'FF$hexColor';
     }
     return int.parse(hexColor, radix: 16);
   }
@@ -34,51 +34,42 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  String _errorMessage = '';  // Variabel untuk menyimpan pesan kesalahan
+  String _errorMessage = '';
+  final ApiService _apiService = ApiService(); // Inisialisasi ApiService
 
   Future<void> _login() async {
-    final String email = _emailController.text;
-    final String password = _passwordController.text;
-
     if (_formKey.currentState!.validate()) {
-      final response = await http.post(
-        Uri.parse('http://127.0.0.1:8000/api/auth/login'), // Ganti dengan URL API Anda
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonEncode(<String, String>{
-          'email': email,
-          'password': password,
-        }),
-      );
-
-      if (response.statusCode == 200) {
-        final Map<String, dynamic> data = jsonDecode(response.body);
-        final String token = data['token'];
-        final String role = data['role'];
+      try {
+        final response = await _apiService.login(
+          _emailController.text,
+          _passwordController.text,
+        );
 
         final prefs = await SharedPreferences.getInstance();
-        await prefs.setString('token', token);
-        await prefs.setString('role', role);
+        await prefs.setBool('isLoggedIn', true);
+        await prefs.setString('role', response['role']);
 
-        if (role == 'admin') {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => const DashboardAdmin()),
-          );
-        } else if (role == 'warga') {
+        if (response['role'] == 'warga') {
+          await _apiService.saveToken(response['access_token']);
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => Dashboard1()),
           );
+        } else if (response['role'] == 'admin') {
+          await _apiService.saveToken(response['access_token']);
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => DashboardAdmin()),
+          );
         } else {
+          // Tampilkan pesan jika role tidak sesuai
           setState(() {
-            _errorMessage = 'Unknown role';
+            _errorMessage = 'Invalid Role';
           });
         }
-      } else {
+      } catch (e) {
         setState(() {
-          _errorMessage = 'Invalid email or password';
+          _errorMessage = 'Invalid Email or Password';
         });
       }
     }
@@ -149,7 +140,7 @@ class _LoginPageState extends State<LoginPage> {
                       TextFormField(
                         controller: _emailController,
                         decoration: InputDecoration(
-                          hintText: 'Masukkan username anda...',
+                          hintText: 'Masukkan email anda...',
                           hintStyle: const TextStyle(color: Colors.grey),
                           filled: true,
                           fillColor: Colors.transparent,
@@ -163,7 +154,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           errorBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20.0),
-                            borderSide: const BorderSide(color: Colors.white),
+                            borderSide: const BorderSide(color: Colors.red),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20.0),
@@ -173,7 +164,7 @@ class _LoginPageState extends State<LoginPage> {
                         style: const TextStyle(color: Colors.white),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Masukkan username anda!';
+                            return 'Masukkan email anda!';
                           }
                           return null;
                         },
@@ -248,8 +239,8 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 20.0), // Menambahkan ruang antara tombol dan pesan error
-                  if (_errorMessage.isNotEmpty) // Menampilkan pesan error jika ada
+                  const SizedBox(height: 20.0),
+                  if (_errorMessage.isNotEmpty)
                     Text(
                       _errorMessage,
                       style: const TextStyle(

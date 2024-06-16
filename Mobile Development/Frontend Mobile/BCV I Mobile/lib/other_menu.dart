@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:pro_tav1/contact.dart';
-import 'main_warga.dart';
-
-void main() {
-  runApp(const MaterialApp(
-    home: OtherMenu(),
-  ));
-}
+import 'package:shared_preferences/shared_preferences.dart';
+import 'login_page.dart'; // Import halaman login
+import 'contact.dart';
 
 class OtherMenu extends StatelessWidget {
   const OtherMenu({super.key});
 
-  // int _selectedIndex = 0;
+  Future<void> _logout(BuildContext context) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.clear(); // Hapus semua data di shared preferences
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (context) => const LoginPage()),
+      (Route<dynamic> route) => false,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,7 +59,7 @@ class OtherMenu extends StatelessWidget {
                       ),
                     ),
                     TextButton.icon(
-                      onPressed: () {},
+                      onPressed: () => _logout(context), // Panggil fungsi logout
                       icon: Icon(
                         MdiIcons.logoutVariant,
                         color: HexColor('#253793'),

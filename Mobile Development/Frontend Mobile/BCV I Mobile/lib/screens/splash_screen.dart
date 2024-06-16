@@ -2,7 +2,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:pro_tav1/login_page.dart';
+import 'package:pro_tav1/main_warga.dart';
+import 'package:pro_tav1/main.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -33,10 +36,31 @@ class _SplashScreenState extends State<SplashScreen>
 
     _controller.repeat(reverse: true);
     
+    _navigateToNextPage();
+  }
+
+  Future<void> _navigateToNextPage() async {
+    final prefs = await SharedPreferences.getInstance();
+    final bool? isLoggedIn = prefs.getBool('isLoggedIn');
+
     Future.delayed(const Duration(seconds: 2), () {
-      Navigator.of(context).pushReplacement(MaterialPageRoute(
-        builder: (_) => const LoginPage(),
-      ));
+      if (isLoggedIn == true) {
+        // Navigate to the main page depending on the user role
+        final String? role = prefs.getString('role');
+        if (role == 'warga') {
+          Navigator.of(context).pushReplacement(MaterialPageRoute(
+            builder: (_) => Dashboard1(),
+          ));
+        } else if (role == 'admin') {
+          Navigator.of(context).pushReplacement(MaterialPageRoute(
+            builder: (_) => DashboardAdmin(),
+          ));
+        }
+      } else {
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (_) => const LoginPage(),
+        ));
+      }
     });
   }
 
@@ -96,4 +120,16 @@ class _SplashScreenState extends State<SplashScreen>
       ),
     );
   }
+}
+
+class HexColor extends Color {
+  static int _getColorFromHex(String hexColor) {
+    hexColor = hexColor.toUpperCase().replaceAll('#', '');
+    if (hexColor.length == 6) {
+      hexColor = 'FF$hexColor';
+    }
+    return int.parse(hexColor, radix: 16);
+  }
+
+  HexColor(final String hexColor) : super(_getColorFromHex(hexColor));
 }

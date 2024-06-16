@@ -1,10 +1,6 @@
-// // login_page.dart
-// import 'dart:convert';
 // import 'package:flutter/material.dart';
-// import 'package:shared_preferences/shared_preferences.dart';
-// import 'services/api_service.dart';
+// // import 'services/api_service.dart';
 // import 'main_warga.dart';
-// import 'main.dart';
 
 // void main() {
 //   runApp(const MaterialApp(
@@ -40,34 +36,30 @@
 //   Future<void> _login() async {
 //     if (_formKey.currentState!.validate()) {
 //       try {
-//         final response = await _apiService.login(
+
+//         final role = await login(
 //           _emailController.text,
 //           _passwordController.text,
 //         );
 
-//         if (response['role'] == 'warga') {
-//           await _apiService.saveToken(response['access_token']);
+//         if (role == 'warga') {
 //           Navigator.pushReplacement(
 //             context,
-//             MaterialPageRoute(builder: (context) => Dashboard1()),
+//             MaterialPageRoute(builder: (context) => Dashboard1()), // Sesuaikan dengan halaman utama warga Anda
 //           );
-//         }else if(response['role'] == 'admin'){
-//           await _apiService.saveToken(response['access_token']);
-//           Navigator.pushReplacement(
-//             context,
-//             MaterialPageRoute(builder: (context) => DashboardAdmin()),
-//             );
-//         } else {
-//           // Tampilkan pesan jika role tidak sesuai
-//           setState(() {
-//             _errorMessage = 'Invalid Role';
-//           });
 //         }
-//       } catch (e) {
-//         setState(() {
-//             _errorMessage = 'Invalid Email or Password';
-//           });
+//       } catch (e) {   
+//           setState(() {
+//             _errorMessage = 'invalid email';
+//           }
+//         );
+
 //       }
+//     } else {
+//         setState(() {
+//             _errorMessage = 'invalid email';
+//           }
+//       );
 //     }
 //   }
 

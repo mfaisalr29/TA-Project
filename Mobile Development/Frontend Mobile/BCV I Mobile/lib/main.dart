@@ -1,7 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:pro_tav1/input_ipl.dart';
+import 'package:pro_tav1/screens/splash_screen.dart';
+//import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:pro_tav1/statusalat_page.dart';
 import 'otheradmin_menu.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  runApp(MaterialApp(
+    home: SplashScreen(),
+  ));
+}
 
 class HexColor extends Color {
   static int _getColorFromHex(String hexColor) {
@@ -16,8 +30,6 @@ class HexColor extends Color {
 }
 
 class DashboardAdmin extends StatefulWidget {
-  const DashboardAdmin({super.key});
-
   @override
   _DashboardAdminState createState() => _DashboardAdminState();
 }
@@ -96,11 +108,13 @@ class _MainContentAdminState extends State<MainContentAdmin> {
           children: [
             Container(
               padding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 20.0),
+              // width: MediaQuery.of(context).size.width,
               height: 300.0,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(30.0),
                 color: Colors.indigo[800],
               ),
+
               child: const Stack(
                 children: [
                   Positioned(

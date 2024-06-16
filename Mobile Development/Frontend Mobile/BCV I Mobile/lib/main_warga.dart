@@ -32,16 +32,19 @@ class _Dashboard1State extends State<Dashboard1> {
   final GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
 
   void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+  setState(() {
+    _selectedIndex = index;
+  });
 
-    if (index == 1) {
-      _navigatorKey.currentState!.push(MaterialPageRoute(builder: (context) => OtherMenu()));
-    } else if (index == 0) {
-      _navigatorKey.currentState!.popUntil((route) => route.isFirst);
-    }
+  if (index == 1) {
+    _navigatorKey.currentState!.push(
+      MaterialPageRoute(builder: (context) => OtherMenu()),
+    );
+  } else if (index == 0) {
+    _navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +105,7 @@ class _MainContentState extends State<MainContent> {
   }
 
   Future<Map<String, dynamic>> _fetchUserData() async {
-    final response = await http.get(Uri.parse('http://127.0.0.1:8000/api/userdata')); // Ganti dengan URL API Anda
+    final response = await http.get(Uri.parse('http://34.101.59.6:8000/api/users')); // Ganti dengan URL API Anda
 
     if (response.statusCode == 200) {
       return jsonDecode(response.body);
@@ -124,9 +127,9 @@ class _MainContentState extends State<MainContent> {
           return const Center(child: Text('No data available'));
         } else {
           final userData = snapshot.data!;
-          final name = userData['name'];
+          final name = userData['nama'];
           final tagihan = userData['tagihan'];
-          final jadwalSampah = userData['jadwal_sampah'];
+          final jadwalSampah = userData['jadwal_sampahs'];
 
           return Padding(
             padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),

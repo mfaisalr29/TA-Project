@@ -7,20 +7,16 @@
                 <div class="d-flex justify-content-center">
                     <nav style="--bs-breadcrumb-divider: '>'" aria-current="page">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item">
-                                Home
-                            </li>
-                            <li class="breadcrumb-item active" aria-current="page">
-                                {{ $title }}
-                            </li>
+                            <li class="breadcrumb-item">Home</li>
+                            <li class="breadcrumb-item active" aria-current="page">{{ $title }}</li>
                         </ol>
                     </nav>
                 </div>
 
                 <div class="p-3 mb-2" style="background-color: #394E69; border-radius: 10px">
                     <div class="d-flex align-items-center">
-                        <img src="{{ asset('img/Profile.png') }}" class="img-fluid mr-2" style="max-height : 100px; border-radius: 40px; padding : 10px">
-                        <h5 class="mb-0 text-white">Nomor Rumah</h5>
+                        <img src="{{ asset('img/Profile.png') }}" class="img-fluid mr-2" style="max-height: 100px; border-radius: 40px; padding: 10px">
+                        <h5 class="mb-0 text-white" id="nama-user-sidebar"></h5>
                     </div>
                     <hr style="border-top: 2px solid #000000;">
                     <div class="p-2 mb-2">
@@ -35,7 +31,7 @@
 
             <div class="col-md-9">
                 <div class="mt-4">
-                    <h1 class="fs-4">Selamat Datang, *Nama Warga</h1>
+                    <h1 class="fs-4">Selamat Datang, <span id="nama-user"></span></h1>
                     <h2 class="small text-muted fs-6">
                        *Hari, Tanggal Bulan Tahun
                     </h2>
@@ -93,6 +89,22 @@
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
     <script>
         $(document).ready(function() {
+            $.ajax({
+                url: '/api/user/profile',
+                type: 'POST',
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                },
+                success: function(response) {
+                    $('#nama-user-sidebar').text(response.nama);
+                    $('#nama-user').text(response.nama);
+                },
+                error: function(xhr, status, error) {
+                    console.error('Failed to fetch profile data:', error);
+                }
+            });
+
+            // Fetch bill data
             $.ajax({
                 url: '/api/bills',
                 type: 'POST',

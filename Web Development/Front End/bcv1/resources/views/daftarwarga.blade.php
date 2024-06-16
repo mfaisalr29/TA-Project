@@ -22,7 +22,7 @@
                 <div class="p-3 mb-2 sidebar-card card" style="background-color: #394E69; border-radius: 10px">
                     <div class="d-flex align-items-center">
                         <img src="{{ asset('img/Profile.png') }}" class="img-fluid mr-2" style="max-height : 100px; border-radius: 40px; padding : 10px">
-                        <h5 class="mb-0 text-white">Nomor Rumah</h5>
+                        <h5 class="mb-0 text-white" id="nama-user"></h5>
                     </div>
                     <hr style="border-top: 2px solid #000000;">
                     <div class="p-2 mb-2">
@@ -49,17 +49,24 @@
                                         <label for="nama" class="form-label">Nama</label>
                                         <input type="text" class="form-control input-custom" id="nama" placeholder="Masukkan nama warga" required>
                                     </div>
-                                    <div class="mb-3">
+                                    {{-- <div class="mb-3">
                                         <label for="noRumah" class="form-label">No. Rumah</label>
                                         <input type="text" class="form-control input-custom" id="noRumah" placeholder="Masukkan No. Rumah" required>
-                                    </div>
+                                    </div> --}}
                                     <div class="mb-3">
                                         <label for="blok" class="form-label">Blok</label>
                                         <select class="form-select input-custom" id="blok" required>
                                             <option selected>Pilih blok tempat tinggal warga</option>
-                                            <option value="Blok A">Blok A</option>
-                                            <option value="Blok B">Blok B</option>
-                                            <option value="Blok C">Blok C</option>
+                                            <option value="Daytona">Daytona</option>
+                                            <option value="Estoril">Estoril</option>
+                                            <option value="Imola">Imola</option>
+                                            <option value="Indiana Polis">Indiana Polis</option>
+                                            <option value="Interlagos">Interlagos</option>
+                                            <option value="Laguna Seca">Laguna Seca</option>
+                                            <option value="Le Mans">Le Mans</option>
+                                            <option value="Monaco">Monaco</option>
+                                            <option value="Monza">Monza</option>
+                                            <option value="Silverstone">Silverstone</option>
                                         </select>
                                     </div>
                                     <div class="mb-3">
@@ -100,11 +107,25 @@
 
     <script>
         $(document).ready(function() {
+            // Fetch user profile data
+            $.ajax({
+                url: '/api/user/profile',
+                type: 'POST',
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                },
+                success: function(response) {
+                    $('#nama-user').text(response.nama);
+                },
+                error: function(xhr, status, error) {
+                    console.error('Failed to fetch profile data:', error);
+                }
+            });
+
             $('#register-warga-form').on('submit', function(e) {
                 e.preventDefault();
                 const data = {
                     nama: $('#nama').val(),
-                    nomor_rumah: $('#noRumah').val(),
                     blok_cluster: $('#blok').val(),
                     nomor_kavling: $('#nomorKavling').val(),
                     no_hp: $('#noHP').val(),

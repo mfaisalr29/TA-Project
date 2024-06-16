@@ -25,7 +25,7 @@
             <div class="p-3 mb-2" style="background-color: #394E69; border-radius: 10px">
                 <div class="d-flex align-items-center">
                     <img src="{{ asset('img/Profile.png') }}" class="img-fluid mr-2" style="max-height: 100px; border-radius: 40px; padding: 10px">
-                    <h5 class="mb-0 text-white" id="nomor-rumah-title"></h5>
+                    <h5 class="mb-0 text-white" id="nama-user"></h5>
                 </div>
                 <hr style="border-top: 2px solid #000000;">
                 <div class="p-2 mb-2">
@@ -66,13 +66,11 @@
                                     <div class="d-flex">
                                         <div style="width : 200px;">
                                             <p>Nama</p>
-                                            <p>No. Rumah</p>
                                             <p>Nomor Kavling</p>
                                             <p>No. HP</p>
                                         </div>
                                         <div style="flex: 1;">
                                             <p id="view-nama"></p>
-                                            <p id="view-no-rumah"></p>
                                             <p id="view-no-kavling"></p>
                                             <p id="view-no-hp"></p>
                                         </div>
@@ -87,15 +85,13 @@
                                                         },
                                                         success: function(response) {
                                                             $('#view-nama').text(response.nama);
-                                                            $('#view-no-rumah').text(response.nomor_rumah);
-                                                            $('#nomor-rumah-title').text(response.nama);
+                                                            $('#nama-user').text(response.nama);
                                                             $('#view-no-kavling').text(response.nomor_kavling);
                                                             $('#user-blok').append(response.blok_cluster);
                                                             $('#view-no-hp').text(response.no_hp);
                                                             $('#user-password').val('password'); 
 
                                                             $('#edit-nama').val(response.nama);
-                                                            $('#edit-no-rumah').val(response.nomor_rumah);
                                                             $('#edit-no-kavling').val(response.nomor_kavling);
                                                             $('#edit-blok').val(response.blok_cluster);
                                                             $('#edit-no-hp').val(response.no_hp);
@@ -106,7 +102,7 @@
                                                     });
 
                                                     $('#edit-profile-btn').on('click', function() {
-                                                        $('#view-nama, #view-no-rumah, #view-no-kavling, #view-no-hp').toggle();
+                                                        $('#view-nama, #view-no-kavling, #view-no-hp').toggle();
                                                         $('#update-profile-form').toggleClass('d-none');
                                                         $('#edit-profile-btn').toggleClass('d-none');
                                                     });
@@ -115,7 +111,6 @@
                                                         e.preventDefault();
                                                         const data = {
                                                             nama: $('#edit-nama').val(),
-                                                            nomor_rumah: $('#edit-no-rumah').val(),
                                                             nomor_kavling: $('#edit-no-kavling').val(),
                                                             blok_cluster: $('#edit-blok').val(),
                                                             no_hp: $('#edit-no-hp').val(),

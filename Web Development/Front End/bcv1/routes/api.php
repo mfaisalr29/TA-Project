@@ -11,7 +11,7 @@ use App\Http\Controllers\JadwalSampahController;
 
 Route::post('/auth/login', [AuthController::class, 'login']);
 
-// Route::apiResource('users', UserController::class);
+// Rute yang dapat diakses oleh semua pengguna yang diautentikasi
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
@@ -22,7 +22,7 @@ Route::middleware(['auth:sanctum', 'checkRole:admin'])->group(function () {
     Route::post('/schedule/edit', [JadwalSampahController::class, 'editSchedule']);
     Route::post('/bills/add', [BillController::class, 'addBill']);
     Route::post('/bills/update', [BillController::class, 'updateBill']);
-    Route::post('/schedule/get', [JadwalSampahController::class, 'getSchedule']);
+    Route::get('/schedule', [JadwalSampahController::class, 'getSchedule']);
     Route::post('/dashboard/data', [JadwalSampahController::class, 'getDashboardData']);
     Route::post('/bills', [BillController::class, 'getBills']);
     Route::get('/bills/{id}', [BillController::class, 'getBillDetails']);
@@ -34,7 +34,7 @@ Route::middleware(['auth:sanctum', 'checkRole:admin'])->group(function () {
 
 // Rute yang dapat diakses oleh warga
 Route::middleware(['auth:sanctum', 'checkRole:warga'])->group(function () {
-    Route::post('/schedule/get', [JadwalSampahController::class, 'getSchedule']);
+    Route::get('/schedule', [JadwalSampahController::class, 'getSchedule']);  
     Route::post('/dashboard/data', [JadwalSampahController::class, 'getDashboardData']);
     Route::post('/bills', [BillController::class, 'getBills']);
     Route::get('/bills/{id}', [BillController::class, 'getBillDetails']);

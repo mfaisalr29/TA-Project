@@ -16,8 +16,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-// Rute yang dapat diakses oleh admin
-Route::middleware(['auth:sanctum', 'checkRole:admin'])->group(function () {
+Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/admin/data', [AdminController::class, 'getAdminData']);
     Route::post('/admin/schedule/edit', [JadwalSampahController::class, 'editSchedule']);
     Route::post('/admin/bills/add', [BillController::class, 'addBill']);
@@ -30,10 +29,6 @@ Route::middleware(['auth:sanctum', 'checkRole:admin'])->group(function () {
     Route::post('/admin/user/update', [ProfileController::class, 'updateProfile']);
     Route::post('/admin/daftarwarga', [UserController::class, 'registerWarga']);
     Route::post('/admin/find-name', [UserController::class, 'findName']);
-});
-
-// Rute yang dapat diakses oleh warga
-Route::middleware(['auth:sanctum', 'checkRole:warga'])->group(function () {
     Route::get('/warga/schedule', [JadwalSampahController::class, 'getSchedule']);  
     Route::post('/warga/dashboard/data', [JadwalSampahController::class, 'getDashboardData']);
     Route::post('/warga/bills', [BillController::class, 'getBills']);

@@ -47,24 +47,10 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
-        $user = $request->user();
-
-        if ($user) {
-            $token = $user->currentAccessToken();
-
-            if ($token) {
-                $token->delete();
-            }
-        }
-
-        // Log the user out from the session
         Auth::logout();
-
-        // Invalidate the session
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        // Redirect to login with status message
         return redirect('/login')->with('status', 'Anda telah keluar.');
     }
 }

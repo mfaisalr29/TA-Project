@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Bill;
-use App\Models\Schedule;
+use App\Models\JadwalSampah;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,7 +19,7 @@ class AdminController extends Controller
             'waktu' => 'required|string|max:255',
         ]);
 
-        $schedule = Schedule::find($validatedData['schedule_id']);
+        $schedule = JadwalSampah::find($validatedData['schedule_id']);
         $schedule->hari = $validatedData['hari'];
         $schedule->waktu = $validatedData['waktu'];
         $schedule->save();

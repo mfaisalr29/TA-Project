@@ -3,7 +3,7 @@ import 'package:pro_tav1/screens/splash_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'services/api_service.dart';
 import 'main_warga.dart';
-import 'main.dart';
+import 'main_admin.dart';
 
 void main() {
   runApp(const MaterialApp(
@@ -48,7 +48,9 @@ class _LoginPageState extends State<LoginPage> {
         final prefs = await SharedPreferences.getInstance();
         await prefs.setBool('isLoggedIn', true);
         await prefs.setString('role', response['role']);
-
+        await prefs.setString ('token', response['access_token']);
+        await prefs.setString ('role', response['role']);
+        
         if (response['role'] == 'warga') {
           await _apiService.saveToken(response['access_token']);
           Navigator.pushReplacement(
@@ -62,7 +64,6 @@ class _LoginPageState extends State<LoginPage> {
             MaterialPageRoute(builder: (context) => DashboardAdmin()),
           );
         } else {
-          // Tampilkan pesan jika role tidak sesuai
           setState(() {
             _errorMessage = 'Invalid Role';
           });

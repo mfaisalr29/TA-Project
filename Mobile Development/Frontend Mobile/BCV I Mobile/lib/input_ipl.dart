@@ -100,16 +100,19 @@ class _InputIPLstate extends State<InputIPL> {
         title: const Text(
           'Input Tagihan IPL',
           style: TextStyle(
-            color: Colors.black,
+            color: Colors.white,
             fontFamily: 'Roboto',
             fontWeight: FontWeight.bold,
           ),
         ),
         centerTitle: true,
-        backgroundColor: HexColor('#F4EBE8'),
+        backgroundColor: Colors.indigo[800],
         elevation: 0.0,
         leading: IconButton(
-          icon: Icon(MdiIcons.arrowLeft),
+          icon: Icon(
+            MdiIcons.arrowLeft,
+            color: Colors.white,
+            ),
           iconSize: 40.0,
           alignment: Alignment.topLeft,
           onPressed: () {

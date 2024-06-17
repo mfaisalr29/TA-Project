@@ -78,7 +78,7 @@
                                             <script>
                                                 $(document).ready(function() {
                                                     $.ajax({
-                                                        url: '/api/user/profile',
+                                                        url: '/api/admin/user/profile',
                                                         type: 'POST',
                                                         headers: {
                                                             'Authorization': 'Bearer ' + localStorage.getItem('token')

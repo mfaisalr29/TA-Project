@@ -24,7 +24,6 @@ class UserController extends Controller
             'blok_cluster' => 'required|string|max:255',
             'no_hp' => 'required|string|max:255',
             'id_pelanggan_online' => 'required|string|max:255|unique:users',
-            // 'nomor_rumah' => 'nullable|string|max:255', 
         ]);
 
         $validatedData['password'] = Hash::make($validatedData['password']); 
@@ -51,7 +50,6 @@ class UserController extends Controller
             'blok_cluster' => 'sometimes|required|string|max:255',
             'no_hp' => 'sometimes|required|string|max:255',
             'id_pelanggan_online' => 'sometimes|required|string|max:255|unique:users,id_pelanggan_online,'.$id,
-            // 'nomor_rumah' => 'sometimes|nullable|string|max:255',
         ]);
 
         if (isset($validatedData['password'])) {
@@ -74,7 +72,6 @@ class UserController extends Controller
     {
         $validatedData = $request->validate([
             'nama' => 'required|string|max:255',
-            // 'nomor_rumah' => 'required|string|max:255',
             'blok_cluster' => 'required|string|max:255',
             'no_hp' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
@@ -85,7 +82,6 @@ class UserController extends Controller
     
         $user = User::create([
             'nama' => $validatedData['nama'],
-            // 'nomor_rumah' => $validatedData['nomor_rumah'],
             'blok_cluster' => $validatedData['blok_cluster'],
             'no_hp' => $validatedData['no_hp'],
             'email' => $validatedData['email'],

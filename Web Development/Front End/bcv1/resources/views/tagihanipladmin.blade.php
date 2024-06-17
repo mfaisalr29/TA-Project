@@ -149,7 +149,7 @@ $(document).ready(function() {
     // Fetch bill data
     function fetchBillData(filters = {}) {
         $.ajax({
-            url: '/api/bills',
+            url: '/api/admin/bills',
             type: 'POST',
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('token')

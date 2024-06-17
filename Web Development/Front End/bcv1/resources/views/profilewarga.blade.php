@@ -102,7 +102,7 @@
 
                                                 $(document).ready(function() {
                                                     $.ajax({
-                                                        url: '/api/user/profile',
+                                                        url: '/api/warga/user/profile',
                                                         type: 'POST',
                                                         headers: {
                                                             'Authorization': 'Bearer ' + localStorage.getItem('token')
@@ -141,7 +141,7 @@
                                                         };
 
                                                         $.ajax({
-                                                            url: '/api/user/update',
+                                                            url: '/api/warga/user/update',
                                                             type: 'POST',
                                                             headers: {
                                                                 'Authorization': 'Bearer ' + localStorage.getItem('token')

@@ -122,7 +122,7 @@
 
             if (data.nomor_kavling && data.blok) {
                 $.ajax({
-                    url: '/api/find-name',
+                    url: '/api/admin/find-name',
                     type: 'POST',
                     data: data,
                     headers: {
@@ -164,7 +164,7 @@
             console.log('Data to be submitted:', data); // Log data before submitting
 
             $.ajax({
-                url: '/api/bills/add',
+                url: '/api/admin/bills/add',
                 type: 'POST',
                 data: data,
                 headers: {

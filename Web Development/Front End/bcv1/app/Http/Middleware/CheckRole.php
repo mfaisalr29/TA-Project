@@ -17,16 +17,34 @@ class CheckRole
      * @param  string  $role
      * @return mixed
      */
-    public function handle(Request $request, Closure $next, $role)
+    public function handle(Request $request, Closure $next, string $role)
     {
-        $user = Auth::user();
+        // Log header authorization
+        Log::info('Authorization Header: ' . $request->header('Authorization'));
 
-        
-        if (!$user || !$request->user()->tokenCan('role:' . $role)) {
-            Auth::logout();
-            return redirect('/login')->with('error', 'You do not have access to this page.');
+        if ($request->bearerToken()) {
+            $token = $request->bearerToken();
+            Log::info('Current token: ' . $token);
+        } else {
+            Log::info('No token found');
         }
 
-        return $next($request);
+        if (Auth::check()) {
+            $user = Auth::user();
+            Log::info('User role: ' . $user->role);
+            if ($user->role === $role) {
+                return $next($request);
+            } else {
+                Log::info('Role mismatch: Required role: ' . $role . ', User role: ' . $user->role);
+            }
+        } else {
+            Log::info('User not authenticated');
+        }
+
+        if ($request->expectsJson()) {
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
+
+        return redirect('/login')->with('error', 'You do not have access to this page.');
     }
 }

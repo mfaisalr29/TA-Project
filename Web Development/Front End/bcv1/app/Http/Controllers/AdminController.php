@@ -123,7 +123,7 @@ class AdminController extends Controller
     public function getDashboardData(Request $request)
     {
         // Logika untuk mengambil data dashboard admin
-        $schedule = Schedule::latest()->first(); // Contoh: mengambil jadwal terbaru
+        $schedule = JadwalSampah::latest()->first(); // Contoh: mengambil jadwal terbaru
         $bill = Bill::latest()->first(); // Contoh: mengambil tagihan terbaru
 
         return response()->json([

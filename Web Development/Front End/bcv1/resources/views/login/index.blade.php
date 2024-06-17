@@ -2,6 +2,11 @@
 
 <link rel="stylesheet" href="/css/style.css">
 <body style="background: linear-gradient(to right, #F8F2F0 50%, #394E69 50%); margin:0; padding:0;">
+  @if (session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+  @endif
   <div class="container-fluid" style="display: grid; height:100vh">
     <div class="row">
       <div class="col-md-4" style="align-self: center; margin: auto">

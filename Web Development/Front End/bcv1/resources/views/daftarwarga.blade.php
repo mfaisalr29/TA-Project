@@ -109,7 +109,7 @@
         $(document).ready(function() {
             // Fetch user profile data
             $.ajax({
-                url: '/api/user/profile',
+                url: '/api/admin/user/profile',
                 type: 'POST',
                 headers: {
                     'Authorization': 'Bearer ' + localStorage.getItem('token')
@@ -136,7 +136,7 @@
                 };
 
                 $.ajax({
-                    url: '/api/daftarwarga',
+                    url: '/api/admin/daftarwarga',
                     type: 'POST',
                     headers: {
                         'Authorization': 'Bearer ' + localStorage.getItem('token')

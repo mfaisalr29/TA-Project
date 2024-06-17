@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
 {
@@ -22,12 +23,12 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
             $token = $user->createToken('authToken', ['role:' . $user->role])->plainTextToken;
+            Log::info('Generated Token: ' . $token);
 
             return response()->json([
                 'access_token' => $token,

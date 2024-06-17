@@ -85,7 +85,7 @@
                     return 'Rp' + angka.toLocaleString('id-ID');
                 }
             $.ajax({
-                url: '/api/user/profile',
+                url: '/api/warga/user/profile',
                 type: 'POST',
                 headers: {
                     'Authorization': 'Bearer ' + localStorage.getItem('token')
@@ -101,7 +101,7 @@
 
             // Fetch all schedules
             $.ajax({
-                url: '/api/schedule',
+                url: '/api/warga/schedule',
                 type: 'GET',
                 headers: {
                     'Authorization': 'Bearer ' + localStorage.getItem('token')
@@ -126,7 +126,7 @@
 
             // Fetch bill data
             $.ajax({
-                url: '/api/bills',
+                url: '/api/warga/bills',
                 type: 'POST',
                 headers: {
                     'Authorization': 'Bearer ' + localStorage.getItem('token')

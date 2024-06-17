@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
 {
@@ -23,13 +22,11 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        Log::info('Login attempt', ['email' => $request->email]);
 
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
-            Log::info('Login successful', ['user' => $user]);
             $token = $user->createToken('authToken', ['role:' . $user->role])->plainTextToken;
 
             return response()->json([
@@ -40,7 +37,6 @@ class AuthController extends Controller
                 'redirect_to' => $user->role === 'admin' ? '/dashboardadmin' : '/dashboard'
             ], 200);
         } else {
-            Log::info('Login failed');
             return response()->json(['message' => 'Invalid credentials'], 401);
         }
     }

@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class CheckRole
 {
@@ -20,7 +21,9 @@ class CheckRole
     {
         $user = Auth::user();
 
+        
         if (!$user || !$request->user()->tokenCan('role:' . $role)) {
+            Auth::logout();
             return redirect('/login')->with('error', 'You do not have access to this page.');
         }
 

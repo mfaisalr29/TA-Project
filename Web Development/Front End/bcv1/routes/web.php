@@ -84,6 +84,6 @@ Route::middleware(['auth:sanctum', 'checkRole:admin'])->group(function () {
     });
 });
 
-Route::get('/login', [LoginController::class, 'index']);
+Route::get('/login', [LoginController::class, 'index'])->name('login');
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');

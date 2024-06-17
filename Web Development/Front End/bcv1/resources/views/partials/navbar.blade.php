@@ -30,7 +30,7 @@
           @endunless
         </li>
         <li class="nav-item">
-          <form action="{{ route('logout') }}" method="POST">
+          <form id="logout-form" action="{{ route('logout') }}" method="POST">
             @csrf
             @unless (in_array($title, $exceptions2))
             <button type="submit" class="btn" style="color: black; background: #FE8660">Logout</button>
@@ -41,3 +41,15 @@
     </div>
   </div>
 </nav>
+
+<script>
+    document.getElementById('logout-form').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent the form from submitting normally
+        
+        // Menghapus token dari localStorage
+        localStorage.removeItem('token');
+        
+        // Submit form
+        this.submit();
+    });
+</script>

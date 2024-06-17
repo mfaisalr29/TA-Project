@@ -16,7 +16,7 @@
             <div class="p-3 mb-2" style="background-color: #394E69; border-radius: 10px">
                 <div class="d-flex align-items-center">
                     <img src="{{ asset('img/Profile.png') }}" class="img-fluid mr-2" style="max-height: 100px; border-radius: 40px; padding: 10px">
-                    <h5 class="mb-0 text-white" id="nomor-rumah-title"></h5>
+                    <h5 class="mb-0 text-white" id="nama-user"></h5>
                 </div>
                 <hr style="border-top: 2px solid #000000;">
                 <div class="p-2 mb-2">
@@ -139,7 +139,7 @@ $(document).ready(function() {
         success: function(response) {
             $('#admin-name').text('Selamat Datang, ' + response.nama);
             $('#current-date').text(response.tanggal);
-            $('#nomor-rumah-title').text(response.nama);
+            $('#nama-user').text(response.nama);
         },
         error: function(xhr, status, error) {
             console.error('Failed to fetch admin data:', error);

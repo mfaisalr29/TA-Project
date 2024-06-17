@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'login_page.dart'; // Import halaman login
+import 'login_page.dart';
 import 'contact.dart';
 
 class OtherMenu extends StatelessWidget {
@@ -10,8 +10,7 @@ class OtherMenu extends StatelessWidget {
   Future<void> _logout(BuildContext context) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.clear(); // Hapus semua data di shared preferences
-    Navigator.pushAndRemoveUntil(
-      context,
+    Navigator.of(context, rootNavigator: true).pushAndRemoveUntil(
       MaterialPageRoute(builder: (context) => const LoginPage()),
       (Route<dynamic> route) => false,
     );
@@ -49,7 +48,7 @@ class OtherMenu extends StatelessWidget {
                         size: 50.0,
                       ),
                       label: const Text(
-                        'Contact',
+                        'Kontak',
                         style: TextStyle(
                           color: Colors.black,
                           fontFamily: 'Roboto',

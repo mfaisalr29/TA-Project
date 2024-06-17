@@ -1,49 +1,60 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'services/api_service.dart';
 
 void main() {
   runApp(const MaterialApp(
-    home: DetailIPL(),
+    home: DetailProfil(),
   ));
 }
 
-class DetailIPL extends StatefulWidget {
-  const DetailIPL({super.key});
+class DetailProfil extends StatefulWidget {
+  const DetailProfil({super.key});
 
   @override
-  _DetailIPLstate createState() => _DetailIPLstate();
+  _DetailProfilState createState() => _DetailProfilState();
 }
 
-class _DetailIPLstate extends State<DetailIPL> {
-  String? selectedYear;
-  String? selectedMonth;
-  String meterAwal = "";
-  String meterAkhir = "";
-  String totalTunggakan = "";
-  String totalTagihan = "";
+class _DetailProfilState extends State<DetailProfil> {
+  String? selectedResident;
+  String email = "";
+  String noRumah = "";
+  String tagihanIPL = "";
+  String tunggakan = "";
+  List<String> residents = [];
 
-  final List<String> years = List.generate(10, (index) => (2020 + index).toString());
-  final List<String> months = [
-    'January', 'February', 'March', 'April', 'May', 'June', 
-    'July', 'August', 'September', 'October', 'November', 'December'
-  ];
+  final ApiService apiService = ApiService();
 
-  void fetchData(String year, String month) async {
-    final response = await http.get(Uri.parse('https://api.example.com/tagihan?year=$year&month=$month'));
+  @override
+  void initState() {
+    super.initState();
+    fetchResidents();
+  }
 
-    if (response.statusCode == 200) {
-      final data = json.decode(response.body);
+  void fetchResidents() async {
+    try {
+      final fetchedResidents = await apiService.fetchResidents();
       setState(() {
-        meterAwal = data['meterAwal'].toString();
-        meterAkhir = data['meterAkhir'].toString();
-        totalTunggakan = data['totalTunggakan'].toString();
-        totalTagihan = data['totalTagihan'].toString();
+        residents = fetchedResidents;
       });
-    } else {
-      // Jika gagal mengambil data dari API
-      throw Exception('Failed to load data');
+    } catch (e) {
+      // Handle error
+      print(e);
+    }
+  }
+
+  void fetchResidentDetails(String residentName) async {
+    try {
+      final details = await apiService.fetchResidentDetails(residentName);
+      setState(() {
+        email = details['email'].toString();
+        noRumah = details['noRumah'].toString();
+        tagihanIPL = details['tagihanIPL'].toString();
+        tunggakan = details['tunggakan'].toString();
+      });
+    } catch (e) {
+      // Handle error
+      print(e);
     }
   }
 
@@ -53,18 +64,21 @@ class _DetailIPLstate extends State<DetailIPL> {
       backgroundColor: HexColor('#F4EBE8'),
       appBar: AppBar(
         title: const Text(
-          'Detail Tagihan IPL',
+          'Profil Warga',
           style: TextStyle(
-            color: Colors.black,
+            color: Colors.white,
             fontFamily: 'Roboto',
             fontWeight: FontWeight.bold,
           ),
         ),
         centerTitle: true,
-        backgroundColor: HexColor('#F4EBE8'),
+        backgroundColor: Colors.indigo[800],
         elevation: 0.0,
         leading: IconButton(
-          icon: Icon(MdiIcons.arrowLeft),
+          icon: Icon(
+            MdiIcons.arrowLeft,
+            color: Colors.white,
+            ),
           iconSize: 40.0,
           alignment: Alignment.topLeft,
           onPressed: () {
@@ -72,15 +86,16 @@ class _DetailIPLstate extends State<DetailIPL> {
           },
         ),
       ),
+
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             DropdownButton<String>(
-              hint: const Text("Select Year"),
-              value: selectedYear,
-              items: years.map((String value) {
+              hint: const Text("Pilih Nama Warga"),
+              value: selectedResident,
+              items: residents.map((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
                   child: Text(value),
@@ -88,130 +103,113 @@ class _DetailIPLstate extends State<DetailIPL> {
               }).toList(),
               onChanged: (newValue) {
                 setState(() {
-                  selectedYear = newValue;
-                  if (selectedYear != null && selectedMonth != null) {
-                    fetchData(selectedYear!, selectedMonth!);
-                  }
-                });
-              },
-            ),
-            const SizedBox(height: 20),
-            DropdownButton<String>(
-              hint: const Text("Select Month"),
-              value: selectedMonth,
-              items: months.map((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-              onChanged: (newValue) {
-                setState(() {
-                  selectedMonth = newValue;
-                  if (selectedYear != null && selectedMonth != null) {
-                    fetchData(selectedYear!, selectedMonth!);
+                  selectedResident = newValue;
+                  if (selectedResident != null) {
+                    fetchResidentDetails(selectedResident!);
                   }
                 });
               },
             ),
             const SizedBox(height: 20),
             Expanded(
-              child: Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(20.0),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30.0),
-                  color: Colors.grey[400],
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(MdiIcons.water),
-                        const SizedBox(width: 10),
-                        const Text(
-                          "Meter Awal",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20.0,
+              child: SingleChildScrollView(
+                child: Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(20.0),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30.0),
+                    color: Colors.grey[400],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Icon(MdiIcons.email),
+                          const SizedBox(width: 10),
+                          const Text(
+                            "Email",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20.0,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    Text(
-                      meterAwal,
-                      style: const TextStyle(
-                        fontSize: 18.0,
+                        ],
                       ),
-                    ),
-                    const SizedBox(height: 20.0),
-                    Divider(color: Colors.black),
-                    const SizedBox(height: 20.0),
-                    Row(
-                      children: [
-                        Icon(MdiIcons.waterCheck),
-                        const SizedBox(width: 10),
-                        const Text(
-                          "Meter Akhir",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20.0,
+                      Text(
+                        email,
+                        style: const TextStyle(
+                          fontSize: 18.0,
+                        ),
+                      ),
+                      const SizedBox(height: 20.0),
+                      Divider(color: Colors.black),
+                      const SizedBox(height: 20.0),
+                      Row(
+                        children: [
+                          Icon(MdiIcons.home),
+                          const SizedBox(width: 10),
+                          const Text(
+                            "No. Rumah",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20.0,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    Text(
-                      meterAkhir,
-                      style: const TextStyle(
-                        fontSize: 18.0,
+                        ],
                       ),
-                    ),
-                    const SizedBox(height: 20.0),
-                    Divider(color: Colors.black),
-                    const SizedBox(height: 20.0),
-                    Row(
-                      children: [
-                        Icon(MdiIcons.currencyUsd),
-                        const SizedBox(width: 10),
-                        const Text(
-                          "Total Tunggakan",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20.0,
+                      Text(
+                        noRumah,
+                        style: const TextStyle(
+                          fontSize: 18.0,
+                        ),
+                      ),
+                      const SizedBox(height: 20.0),
+                      Divider(color: Colors.black),
+                      const SizedBox(height: 20.0),
+                      Row(
+                        children: [
+                          Icon(MdiIcons.currencyUsd),
+                          const SizedBox(width: 10),
+                          const Text(
+                            "Tagihan IPL",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20.0,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    Text(
-                      totalTunggakan,
-                      style: const TextStyle(
-                        fontSize: 18.0,
+                        ],
                       ),
-                    ),
-                    const SizedBox(height: 20.0),
-                    Divider(color: Colors.black),
-                    const SizedBox(height: 20.0),
-                    Row(
-                      children: [
-                        Icon(MdiIcons.currencyUsd),
-                        const SizedBox(width: 10),
-                        const Text(
-                          "Total Tagihan IPL",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20.0,
+                      Text(
+                        tagihanIPL,
+                        style: const TextStyle(
+                          fontSize: 18.0,
+                        ),
+                      ),
+                      const SizedBox(height: 20.0),
+                      Divider(color: Colors.black),
+                      const SizedBox(height: 20.0),
+                      Row(
+                        children: [
+                          Icon(MdiIcons.currencyUsd),
+                          const SizedBox(width: 10),
+                          const Text(
+                            "Tunggakan",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20.0,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    Text(
-                      totalTagihan,
-                      style: const TextStyle(
-                        fontSize: 18.0,
+                        ],
                       ),
-                    ),
-                  ],
+                      Text(
+                        tunggakan,
+                        style: const TextStyle(
+                          fontSize: 18.0,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -222,12 +220,11 @@ class _DetailIPLstate extends State<DetailIPL> {
   }
 }
 
-// Utility class for hex color conversion
 class HexColor extends Color {
   static int _getColorFromHex(String hexColor) {
-    hexColor = hexColor.toUpperCase().replaceAll('#', '');
+    hexColor = hexColor.toUpperCase().replaceAll("#", "");
     if (hexColor.length == 6) {
-      hexColor = 'FF' + hexColor;
+      hexColor = "FF$hexColor";
     }
     return int.parse(hexColor, radix: 16);
   }

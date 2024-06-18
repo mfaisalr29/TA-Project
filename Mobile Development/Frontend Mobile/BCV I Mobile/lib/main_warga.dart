@@ -65,13 +65,31 @@ class _MainContentState extends State<MainContent> {
   final ApiService _apiService = ApiService();
   int? _bills;
   String? _name;
+  List<dynamic> _schedules = [];
+  bool isLoading = true;
 
   @override
   void initState() {
     super.initState();
     _fetchBills();
     _fetchName();
+    _fetchSchedules();
   }
+
+  Future<void> _fetchSchedules() async {
+    try {
+      final List<dynamic> fetchedSchedules = await _apiService.getSchedule();
+      setState(() {
+        _schedules = fetchedSchedules;
+        isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
 
   Future<void> _fetchBills() async {
     try {
@@ -96,6 +114,10 @@ class _MainContentState extends State<MainContent> {
 
   @override
   Widget build(BuildContext context) {
+    final scheduleText = _schedules.isNotEmpty
+        ? _schedules.map((schedule) => '${schedule['hari']} Jam ${schedule['waktu']}').join('\n')
+        : 'Loading...';
+
     return Padding(
       padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
       child: Column(
@@ -172,52 +194,95 @@ class _MainContentState extends State<MainContent> {
             ),
           ),
           const SizedBox(height: 20.0),
-          Row(
-            children: [
-              Expanded(
-                child: Container(
-                  padding: const EdgeInsets.fromLTRB(24.0, 5.0, 10.0, 5.0),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30.0),
-                    color: Colors.indigo[800],
-                  ),
-                  child: Row(
+
+          Container(
+            padding: const EdgeInsets.fromLTRB(24.0, 5.0, 10.0, 5.0),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(30.0),
+              color: Colors.indigo[800],
+            ),
+            child: Row(
+              children: [
+                Icon(
+                  MdiIcons.trashCan,
+                  color: HexColor('#FFFFFF'),
+                  size: 44.0,
+                ),
+                const SizedBox(width: 8.0),
+                Expanded(
+                  child: Wrap(
                     children: [
-                      Icon(
-                        MdiIcons.trashCan,
-                        color: HexColor('#FFFFFF'),
-                        size: 44.0,
+                      const Text(
+                        'Jadwal ambil sampah:',
+                        textAlign: TextAlign.start,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'Roboto',
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20.0,
+                        ),
                       ),
-                      const SizedBox(width: 8.0),
-                      const Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Jadwal ambil sampah:',
-                            textAlign: TextAlign.start,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: 'Roboto',
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20.0,
-                            ),
-                          ),
-                          Text(
-                            'Hari Selasa dan Kamis',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: 'Roboto',
-                              fontSize: 22.0,
-                            ),
-                          ),
-                        ],
+                      Text(
+                        scheduleText,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'Roboto',
+                          fontSize: 22.0,
+                        ),
                       ),
                     ],
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
+
+          // Row(
+          //   children: [
+          //     Expanded(
+          //       child: Container(
+          //         padding: const EdgeInsets.fromLTRB(24.0, 5.0, 10.0, 5.0),
+          //         decoration: BoxDecoration(
+          //           borderRadius: BorderRadius.circular(30.0),
+          //           color: Colors.indigo[800],
+          //         ),
+          //         child: Row(
+          //           children: [
+          //             Icon(
+          //               MdiIcons.trashCan,
+          //               color: HexColor('#FFFFFF'),
+          //               size: 44.0,
+          //             ),
+          //             const SizedBox(width: 8.0),
+          //             Column(
+          //               crossAxisAlignment: CrossAxisAlignment.start,
+          //               children: [
+          //                 Text(
+          //                   'Jadwal ambil sampah:',
+          //                   textAlign: TextAlign.start,
+          //                   style: TextStyle(
+          //                     color: Colors.white,
+          //                     fontFamily: 'Roboto',
+          //                     fontWeight: FontWeight.bold,
+          //                     fontSize: 20.0,
+          //                   ),
+          //                 ),
+          //                 Text(
+          //                   scheduleText,
+          //                   style: const TextStyle(
+          //                     color: Colors.white,
+          //                     fontFamily: 'Roboto',
+          //                     fontSize: 22.0,
+          //                   ),
+          //                 ),
+          //               ],
+          //             ),
+          //           ],
+          //         ),
+          //       ),
+          //     ),
+          //   ],
+          // ),
           const SizedBox(height: 20.0,),
           Row(
             children: [

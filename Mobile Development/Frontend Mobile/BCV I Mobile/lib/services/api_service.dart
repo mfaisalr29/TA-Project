@@ -39,7 +39,7 @@ class ApiService {
       throw Exception('Token tidak tersedia');
     }
 
-    const String url = '$_url/bills';
+    const String url = '$_url/warga/bills';
     final response = await http.post(
       Uri.parse(url),
       headers: {
@@ -63,7 +63,7 @@ class ApiService {
       throw Exception('Token tidak tersedia');
     }
 
-    const String url = '$_url/bills';
+    const String url = '$_url/warga/user/profile';
     final response = await http.post(
       Uri.parse(url),
       headers: {
@@ -73,11 +73,35 @@ class ApiService {
 
     if (response.statusCode == 200) {
       final responseBody = json.decode(response.body);
-      return responseBody[0]['user']['nama'].toString();
+      return responseBody['nama'].toString();
     } else {
       throw Exception('Failed to send request');
     }
   }
+
+
+  Future<List<dynamic>> getSchedule() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+
+    final String url = '$_url/warga/schedule';
+    final response = await http.get(
+      Uri.parse(url),
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return json.decode(response.body) as List<dynamic>;
+    } else {
+      throw Exception('Failed to send request');   
+    }
+  }
+
+// -----------------------------------------------------------
+// -----------------------------------------------------------
+// -----------------------------------------------------------
 
   Future<List<String>> fetchResidents() async {
     const String url = '$_url/residents';
@@ -101,4 +125,5 @@ class ApiService {
       throw Exception('Failed to load resident details');
     }
   }
+
 }

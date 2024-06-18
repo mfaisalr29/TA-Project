@@ -108,12 +108,6 @@ class _ContactMenustate extends State<ContactMenu> {
                         ],
                       ),
                     ),
-                    IconButton(
-                      icon: Icon(MdiIcons.squareEditOutline),
-                      onPressed: () {
-
-                      },
-                    )
                   ],
                 )
               ],
@@ -121,21 +115,6 @@ class _ContactMenustate extends State<ContactMenu> {
           ),
         ),
       ),
-      floatingActionButton: Transform.scale(
-        scale: 1.3,
-        child: FloatingActionButton(
-          onPressed: () {
-
-          },
-          backgroundColor: HexColor("#FE8660"),
-          foregroundColor: HexColor('#253793'),
-          shape: const CircleBorder(),
-          elevation: 10.0,
-          splashColor: HexColor('#253793'),
-          child: Icon(MdiIcons.plusThick),
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }

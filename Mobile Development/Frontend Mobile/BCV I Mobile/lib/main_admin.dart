@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:pro_tav1/input_ipl.dart';
-import 'package:pro_tav1/statusalat_page.dart';
+import 'input_ipl.dart';
+import 'services/api_service.dart';
+import 'statusalat_page.dart';
 import 'navbar/navbar.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -50,7 +52,9 @@ class _DashboardAdminState extends State<DashboardAdmin> {
           backgroundColor: Colors.indigo[800],
           elevation: 0.0,
         ),
-        body: MainContentAdmin(),
+        body: SingleChildScrollView(
+          child: MainContentAdmin(),
+        )
       ),
     );
   }
@@ -62,8 +66,36 @@ class MainContentAdmin extends StatefulWidget {
 }
 
 class _MainContentAdminState extends State<MainContentAdmin> {
+  final ApiService _apiService = ApiService();
+  List<dynamic> _schedules = [];
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchSchedules();
+  }
+
+  Future<void> _fetchSchedules() async {
+    try {
+      final List<dynamic> fetchedSchedules = await _apiService.getSchedule();
+      setState(() {
+        _schedules = fetchedSchedules;
+        isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final scheduleText = _schedules.isNotEmpty
+      ? _schedules.map((schedule) => 
+      '${schedule['hari']} Jam ${schedule['waktu']}').join('\n'): 'Loading...';
+
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
@@ -71,12 +103,12 @@ class _MainContentAdminState extends State<MainContentAdmin> {
           children: [
             Container(
               padding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 20.0),
-              height: 300.0,
+              
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(30.0),
                 color: Colors.indigo[800],
               ),
-              child: const Stack(
+              child: Stack(
                 children: [
                   Positioned(
                     top: 0.0,
@@ -128,11 +160,19 @@ class _MainContentAdminState extends State<MainContentAdmin> {
                         height: 50.0,
                       ),
                       Text(
-                        'Jadwal ambil sampah:\n',
+                        'Jadwal ambil sampah:',
                         style: TextStyle(
                           color: Colors.white,
                           fontFamily: 'Roboto',
                           fontSize: 20.0,
+                        ),
+                      ),
+                      Text(
+                        scheduleText,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'Roboto',
+                          fontSize: 22.0,
                         ),
                       ),
                     ],
@@ -162,17 +202,38 @@ class _MainContentAdminState extends State<MainContentAdmin> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30.0),
                         ),
+                        elevation: 10.0,
+                        shadowColor: Colors.black.withOpacity(1.0),
                       ),
-                      child: const Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
-                            'Kondisi air dan alat',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
+                          Spacer(),
+                          Container(
+                            padding: EdgeInsets.all(8.0),
+                            decoration: BoxDecoration(
+                              color: HexColor('#FFAB90'),
+                              shape: BoxShape.rectangle,
+                              borderRadius: BorderRadius.circular(30.0),
+                            ),
+                            child: Icon(
+                              MdiIcons.wrenchCog,
+                              size: 100.0,
                               color: Colors.black,
-                              fontFamily: 'Roboto',
-                              fontSize: 16.0,
+                            ),
+                          ),
+                          Spacer(),
+                          Padding(
+                            padding: EdgeInsets.only(bottom: 16.0),
+                            child: Text(
+                              'Kondisi air dan alat',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: 'Roboto',
+                                fontSize: 16.0,
+                              ),
                             ),
                           ),
                         ],
@@ -180,7 +241,7 @@ class _MainContentAdminState extends State<MainContentAdmin> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 10.0),
+                const SizedBox(width: 10.0), // Ubah dari height ke width
                 Expanded(
                   child: Container(
                     padding: const EdgeInsets.fromLTRB(11.0, 3.0, 5.0, 0.0),
@@ -199,17 +260,38 @@ class _MainContentAdminState extends State<MainContentAdmin> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30.0),
                         ),
+                        elevation: 10.0,
+                        shadowColor: Colors.black.withOpacity(1.0),
                       ),
-                      child: const Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
-                            'IPL',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
+                          Spacer(),
+                          Container(
+                            padding: EdgeInsets.all(8.0),
+                            decoration: BoxDecoration(
+                              color: HexColor('#FFAB90'),
+                              shape: BoxShape.rectangle,
+                              borderRadius: BorderRadius.circular(30.0),
+                            ),
+                            child: Icon(
+                              MdiIcons.receiptTextEdit,
+                              size: 100.0,
                               color: Colors.black,
-                              fontFamily: 'Roboto',
-                              fontSize: 16.0,
+                            ),
+                          ),
+                          Spacer(),
+                          Padding(
+                            padding: EdgeInsets.only(bottom: 16.0),
+                            child: Text(
+                              'Input IPL',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: 'Roboto',
+                                fontSize: 16.0,
+                              ),
                             ),
                           ),
                         ],

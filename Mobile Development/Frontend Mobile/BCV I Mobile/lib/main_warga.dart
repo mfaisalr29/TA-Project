@@ -115,8 +115,8 @@ class _MainContentState extends State<MainContent> {
   @override
   Widget build(BuildContext context) {
     final scheduleText = _schedules.isNotEmpty
-        ? _schedules.map((schedule) => '${schedule['hari']} Jam ${schedule['waktu']}').join('\n')
-        : 'Loading...';
+      ? _schedules.map((schedule) => 
+      '${schedule['hari']} Jam ${schedule['waktu']}').join('\n'): 'Loading...';
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
@@ -299,7 +299,9 @@ class _MainContentState extends State<MainContent> {
                       fixedSize: const Size(0.0, 65.0),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30.0),
-                      )
+                      ),
+                      elevation: 10.0,
+                      shadowColor: Colors.black.withOpacity(1.0),
                   ),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,

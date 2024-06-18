@@ -51,7 +51,7 @@
     $(document).ready(function() {
       $.ajaxSetup({
         headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
         }
       });
 
@@ -69,6 +69,12 @@
           },
           success: function(response) {
             localStorage.setItem('token', response.access_token);
+            $.ajaxSetup({
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('token'),
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
             window.location.href = response.redirect_to;
           },
           error: function(xhr, status, error) {

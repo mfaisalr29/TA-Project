@@ -21,17 +21,13 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/admin/schedule/edit', [JadwalSampahController::class, 'editSchedule']);
     Route::post('/admin/bills/add', [BillController::class, 'addBill']);
     Route::post('/admin/bills/update', [BillController::class, 'updateBill']);
-    Route::get('/admin/schedule', [JadwalSampahController::class, 'getSchedule']);
-    Route::post('/admin/dashboard/data', [JadwalSampahController::class, 'getDashboardData']);
-    Route::post('/admin/bills', [BillController::class, 'getBills']);
-    Route::get('/admin/bills/{id}', [BillController::class, 'getBillDetails']);
-    Route::post('/admin/user/profile', [ProfileController::class, 'getProfile']);
     Route::post('/admin/user/update', [ProfileController::class, 'updateProfile']);
     Route::post('/admin/daftarwarga', [UserController::class, 'registerWarga']);
     Route::post('/admin/find-name', [UserController::class, 'findName']);
-    Route::get('/warga/schedule', [JadwalSampahController::class, 'getSchedule']);  
-    Route::post('/warga/dashboard/data', [JadwalSampahController::class, 'getDashboardData']);
-    Route::post('/warga/bills', [BillController::class, 'getBills']);
-    Route::get('/warga/bills/{id}', [BillController::class, 'getBillDetails']);
-    Route::post('/warga/user/profile', [ProfileController::class, 'getProfile']);
+    
+    Route::get('/schedule', [JadwalSampahController::class, 'getSchedule']);
+    Route::post('/bills', [BillController::class, 'getBills']);
+    Route::post('/dashboard/data', [JadwalSampahController::class, 'getDashboardData']);
+    Route::get('/bills/{id}', [BillController::class, 'getBillDetails']);
+    Route::post('/user/profile', [ProfileController::class, 'getProfile']);
 });

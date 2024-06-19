@@ -34,12 +34,12 @@ class ApiService {
   Future<int> getBills() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
-    
+
     if (token == null) {
       throw Exception('Token tidak tersedia');
     }
 
-    const String url = '$_url/warga/bills';
+    const String url = '$_url/bills';
     final response = await http.post(
       Uri.parse(url),
       headers: {
@@ -55,15 +55,15 @@ class ApiService {
     }
   }
 
-  Future<String> getNameBills() async {
+  Future<String> getName() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
-    
+
     if (token == null) {
       throw Exception('Token tidak tersedia');
     }
 
-    const String url = '$_url/warga/user/profile';
+    const String url = '$_url/user/profile';
     final response = await http.post(
       Uri.parse(url),
       headers: {
@@ -79,12 +79,39 @@ class ApiService {
     }
   }
 
+  Future<String> getNameBills(String nomor_kavling, String blok) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+
+    if (token == null) {
+      throw Exception('Token tidak tersedia');
+    }
+
+    const String url = '$_url/admin/find-name';
+    final response = await http.post(
+      Uri.parse(url),
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+      body: {
+        'nomor_kavling': '$nomor_kavling',
+        'blok': '$blok',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final responseBody = json.decode(response.body);
+      return responseBody['nama'].toString();
+    } else {
+      throw Exception('Failed to send request');
+    }
+  }
 
   Future<List<dynamic>> getSchedule() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
 
-    final String url = '$_url/warga/schedule';
+    final String url = '$_url/schedule';
     final response = await http.get(
       Uri.parse(url),
       headers: {
@@ -95,7 +122,7 @@ class ApiService {
     if (response.statusCode == 200) {
       return json.decode(response.body) as List<dynamic>;
     } else {
-      throw Exception('Failed to send request');   
+      throw Exception('Failed to send request');
     }
   }
 
@@ -109,7 +136,8 @@ class ApiService {
 
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
-      return List<String>.from(data.map((resident) => resident['name'].toString()));
+      return List<String>.from(
+          data.map((resident) => resident['name'].toString()));
     } else {
       throw Exception('Failed to load residents');
     }
@@ -125,5 +153,4 @@ class ApiService {
       throw Exception('Failed to load resident details');
     }
   }
-
 }

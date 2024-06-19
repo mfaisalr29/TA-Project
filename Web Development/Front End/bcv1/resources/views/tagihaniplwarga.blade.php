@@ -37,34 +37,26 @@
                     </h2>
 
                     <nav class="main-nav d-flex justify-content-between mt-5">
-                        <form action="">
-                            <div class="input-group border">
-                                <button class="btn search-btn" type="button" id="buttonSearchTable">
-                                    <i class="bi bi-search"></i>
-                                </button>
-                                <input type="text" class="form-control search-input" placeholder="Search ..." aria-label="Example text with button addon" aria-describedby="buttonSearchTable">
-                            </div>
-                        </form>
                         <div class="d-flex gap-4">
-                            <a href="#" class="btn btn-light border">
+                            <button class="btn btn-light border" data-bs-toggle="modal" data-bs-target="#filterModal">
                                 <div class="d-flex">
                                     <i class="bi bi-funnel me-2"></i>
                                     <span>Filter</span>
                                 </div>
-                            </a>
-                            <a href="#" class="btn btn-light border">
+                            </button>
+                            <button id="exportBtn" class="btn btn-light border">
                                 <div class="d-flex">
                                     <i class="bi bi-box-arrow-up me-2"></i>
                                     <span>Export</span>
                                 </div>
-                            </a>
+                            </button>
                         </div>
                     </nav>
 
                     <div class="card">
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table">
+                                <table class="table" id="billTable">
                                     <thead class="table-light">
                                         <tr>
                                             <th scope="col">Tahun</th>
@@ -75,7 +67,6 @@
                                         </tr>
                                     </thead>
                                     <tbody id="bill-table-body">
-                                        <!-- Data akan diisi melalui JavaScript -->
                                     </tbody>
                                 </table>
                             </div>
@@ -87,6 +78,7 @@
     </div>
 
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
     <script>
         $(document).ready(function() {
             $.ajax({
@@ -136,6 +128,27 @@
                     console.error('Failed to fetch bill data:', error);
                 }
             });
+
+            $('#exportBtn').on('click', function() {
+                var table = document.getElementById('billTable');
+                var wb = XLSX.utils.table_to_book(table, {sheet: "Tagihan IPL"});
+                var ws = wb.Sheets["Tagihan IPL"];
+
+                // Mengambil range dari sheet
+                var range = XLSX.utils.decode_range(ws['!ref']);
+
+                // Menambahkan style bold pada header
+                for(var C = range.s.c; C <= range.e.c; ++C) {
+                    var cell_address = XLSX.utils.encode_cell({c:C, r:0});
+                    if(!ws[cell_address]) continue;
+                }
+
+                // Menambahkan format tabel
+                ws['!autofilter'] = { ref: XLSX.utils.encode_range(range) };
+
+                XLSX.writeFile(wb, "Tagihan_IPL.xlsx");
+            });
+
         });
     </script>
 @endsection

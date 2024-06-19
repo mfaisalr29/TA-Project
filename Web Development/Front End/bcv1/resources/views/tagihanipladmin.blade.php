@@ -232,7 +232,21 @@ $(document).ready(function() {
     // Export to Excel
     $('#exportBtn').on('click', function() {
         var table = document.getElementById('billTable');
-        var wb = XLSX.utils.table_to_book(table, {sheet: "Sheet JS"});
+        var wb = XLSX.utils.table_to_book(table, {sheet: "Tagihan IPL"});
+        var ws = wb.Sheets["Tagihan IPL"];
+
+        // Mengambil range dari sheet
+        var range = XLSX.utils.decode_range(ws['!ref']);
+
+        // Menambahkan style bold pada header
+        for(var C = range.s.c; C <= range.e.c; ++C) {
+            var cell_address = XLSX.utils.encode_cell({c:C, r:0});
+            if(!ws[cell_address]) continue;
+        }
+
+        // Menambahkan format tabel
+        ws['!autofilter'] = { ref: XLSX.utils.encode_range(range) };
+
         XLSX.writeFile(wb, "Tagihan_IPL.xlsx");
     });
 });

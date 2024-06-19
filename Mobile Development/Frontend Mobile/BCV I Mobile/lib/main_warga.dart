@@ -103,7 +103,7 @@ class _MainContentState extends State<MainContent> {
   }
   Future<void> _fetchName() async {
     try {
-      final name = await _apiService.getNameBills();
+      final name = await _apiService.getName();
       setState(() {
         _name = name;
       });

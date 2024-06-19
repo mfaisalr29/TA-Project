@@ -82,7 +82,7 @@
     <script>
         $(document).ready(function() {
             $.ajax({
-                url: '/api/warga/user/profile',
+                url: '/api/user/profile',
                 type: 'POST',
                 headers: {
                     'Authorization': 'Bearer ' + localStorage.getItem('token')
@@ -98,7 +98,7 @@
 
             // Fetch bill data
             $.ajax({
-                url: '/api/warga/bills',
+                url: '/api/bills',
                 type: 'POST',
                 headers: {
                     'Authorization': 'Bearer ' + localStorage.getItem('token')

@@ -109,7 +109,7 @@
         $(document).ready(function() {
             // Fetch user profile data
             $.ajax({
-                url: '/api/admin/user/profile',
+                url: '/api/user/profile',
                 type: 'POST',
                 headers: {
                     'Authorization': 'Bearer ' + localStorage.getItem('token')

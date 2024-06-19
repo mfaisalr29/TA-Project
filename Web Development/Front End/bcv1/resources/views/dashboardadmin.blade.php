@@ -80,7 +80,7 @@
                     return 'Rp' + angka.toLocaleString('id-ID');
                 }
                 $.ajax({
-                    url: '/api/admin/user/profile',
+                    url: '/api/user/profile',
                     type: 'POST',
                     headers: {
                         'Authorization': 'Bearer ' + localStorage.getItem('token')
@@ -96,7 +96,7 @@
 
   
                 $.ajax({
-                    url: '/api/admin/schedule',
+                    url: '/api/schedule',
                     type: 'GET',
                     headers: {
                         'Authorization': 'Bearer ' + localStorage.getItem('token')
@@ -121,7 +121,7 @@
 
 
                 $.ajax({
-                    url: '/api/admin/bills',
+                    url: '/api/bills',
                     type: 'POST',
                     headers: {
                         'Authorization': 'Bearer ' + localStorage.getItem('token')

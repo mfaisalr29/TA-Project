@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:pro_tav1/main.dart';
+import 'main.dart';
 
 void main() {
   runApp(const MaterialApp(

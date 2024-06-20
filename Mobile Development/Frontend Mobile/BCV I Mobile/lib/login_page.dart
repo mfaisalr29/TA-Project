@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pro_tav1/screens/splash_screen.dart';
+import '/screens/splash_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'services/api_service.dart';
 import 'main_warga.dart';

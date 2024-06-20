@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:pro_tav1/login_page.dart';
-import 'package:pro_tav1/main_warga.dart';
-import 'package:pro_tav1/main_admin.dart';
+import 'package:bcv1mobile/login_page.dart';
+import 'package:bcv1mobile/main_warga.dart';
+import 'package:bcv1mobile/main_admin.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

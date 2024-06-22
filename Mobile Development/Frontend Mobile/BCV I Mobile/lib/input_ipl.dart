@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:image_picker/image_picker.dart';
-import 'dart:convert';
+import 'package:path_provider/path_provider.dart';
+// import 'dart:convert';
 import 'dart:io';
-import 'package:http/http.dart' as http;
+// import 'package:http/http.dart' as http;
 import 'services/api_service.dart'; // Import ApiService
+import 'package:gallery_saver/gallery_saver.dart';
 
 void main() {
   runApp(const MaterialApp(
@@ -71,6 +73,39 @@ class _InputIPLstate extends State<InputIPL> {
     }
   }
 
+    Future<void> _pickImage() async {
+    final pickedFile = await picker.pickImage(source: ImageSource.camera);
+
+    setState(() {
+      if (pickedFile != null) {
+        _image = File(pickedFile.path);
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
+
+  Future<void> _saveImage() async {
+    if (_image != null) {
+      try {
+        final Directory? directory = await getExternalStorageDirectory();
+        final String path = directory!.path;
+        final String fileName = 'IPL_${DateTime.now().millisecondsSinceEpoch}.jpg';
+        final File newImage = await _image!.copy('$path/$fileName');
+
+        await GallerySaver.saveImage(newImage.path);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Foto telah disimpan di galeri anda!')),
+        );
+      } catch (e) {
+        print('Error saving image: $e');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Gagal menyimpan foto')),
+        );
+      }
+    }
+  }
+
   void _submitData() async {
     final response = await _apiService.getNameBills(selectedNomorKavling!, selectedBlok!);
 
@@ -79,8 +114,6 @@ class _InputIPLstate extends State<InputIPL> {
       namaController.text = _nama!;
     });
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -215,82 +248,98 @@ class _InputIPLstate extends State<InputIPL> {
                         ),
                       ],
                     ),
-                    // TextField(
-                    //   controller: meterAkhirController,
-                    //   keyboardType: TextInputType.number,
-                    //   decoration: InputDecoration(
-                    //     hintText: 'Masukkan Meter Akhir',
-                    //   ),
-                    // ),
+                    TextField(
+                      // controller: meterAkhirController,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        hintText: 'Masukkan Meter Akhir',
+                      ),
+                    ),
                     const SizedBox(height: 20.0),
-                    // Center(
-                    //   child: _image == null
-                    //       ? ElevatedButton.icon(
-                    //           onPressed: _pickImage,
-                    //           icon: Icon(MdiIcons.camera, color: Colors.black),
-                    //           label: Text(
-                    //             "Ambil Gambar",
-                    //             style: TextStyle(color: Colors.black),
-                    //           ),
-                    //           style: ElevatedButton.styleFrom(
-                    //             backgroundColor: HexColor('#FE8660'),
-                    //           ),
-                    //         )
-                    //       : Column(
-                    //           children: [
-                    //             Container(
-                    //               width: double.infinity,
-                    //               height: 200, // Set the height as needed
-                    //               decoration: BoxDecoration(
-                    //                 borderRadius: BorderRadius.circular(15),
-                    //                 border: Border.all(
-                    //                   color: Colors.black,
-                    //                   width: 2,
-                    //                 ),
-                    //               ),
-                    //               child: ClipRRect(
-                    //                 borderRadius: BorderRadius.circular(15),
-                    //                 child: Image.file(
-                    //                   _image!,
-                    //                   fit: BoxFit.contain,
-                    //                 ),
-                    //               ),
-                    //             ),
-                    //             const SizedBox(height: 10),
-                    //             ElevatedButton.icon(
-                    //               onPressed: _pickImage,
-                    //               icon: Icon(MdiIcons.refresh, color: Colors.black),
-                    //               label: Text(
-                    //                 "Ulang",
-                    //                 style: TextStyle(color: Colors.black),
-                    //               ),
-                    //               style: ElevatedButton.styleFrom(
-                    //                 backgroundColor: HexColor('#FE8660'),
-                    //               ),
-                    //             ),
-                    //           ],
-                    //         ),
-                    // ),
+                    Center(
+                      child: _image == null
+                          ? ElevatedButton.icon(
+                              onPressed: _pickImage,
+                              icon: Icon(MdiIcons.camera, color: Colors.black),
+                              label: Text(
+                                "Ambil Gambar",
+                                style: TextStyle(color: Colors.black),
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: HexColor('#FE8660'),
+                              ),
+                            )
+                          : Column(
+                              children: [
+                                Container(
+                                  width: double.infinity,
+                                  height: 200,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                    border: Border.all(
+                                      color: Colors.black,
+                                      width: 2,
+                                    ),
+                                  ),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(15),
+                                    child: Image.file(
+                                      _image!,
+                                      fit: BoxFit.contain,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 10),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    ElevatedButton.icon(
+                                      onPressed: _pickImage,
+                                      icon: Icon(MdiIcons.refresh, color: Colors.black),
+                                      label: Text(
+                                        "Ulang",
+                                        style: TextStyle(color: Colors.black),
+                                      ),
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: HexColor('#FE8660'),
+                                      ),
+                                    ),
+                                    ElevatedButton.icon(
+                                      onPressed: _saveImage,
+                                      icon: Icon(MdiIcons.contentSave, color: Colors.black),
+                                      label: Text(
+                                        "Simpan",
+                                        style: TextStyle(color: Colors.black),
+                                      ),
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: HexColor('#FE8660'),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                    ),
                   ],
                 ),
               ),
-              // const SizedBox(height: 20.0),
-              // ElevatedButton(
-              //   onPressed: _submitData,
-              //   style: ElevatedButton.styleFrom(
-              //     backgroundColor: HexColor('#FE8660'),
-              //     padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-              //     textStyle: TextStyle(
-              //       fontSize: 20,
-              //       fontWeight: FontWeight.bold,
-              //     ),
-              //   ),
-              //   child: Container(
-              //     width: double.infinity,
-              //     alignment: Alignment.center,
-              //     child: Text("Input IPL", style: TextStyle(color: Colors.black)),
-              //   ),
-              // ),
+              const SizedBox(height: 20.0),
+              ElevatedButton(
+                onPressed: _submitData,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: HexColor('#FE8660'),
+                  padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                  textStyle: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                child: Container(
+                  width: double.infinity,
+                  alignment: Alignment.center,
+                  child: Text("Input IPL", style: TextStyle(color: Colors.black)),
+                ),
+              ),
             ],
           ),
         ),
